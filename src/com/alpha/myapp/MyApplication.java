@@ -1,6 +1,6 @@
-package com.mycompany.myapp;
+package com.alpha.myapp;
 
-import com.mycompany.gui.HomeForm;
+import com.alpha.gui.HomeForm;
 import static com.codename1.ui.CN.*;
 
 import com.codename1.ui.Form;

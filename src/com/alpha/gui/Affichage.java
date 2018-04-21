@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.gui;
+package com.alpha.gui;
 
 import com.codename1.components.SpanLabel;
 import com.codename1.ui.Form;
-import com.mycompagny.Service.ServiceTask;
+import com.alpha.Service.ServiceTask;
 
 /**
  *
