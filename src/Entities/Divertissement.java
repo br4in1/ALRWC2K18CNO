@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package Entities;
-import java.sql.Timestamp ;
+import java.util.Timestamp ;
 /**
  *
  * @author Sof
