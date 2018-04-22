@@ -5,7 +5,7 @@
  */
 package com.alpha.Entite;
 import java.util.Date;
-import java.sql.Timestamp;
+import java.util.TimeZone;
 
 /**
  *
@@ -18,12 +18,12 @@ public class User {
 	protected Boolean enabled;
 	protected String salt;
 	protected String password;
-	protected Timestamp last_login;
+	protected TimeZone last_login;
 	protected String roles;
 	protected String firstname;
 	protected String lastname;
 
-	public User(String username, String email, Boolean enabled, String salt, String password, Timestamp last_login, String roles, String firstname, String lastname) {
+	public User(String username, String email, Boolean enabled, String salt, String password, TimeZone last_login, String roles, String firstname, String lastname) {
 		this.username = username;
 		this.email = email;
 		this.enabled = enabled;
@@ -83,11 +83,11 @@ public class User {
 		this.password = password;
 	}
 
-	public Timestamp getLast_login() {
+	public TimeZone getLast_login() {
 		return last_login;
 	}
 
-	public void setLast_login(Timestamp last_login) {
+	public void setLast_login(TimeZone last_login) {
 		this.last_login = last_login;
 	}
 

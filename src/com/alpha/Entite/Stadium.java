@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package com.alpha.Entite;
-import java.math.BigInteger;
 
 /**
  *
@@ -14,12 +13,12 @@ public class Stadium {
     private int id;
     private String name;
     private String city;
-    private BigInteger capacity;
+    private int capacity;
     private double getLat;
     private double getLong;
     private String photo;
 
-    public Stadium(int id, String name, String city, BigInteger capacity, double getLat, double getLong, String photo) {
+    public Stadium(int id, String name, String city, int capacity, double getLat, double getLong, String photo) {
         this.id = id;
         this.name = name;
         this.city = city;
@@ -53,11 +52,11 @@ public class Stadium {
         this.city = city;
     }
 
-    public BigInteger getCapacity() {
+    public int getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(BigInteger capacity) {
+    public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
 

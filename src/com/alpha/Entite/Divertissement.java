@@ -6,7 +6,8 @@
 package com.alpha.Entite;
 
 import java.util.Date;
-import java.sql.Timestamp ;
+
+import java.util.TimeZone;
 /**
  *
  * @author Sof
@@ -16,14 +17,14 @@ public class Divertissement {
     private String nom ; 
     private double geolat ; 
     private double geolong ; 
-    private Timestamp heureOuverture ; 
-    private Timestamp heureFermeture ; 
+    private TimeZone heureOuverture ; 
+    private TimeZone heureFermeture ; 
     private String Link ; 
     private String Image ; 
     private String City ; 
 	public Divertissement()
 	{}
-    public Divertissement(int id, String nom, double geolat, double geolong, Timestamp heureOuverture, Timestamp heureFermeture, String Link, String Image, String City) {
+    public Divertissement(int id, String nom, double geolat, double geolong, TimeZone heureOuverture, TimeZone heureFermeture, String Link, String Image, String City) {
         this.id = id;
         this.nom = nom;
         this.geolat = geolat;
@@ -51,11 +52,11 @@ public class Divertissement {
         return geolong;
     }
 
-    public Timestamp getHeureOuverture() {
+    public TimeZone getHeureOuverture() {
         return heureOuverture;
     }
 
-    public Timestamp getHeureFermeture() {
+    public TimeZone getHeureFermeture() {
         return heureFermeture;
     }
 
@@ -87,11 +88,11 @@ public class Divertissement {
         this.geolong = geolong;
     }
 
-    public void setHeureOuverture(Timestamp heureOuverture) {
+    public void setHeureOuverture(TimeZone heureOuverture) {
         this.heureOuverture = heureOuverture;
     }
 
-    public void setHeureFermeture(Timestamp heureFermeture) {
+    public void setHeureFermeture(TimeZone heureFermeture) {
         this.heureFermeture = heureFermeture;
     }
 

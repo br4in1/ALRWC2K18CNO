@@ -110,7 +110,5 @@ public class Gallery {
 		this.ville = ville;
 	}
 
-	public String getAvis() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
+	
 }

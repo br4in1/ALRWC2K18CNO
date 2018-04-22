@@ -5,8 +5,8 @@
  */
 package com.alpha.Entite;
 
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.util.Date;
+import java.util.TimeZone;
 
 /**
  *
@@ -21,7 +21,7 @@ public class SimpleUser extends User{
 	private String profilepicture;
 	public static SimpleUser current_user = null;
 
-	public SimpleUser(Date birthdate, Date registrationdate, String nationality, Boolean loggedin, int fidaelitypoints, String profilepicture, String username, String email, Boolean enabled, String salt, String password, Timestamp last_login, String roles, String firstname, String lastname) {
+	public SimpleUser(Date birthdate, Date registrationdate, String nationality, Boolean loggedin, int fidaelitypoints, String profilepicture, String username, String email, Boolean enabled, String salt, String password, TimeZone last_login, String roles, String firstname, String lastname) {
 		super(username, email, enabled, salt, password, last_login, roles, firstname, lastname);
 		this.birthdate = birthdate;
 		this.registrationdate = registrationdate;
