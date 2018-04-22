@@ -11,7 +11,7 @@ import com.codename1.io.JSONParser;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
 import com.codename1.ui.events.ActionListener;
-import com.mycompany.Entite.Task;
+import com.alpha.Entite.Task;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
