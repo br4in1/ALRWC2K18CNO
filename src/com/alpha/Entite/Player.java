@@ -29,6 +29,8 @@ public class Player {
     private int shirtNb ; 
     private String video ; 
 
+	public Player(){}
+	
     public Player(int id, String name, String lastName, int age, String club, String nation, double height, double weight, String position, int goals, String description, String profilePhoto, String blanketPhoto, String descriptionPhoto, String fbLink, String twitterLink, int shirtNb, String video) {
         this.id = id;
         this.name = name;

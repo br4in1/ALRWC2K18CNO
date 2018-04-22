@@ -37,6 +37,8 @@ public class Team {
     private String description ;//21
     private String website ;//22
     private String video ;//23
+	
+	public Team (){}
 
     public Team(int id, String name, String coach, String president, String area, int gamesPlayed, int goalScored, int goalAgainst, int participations, Date fifaDate, String wcGroup, int win, int loose, int draw, int points, int fifaRank, String flagPhoto, String logoPhoto, String squadPhoto, String descriptionPhoto, String description, String website, String video) {
         this.id = id;
@@ -307,7 +309,12 @@ public class Team {
 		img.setFitWidth(100);
 		return img;
 	}
-    
-    
+
+	@Override
+	public String toString() {
+		return "Team{" + "id=" + id + ", name=" + name + ", coach=" + coach + ", president=" + president + ", area=" + area + ", gamesPlayed=" + gamesPlayed + ", goalScored=" + goalScored + ", goalAgainst=" + goalAgainst + ", participations=" + participations + ", fifaDate=" + fifaDate + ", wcGroup=" + wcGroup + ", win=" + win + ", loose=" + loose + ", draw=" + draw + ", points=" + points + ", fifaRank=" + fifaRank + ", flagPhoto=" + flagPhoto + ", logoPhoto=" + logoPhoto + ", squadPhoto=" + squadPhoto + ", descriptionPhoto=" + descriptionPhoto + ", description=" + description + ", website=" + website + ", video=" + video + '}';
+	}
+
+	
 }
      

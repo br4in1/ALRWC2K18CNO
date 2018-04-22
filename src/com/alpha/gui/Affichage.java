@@ -8,6 +8,7 @@ package com.alpha.gui;
 import com.codename1.components.SpanLabel;
 import com.codename1.ui.Form;
 import com.alpha.Service.ServiceTask;
+import com.alpha.Service.ServiceTeam;
 
 /**
  *
@@ -24,6 +25,11 @@ public class Affichage {
         lb = new SpanLabel("");
         f.add(lb);
         ServiceTask serviceTask=new ServiceTask();
+		
+		//TeamTask teamtask = new ServiceTeam() ; 
+		//lb.setText(ServiceTeam.getList2().toString());
+
+		
         lb.setText(serviceTask.getList2().toString());
         /*/
         ConnectionRequest con = new ConnectionRequest();
