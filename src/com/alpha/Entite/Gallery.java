@@ -19,6 +19,10 @@ public class Gallery {
     private String description;
     private String image;
     private String etat ; 
+	
+	
+	
+	
 
 
 	public Gallery() {
