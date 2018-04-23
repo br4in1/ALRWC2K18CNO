@@ -1,6 +1,6 @@
 package com.alpha.myapp;
 
-import com.alpha.gui.HomeForm;
+import com.alpha.gui.SignInForm;
 import static com.codename1.ui.CN.*;
 
 import com.codename1.ui.Form;
@@ -8,7 +8,6 @@ import com.codename1.ui.Dialog;
 
 import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
-import com.codename1.io.Log;
 import com.codename1.ui.Toolbar;
 
 /**
@@ -24,10 +23,7 @@ public class MyApplication {
         theme = UIManager.initFirstTheme("/theme");
 
         // Enable Toolbar on all Forms by default
-        Toolbar.setGlobalToolbar(true);
-
-        // Pro only feature
-        Log.bindCrashProtection(true);
+         Toolbar.setGlobalToolbar(false);
     }
 
     public void start() {
@@ -35,8 +31,8 @@ public class MyApplication {
             current.show();
             return;
         }
-        HomeForm h = new HomeForm();
-        h.getF().show();
+        SignInForm h = new SignInForm(theme);
+        h.show();
 /*/
       ConnectionRequest con = new ConnectionRequest();
         con.setUrl("http://41.226.11.243:10004/tasks/");
