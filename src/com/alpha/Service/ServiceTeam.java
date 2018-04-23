@@ -60,8 +60,7 @@ public class ServiceTeam {
 	 
     public ArrayList<Team> getList2(){       
         ConnectionRequest con = new ConnectionRequest();
-		con.setUrl("http://41.226.11.243:10004/tasks/");  
-       // con.setUrl("http://localhost/projet/ALRWC2K18/web/app_dev.php/team/allTeam");  
+        con.setUrl("http://127.0.0.1:8000/team/allTeam");  
 
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override

@@ -25,8 +25,8 @@ public class DisplayTeam {
         lb = new SpanLabel("");
         f.add(lb);
 		
-		ServiceTeam teamtask = new ServiceTeam() ; 
-		lb.setText(teamtask.getList2().toString());
+		ServiceTeam serviceTeam = new ServiceTeam() ; 
+		lb.setText(serviceTeam.getList2().toString());
 
           f.getToolbar().addCommandToRightBar("back", null, (ev)->{HomeForm h=new HomeForm();
           h.getF().show();

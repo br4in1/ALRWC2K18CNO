@@ -24,8 +24,8 @@ public class DisplayPlayer {
         lb = new SpanLabel("");
         f.add(lb);
 		
-		ServicePlayer playertask = new ServicePlayer() ; 
-		lb.setText(playertask.getList2().toString());
+		ServicePlayer servicePlayer = new ServicePlayer() ; 
+		lb.setText(servicePlayer.getList2().toString());
 
           f.getToolbar().addCommandToRightBar("back", null, (ev)->{HomeForm h=new HomeForm();
           h.getF().show();
