@@ -43,8 +43,28 @@ public class ServicePlayer {
 				// System.out.println(obj.get("id"));
 				float id = Float.parseFloat(obj.get("id").toString());
 
+				
 				System.out.println(id);
 				p.setId((int) id);
+				p.setName(obj.get("name").toString());
+
+				p.setLastName(obj.get("lastname").toString());
+			//	p.setAge(Integer.parseInt(obj.get("age").toString()));
+				p.setClub(obj.get("club").toString());
+				p.setNation(obj.get("nation").toString());
+			//	p.setHeight(Double.parseDouble(obj.get("height").toString()));
+			//	p.setWeight(Double.parseDouble(obj.get("weight").toString()));
+				p.setPosition(obj.get("position").toString());
+			//	p.setGoals(Integer.parseInt(obj.get("goals").toString()));
+				p.setDescription(obj.get("description").toString());//profilePhoto
+				p.setProfilePhoto(obj.get("profilephoto").toString());
+				p.setBlanketPhoto(obj.get("blanketphoto").toString());
+				p.setDescriptionPhoto(obj.get("descriptionphoto").toString());
+				p.setFbLink(obj.get("fblink").toString());
+				p.setTwitterLink(obj.get("twitterlink").toString());
+				//p.setShirtNb(Integer.parseInt(obj.get("shirtNb").toString()));
+				p.setVideo(obj.get("video").toString());
+				
 				System.out.println(p);
 				listPlayers.add(p);
 

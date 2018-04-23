@@ -65,8 +65,11 @@ public class ServiceTask {
                 System.out.println(id);
                 e.setId((int) id);
                 //e.setId(Integer.parseInt(obj.get("id").toString().trim()));
+				
                 e.setEtat(obj.get("state").toString());
                 e.setNom(obj.get("name").toString());
+				
+				
                 System.out.println(e);
                 listEtudiants.add(e);
 

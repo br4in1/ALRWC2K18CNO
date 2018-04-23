@@ -44,6 +44,33 @@ public class ServiceTeam {
 
 				System.out.println(id);
 				t.setId((int) id);
+				t.setName(obj.get("name").toString());
+				t.setCoach(obj.get("coach").toString());
+				t.setPresident(obj.get("president").toString());
+				t.setArea(obj.get("area").toString());
+				t.setGamesPlayed(Integer.parseInt(obj.get("gameplayed").toString()));
+				/*t.setGoalScored(Integer.parseInt(obj.get("goalscored").toString()));
+				t.setGoalAgainst(Integer.parseInt(obj.get("goalagainst").toString()));
+				t.setParticipations(Integer.parseInt(obj.get("participations").toString()));
+				t.setFifaDate(Date.valueOf(obj.get("fifadate").toString()));*/
+				t.setWcGroup(obj.get("wcgroup").toString());
+				
+/*				t.setWin(Integer.parseInt(obj.get("win").toString()));
+				t.setLoose(Integer.parseInt(obj.get("loose").toString()));
+				t.setDraw(Integer.parseInt(obj.get("draw").toString()));
+				t.setPoints(Integer.parseInt(obj.get("points").toString()));
+				t.setFifaRank(Integer.parseInt(obj.get("fifarank").toString()));*/
+				t.setFlagPhoto(obj.get("flagphoto").toString());
+				t.setLogoPhoto(obj.get("logophoto").toString());
+				t.setSquadPhoto(obj.get("squadphoto").toString());
+				t.setDescriptionPhoto(obj.get("descriptionphoto").toString());
+				t.setDescription(obj.get("description").toString());
+				t.setWebsite(obj.get("website").toString());
+				t.setVideo(obj.get("video").toString());
+				
+				
+				
+				
 				System.out.println(t);
 				listTeams.add(t);
 
@@ -66,7 +93,9 @@ public class ServiceTeam {
             @Override
             public void actionPerformed(NetworkEvent evt) {
                 ServiceTeam ser = new ServiceTeam();
-                listTeams2 = ser.getListTeam(new String(con.getResponseData()));
+               // listTeams2 = ser.getListTeam(new String(con.getResponseData()));
+			    listTeams2 = ser.getListTeam(new String(con.getResponseData()));
+
             }
         });
         NetworkManager.getInstance().addToQueueAndWait(con);
