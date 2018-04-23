@@ -5,26 +5,34 @@
  */
 package com.alpha.gui;
 
+import com.codename1.components.FloatingHint;
+import com.codename1.components.OnOffSwitch;
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.components.SpanLabel;
-import com.codename1.components.ToastBar;
+import com.codename1.ui.AutoCompleteTextField;
 import com.codename1.ui.Button;
 import com.codename1.ui.ButtonGroup;
+import com.codename1.ui.CheckBox;
 import com.codename1.ui.Component;
 import static com.codename1.ui.Component.BOTTOM;
 import static com.codename1.ui.Component.CENTER;
 import static com.codename1.ui.Component.LEFT;
 import static com.codename1.ui.Component.RIGHT;
 import com.codename1.ui.Container;
+import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
 import com.codename1.ui.FontImage;
+import com.codename1.ui.Form;
 import com.codename1.ui.Graphics;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
 import com.codename1.ui.RadioButton;
 import com.codename1.ui.Tabs;
 import com.codename1.ui.TextArea;
+import com.codename1.ui.TextField;
 import com.codename1.ui.Toolbar;
+import com.codename1.ui.events.ActionEvent;
+import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
@@ -32,36 +40,27 @@ import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
+import javafx.scene.control.Alert;
 
 /**
  *
  * @author Sof
  */
-public class GuideAffichage extends BaseForm {
-	Resources res;
-	 public GuideAffichage(Resources res) {
-		 super("Newsfeed", BoxLayout.y());
-		 this.res = res ; 
-        
+public class AfficherSingleStade  extends BaseForm {
+	public AfficherSingleStade(Resources res){
+	 super("", BoxLayout.y());
+		
         Toolbar tb = new Toolbar(true);
         setToolbar(tb);
         getTitleArea().setUIID("Container");
-        setTitle("Newsfeed");
+        setTitle("");
         getContentPane().setScrollVisible(false);
         
         super.addSideMenu(res);
         tb.addSearchCommand(e -> {});
         
-        Tabs swipe = new Tabs();
-
-        Label spacer1 = new Label();
-        Label spacer2 = new Label();
-        addTab(swipe, res.getImage("news-item.jpg"), spacer1, "15 Likes  ", "85 Comments", "Integer ut placerat purued non dignissim neque. ");
-        addTab(swipe, res.getImage("dog.jpg"), spacer2, "100 Likes  ", "66 Comments", "Dogs are cute: story at 11");
-                
-        swipe.setUIID("Container");
-        swipe.getContentPane().setUIID("Container");
-        swipe.hideTabs();
+      
+       
         
         ButtonGroup bg = new ButtonGroup();
         int size = Display.getInstance().convertToPixels(1);
@@ -76,7 +75,7 @@ public class GuideAffichage extends BaseForm {
         g.setColor(0xffffff);
         g.setAntiAliased(true);
         g.fillArc(0, 0, size, size, 0, 360);
-        RadioButton[] rbs = new RadioButton[swipe.getTabCount()];
+      /*  RadioButton[] rbs = new RadioButton[swipe.getTabCount()];
         FlowLayout flow = new FlowLayout(CENTER);
         flow.setValign(BOTTOM);
         Container radioContainer = new Container(flow);
@@ -96,20 +95,18 @@ public class GuideAffichage extends BaseForm {
         
         Component.setSameSize(radioContainer, spacer1, spacer2);
         add(LayeredLayout.encloseIn(swipe, radioContainer));
-        
+        */
         ButtonGroup barGroup = new ButtonGroup();
-        RadioButton all = RadioButton.createToggle("All", barGroup);
+        RadioButton all = RadioButton.createToggle("Hotel", barGroup);
         all.setUIID("SelectBar");
-        RadioButton featured = RadioButton.createToggle("Featured", barGroup);
+        RadioButton featured = RadioButton.createToggle("Stade", barGroup);
         featured.setUIID("SelectBar");
-        RadioButton popular = RadioButton.createToggle("Popular", barGroup);
+        RadioButton popular = RadioButton.createToggle("Divertissement", barGroup);
         popular.setUIID("SelectBar");
-        RadioButton myFavorite = RadioButton.createToggle("My Favorites", barGroup);
-        myFavorite.setUIID("SelectBar");
         Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
         
         add(LayeredLayout.encloseIn(
-                GridLayout.encloseIn(4, all, featured, popular, myFavorite),
+                GridLayout.encloseIn(3, all, featured, popular),
                 FlowLayout.encloseBottom(arrow)
         ));
         
@@ -122,18 +119,20 @@ public class GuideAffichage extends BaseForm {
         bindButtonSelection(all, arrow);
         bindButtonSelection(featured, arrow);
         bindButtonSelection(popular, arrow);
-        bindButtonSelection(myFavorite, arrow);
+    
         
         // special case for rotation
         addOrientationListener(e -> {
             updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
         });
         
-        addButton(res.getImage("news-item-1.jpg"), "Morbi per tincidunt tellus sit of amet eros laoreet.", false, 26, 32);
-        addButton(res.getImage("news-item-2.jpg"), "Fusce ornare cursus masspretium tortor integer placera.", true, 15, 21);
+        addButton(res.getImage("news-item-1.jpg"), "Morbi per tincidunt tellus sit of amet eros laoreet.", false, 123, 32);
+        addButton(res.getImage("news-item-2.jpg"), "Fusce ornare cursus masspretium tortor integer placera.", true, 546, 21);
         addButton(res.getImage("news-item-3.jpg"), "Maecenas eu risus blanscelerisque massa non amcorpe.", false, 36, 15);
         addButton(res.getImage("news-item-4.jpg"), "Pellentesque non lorem diam. Proin at ex sollicia.", false, 11, 9);
-    }
+		Button but = new Button("aaaa");
+		add(but);
+	}
     
     private void updateArrowPosition(Button b, Label arrow) {
         arrow.getUnselectedStyle().setMargin(LEFT, b.getX() + b.getWidth() / 2 - arrow.getWidth() / 2);
@@ -212,7 +211,7 @@ public class GuideAffichage extends BaseForm {
                ));
        add(cnt);
 	   
-       image.addActionListener(e -> new AfficherSingleStade(this.res).show());
+       image.addActionListener(e ->   Dialog.show("Alerte", "Etes vous pret pour ce module ?", "oui","non"));
    }
     
     private void bindButtonSelection(Button b, Label arrow) {
