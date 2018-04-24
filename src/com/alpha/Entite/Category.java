@@ -12,6 +12,10 @@ package com.alpha.Entite;
 public class Category {
 	int id;
 	String label;
+	
+	public Category(){
+		
+	}
 
 	public Category(int id, String label) {
 		this.id = id;

@@ -17,6 +17,10 @@ public class Product {
 	Float price;
 	int remaining;
 	Category category;
+	
+	public Product(){
+		
+	}
 
 	public Product(int id, String label, String descrption, String pic1, String pic2, String pic3, Float price, int remaining, Category category) {
 		this.id = id;

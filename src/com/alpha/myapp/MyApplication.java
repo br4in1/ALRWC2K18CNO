@@ -16,50 +16,45 @@ import com.codename1.ui.Toolbar;
  */
 public class MyApplication {
 
-    private Form current;
-    private Resources theme;
+	private Form current;
+	private Resources theme;
 
-    public void init(Object context) {
-        theme = UIManager.initFirstTheme("/theme");
+	public void init(Object context) {
+		theme = UIManager.initFirstTheme("/theme");
 
-        // Enable Toolbar on all Forms by default
-         Toolbar.setGlobalToolbar(false);
-    }
+		// Enable Toolbar on all Forms by default
+		Toolbar.setGlobalToolbar(false);
+	}
 
-    public void start() {
-        if (current != null) {
-            current.show();
-            return;
-        }
-        SignInForm h = new SignInForm(theme);
-        h.show();
-/*/
-      ConnectionRequest con = new ConnectionRequest();
+	public void start() {
+		if (current != null) {
+			current.show();
+			return;
+		}
+		SignInForm h = new SignInForm(theme);
+		h.show();
+		/*ConnectionRequest con = new ConnectionRequest();
         con.setUrl("http://41.226.11.243:10004/tasks/");
-          NetworkManager.getInstance().addToQueue(con);
+        NetworkManager.getInstance().addToQueue(con);
         con.addResponseListener(new ActionListener<NetworkEvent>() {
-
             @Override
             public void actionPerformed(NetworkEvent evt) {
                 ServiceTask ser = new ServiceTask();
                 List<Task> list = ser.getListTask(new String(con.getResponseData()));
-                System.out.println(list);
-                
-                
+                System.out.println(list);  
             }
-        });
-        //*/
-    }
+        });*/
+	}
 
-    public void stop() {
-        current = getCurrentForm();
-        if (current instanceof Dialog) {
-            ((Dialog) current).dispose();
-            current = getCurrentForm();
-        }
-    }
+	public void stop() {
+		current = getCurrentForm();
+		if (current instanceof Dialog) {
+			((Dialog) current).dispose();
+			current = getCurrentForm();
+		}
+	}
 
-    public void destroy() {
-    }
+	public void destroy() {
+	}
 
 }
