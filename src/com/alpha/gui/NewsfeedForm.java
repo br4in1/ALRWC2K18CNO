@@ -57,8 +57,8 @@ public class NewsfeedForm extends BaseForm {
 
     public NewsfeedForm(Resources res) {
         super("Newsfeed", BoxLayout.y());
-        ServiceArticles sa = new ServiceArticles();
-        sa.getList2();
+       // ServiceArticles sa = new ServiceArticles();
+       // sa.getList2();
         this.res = res;
         Toolbar tb = new Toolbar(true);
         setToolbar(tb);

@@ -40,7 +40,7 @@ public class ServiceArticles {
                 float id = Float.parseFloat(obj.get("id").toString());
                 p.setId((int) id);
                 Map < String, Object > auteurMap = (Map < String, Object > ) obj.get("auteur");
-                User u = new User(auteurMap.get(""), json, Boolean.FALSE, json, json, last_login, json, json, json)
+                //User u = new User(auteurMap.get(""), json, Boolean.FALSE, json, json, last_login, json, json, json)
                 System.out.println();
                 //p.setArticleImage(obj.get("articleImage").toString());
                            // Map<String, Object> auteur = j.parseJSON(new CharArrayReader(obj.get));
