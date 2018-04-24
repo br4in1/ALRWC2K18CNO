@@ -6,6 +6,7 @@
 package com.alpha.gui;
 
 import com.codename1.components.FloatingHint;
+import com.codename1.components.ImageViewer;
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.components.SpanLabel;
 import com.codename1.components.WebBrowser;
@@ -19,6 +20,7 @@ import static com.codename1.ui.Component.LEFT;
 import static com.codename1.ui.Component.RIGHT;
 import com.codename1.ui.Container;
 import com.codename1.ui.Display;
+import com.codename1.ui.EncodedImage;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.Graphics;
@@ -29,6 +31,7 @@ import com.codename1.ui.Tabs;
 import com.codename1.ui.TextArea;
 import com.codename1.ui.TextField;
 import com.codename1.ui.Toolbar;
+import com.codename1.ui.URLImage;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
@@ -36,6 +39,7 @@ import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
+import java.io.IOException;
 
 /**
  *
@@ -45,7 +49,7 @@ public class articleForm extends BaseForm {
 
     Resources res;
 
-    public articleForm(Resources res, int id) {
+    public articleForm(Resources res, int id)  {
         super("Newsfeed", BoxLayout.y());
         this.res = res;
         Toolbar tb = new Toolbar(true);
@@ -114,6 +118,7 @@ public class articleForm extends BaseForm {
                 + "</body>\n"
                 + "</html>\n";
         browser.setPage(htmlcode, null);
+      
         add(browser);
         /* addButton(res.getImage("news-item-1.jpg"), "Morbi per tincidunt tellus sit of amet eros laoreet.", false, 26, 32, 0);
         addButton(res.getImage("news-item-2.jpg"), "Fusce ornare cursus masspretium tortor integer placera.", true, 15, 21, 0);
