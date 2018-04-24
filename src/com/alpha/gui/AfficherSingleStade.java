@@ -97,16 +97,20 @@ public class AfficherSingleStade  extends BaseForm {
         add(LayeredLayout.encloseIn(swipe, radioContainer));
         */
         ButtonGroup barGroup = new ButtonGroup();
-        RadioButton all = RadioButton.createToggle("Hotel", barGroup);
+        RadioButton all = RadioButton.createToggle("All", barGroup);
+		all.setName("all");
         all.setUIID("SelectBar");
         RadioButton featured = RadioButton.createToggle("Stade", barGroup);
+		featured.setName("Stade");
         featured.setUIID("SelectBar");
         RadioButton popular = RadioButton.createToggle("Divertissement", barGroup);
         popular.setUIID("SelectBar");
+		RadioButton hotel = RadioButton.createToggle("Hotel", barGroup);
+        hotel.setUIID("SelectBar");
         Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
         
         add(LayeredLayout.encloseIn(
-                GridLayout.encloseIn(3, all, featured, popular),
+                GridLayout.encloseIn(4, all, featured, popular,hotel),
                 FlowLayout.encloseBottom(arrow)
         ));
         
@@ -119,6 +123,7 @@ public class AfficherSingleStade  extends BaseForm {
         bindButtonSelection(all, arrow);
         bindButtonSelection(featured, arrow);
         bindButtonSelection(popular, arrow);
+    bindButtonSelection(hotel, arrow);
     
         
         // special case for rotation
@@ -126,10 +131,11 @@ public class AfficherSingleStade  extends BaseForm {
             updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
         });
         
-        addButton(res.getImage("news-item-1.jpg"), "Morbi per tincidunt tellus sit of amet eros laoreet.", false, 123, 32);
+        addButton(res.getImage("news-item-1.jpg"), "Morbi per tincidunt tellus sit of amet eros laoreet.", false, 23, 32);
         addButton(res.getImage("news-item-2.jpg"), "Fusce ornare cursus masspretium tortor integer placera.", true, 546, 21);
         addButton(res.getImage("news-item-3.jpg"), "Maecenas eu risus blanscelerisque massa non amcorpe.", false, 36, 15);
         addButton(res.getImage("news-item-4.jpg"), "Pellentesque non lorem diam. Proin at ex sollicia.", false, 11, 9);
+		
 		Button but = new Button("aaaa");
 		add(but);
 	}
@@ -218,6 +224,8 @@ public class AfficherSingleStade  extends BaseForm {
         b.addActionListener(e -> {
             if(b.isSelected()) {
                 updateArrowPosition(b, arrow);
+				
+		Dialog.show(b.getName(), "alo", "alo", "alo");
             }
         });
     }
