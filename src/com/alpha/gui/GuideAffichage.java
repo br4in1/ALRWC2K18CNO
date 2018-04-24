@@ -5,6 +5,10 @@
  */
 package com.alpha.gui;
 
+import com.alpha.Entite.Hotel;
+import com.alpha.Entite.Stadium;
+import com.alpha.Service.ServiceGuide;
+import com.codename1.components.ImageViewer;
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.components.SpanLabel;
 import com.codename1.components.ToastBar;
@@ -17,6 +21,7 @@ import static com.codename1.ui.Component.LEFT;
 import static com.codename1.ui.Component.RIGHT;
 import com.codename1.ui.Container;
 import com.codename1.ui.Display;
+import com.codename1.ui.EncodedImage;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Graphics;
 import com.codename1.ui.Image;
@@ -25,6 +30,7 @@ import com.codename1.ui.RadioButton;
 import com.codename1.ui.Tabs;
 import com.codename1.ui.TextArea;
 import com.codename1.ui.Toolbar;
+import com.codename1.ui.URLImage;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
@@ -32,6 +38,7 @@ import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
+import java.util.ArrayList;
 
 /**
  *
@@ -39,6 +46,7 @@ import com.codename1.ui.util.Resources;
  */
 public class GuideAffichage extends BaseForm {
 	Resources res;
+	Container CntStades = new Container(); ; 
 	 public GuideAffichage(Resources res) {
 		 super("Newsfeed", BoxLayout.y());
 		 this.res = res ; 
@@ -99,12 +107,16 @@ public class GuideAffichage extends BaseForm {
         
         ButtonGroup barGroup = new ButtonGroup();
         RadioButton all = RadioButton.createToggle("All", barGroup);
+		all.setName("all");
         all.setUIID("SelectBar");
-        RadioButton featured = RadioButton.createToggle("Featured", barGroup);
+        RadioButton featured = RadioButton.createToggle("Stadiums", barGroup);
+		featured.setName("Stadiums");
         featured.setUIID("SelectBar");
-        RadioButton popular = RadioButton.createToggle("Popular", barGroup);
+        RadioButton popular = RadioButton.createToggle("Hotels", barGroup);
+		popular.setName("Hotels");
         popular.setUIID("SelectBar");
-        RadioButton myFavorite = RadioButton.createToggle("My Favorites", barGroup);
+        RadioButton myFavorite = RadioButton.createToggle("Restos", barGroup);
+		myFavorite.setName("Restos");
         myFavorite.setUIID("SelectBar");
         Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
         
@@ -128,12 +140,20 @@ public class GuideAffichage extends BaseForm {
         addOrientationListener(e -> {
             updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
         });
+		
+		
         
-        addButton(res.getImage("news-item-1.jpg"), "Morbi per tincidunt tellus sit of amet eros laoreet.", false, 26, 32);
-        addButton(res.getImage("news-item-2.jpg"), "Fusce ornare cursus masspretium tortor integer placera.", true, 15, 21);
-        addButton(res.getImage("news-item-3.jpg"), "Maecenas eu risus blanscelerisque massa non amcorpe.", false, 36, 15);
-        addButton(res.getImage("news-item-4.jpg"), "Pellentesque non lorem diam. Proin at ex sollicia.", false, 11, 9);
-    }
+          ServiceGuide ser= new  ServiceGuide();
+		 ArrayList<Stadium> Tab =  ser.getListStade();
+	 
+		 for(int i = 0 ; i < Tab.size() ; i++)
+			  {
+		 addButton(res.getImage("news-item-1.jpg") , Tab.get(i).getName()+" "+Tab.get(i).getCapacity(), false, 11, 9);
+		
+		}
+		 add(CntStades);
+	 
+	 }
     
     private void updateArrowPosition(Button b, Label arrow) {
         arrow.getUnselectedStyle().setMargin(LEFT, b.getX() + b.getWidth() / 2 - arrow.getWidth() / 2);
@@ -210,8 +230,9 @@ public class GuideAffichage extends BaseForm {
                        ta,
                        BoxLayout.encloseX(likes, comments)
                ));
-       add(cnt);
+       //add(cnt);
 	   
+	   CntStades.add(cnt);
        image.addActionListener(e -> new AfficherSingleStade(this.res).show());
    }
     
@@ -219,6 +240,39 @@ public class GuideAffichage extends BaseForm {
         b.addActionListener(e -> {
             if(b.isSelected()) {
                 updateArrowPosition(b, arrow);
+				if(b.getName()=="all")
+				{
+					CntStades.removeAll();
+					
+				}
+				else if(b.getName()=="Stadiums")
+				{
+					   ServiceGuide ser= new  ServiceGuide();
+		 ArrayList<Stadium> Tab =  ser.getListStade();
+	 
+				  CntStades.removeAll();
+		 for(int i = 0 ; i < Tab.size() ; i++)
+			  {
+				  addButton(res.getImage("news-item-1.jpg") , Tab.get(i).getName()+" "+Tab.get(i).getCapacity(), false, 11, 9);
+				}
+		 
+				}
+				else if(b.getName()=="Hotels")
+				{
+					CntStades.removeAll();
+					 ServiceGuide ser= new  ServiceGuide();
+		 ArrayList<Hotel> Tab =  ser.getListHotel();
+	 
+				  CntStades.removeAll();
+		 for(int i = 0 ; i < Tab.size() ; i++)
+			  {
+				  addButton(res.getImage("news-item-1.jpg") , Tab.get(i).getNom()+" "+Tab.get(i).getCity(), false, Tab.get(i).getNbEtoiles(), 9);
+			 }
+				}
+				else {
+					CntStades.removeAll();
+				
+				}
             }
         });
     }

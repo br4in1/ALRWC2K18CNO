@@ -27,6 +27,9 @@ public class Stadium {
         this.getLong = getLong;
         this.photo = photo;
     }
+	   public Stadium() {
+       
+    }
 
     public int getId() {
         return id;
