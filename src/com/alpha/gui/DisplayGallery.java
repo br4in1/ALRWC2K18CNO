@@ -5,6 +5,7 @@
  */
 package com.alpha.gui;
 
+import com.alpha.Service.ServiceGallery;
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.components.SpanLabel;
 import com.codename1.components.ToastBar;
@@ -39,8 +40,13 @@ import com.codename1.ui.util.Resources;
  */
 public class DisplayGallery extends BaseForm {
 	Container cnt2 = new Container();
+
   public DisplayGallery(Resources res) {
-        super("", BoxLayout.y());
+	  super("", BoxLayout.y());
+	  ServiceGallery g1 = new ServiceGallery(); 
+	  g1.getList2();
+
+        
 		
 		 Toolbar tb = new Toolbar(true);
         setToolbar(tb);
