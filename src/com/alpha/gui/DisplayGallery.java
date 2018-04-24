@@ -39,27 +39,14 @@ import com.codename1.ui.util.Resources;
  */
 public class DisplayGallery extends BaseForm {
   public DisplayGallery(Resources res) {
-        super("Newsfeed", BoxLayout.y());
+        super("", BoxLayout.y());
 		 Toolbar tb = new Toolbar(true);
         setToolbar(tb);
         getTitleArea().setUIID("Container");
-        setTitle("Newsfeed");
         getContentPane().setScrollVisible(false);
         
         super.addSideMenu(res);
-        tb.addSearchCommand(e -> {});
-        
-        Tabs swipe = new Tabs();
-
-        Label spacer1 = new Label();
-        Label spacer2 = new Label();
-        addTab(swipe, res.getImage("news-item.jpg"), spacer1, "15 Likes  ", "85 Comments", "Integer ut placerat purued non dignissim neque. ");
-        addTab(swipe, res.getImage("dog.jpg"), spacer2, "100 Likes  ", "66 Comments", "Dogs are cute: story at 11");
                 
-        swipe.setUIID("Container");
-        swipe.getContentPane().setUIID("Container");
-        swipe.hideTabs();
-        
         ButtonGroup bg = new ButtonGroup();
         int size = Display.getInstance().convertToPixels(1);
         Image unselectedWalkthru = Image.createImage(size, size, 0);
@@ -73,6 +60,7 @@ public class DisplayGallery extends BaseForm {
         g.setColor(0xffffff);
         g.setAntiAliased(true);
         g.fillArc(0, 0, size, size, 0, 360);
+		/*
         RadioButton[] rbs = new RadioButton[swipe.getTabCount()];
         FlowLayout flow = new FlowLayout(CENTER);
         flow.setValign(BOTTOM);
@@ -82,31 +70,21 @@ public class DisplayGallery extends BaseForm {
             rbs[iter].setPressedIcon(selectedWalkthru);
             rbs[iter].setUIID("Label");
             radioContainer.add(rbs[iter]);
-        }
+        } 
                 
-        rbs[0].setSelected(true);
-        swipe.addSelectionListener((i, ii) -> {
-            if(!rbs[ii].isSelected()) {
-                rbs[ii].setSelected(true);
-            }
-        });
-        
-        Component.setSameSize(radioContainer, spacer1, spacer2);
-        add(LayeredLayout.encloseIn(swipe, radioContainer));
-        
+        rbs[0].setSelected(true); */
+    
         ButtonGroup barGroup = new ButtonGroup();
         RadioButton all = RadioButton.createToggle("All", barGroup);
         all.setUIID("SelectBar");
-        RadioButton featured = RadioButton.createToggle("Featured", barGroup);
-        featured.setUIID("SelectBar");
-        RadioButton popular = RadioButton.createToggle("Popular", barGroup);
-        popular.setUIID("SelectBar");
-        RadioButton myFavorite = RadioButton.createToggle("My Favorites", barGroup);
-        myFavorite.setUIID("SelectBar");
+        RadioButton Popular = RadioButton.createToggle("Popular", barGroup);
+        Popular.setUIID("SelectBar");
+        RadioButton New = RadioButton.createToggle("New", barGroup);
+        New.setUIID("SelectBar");
         Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
-        
+		
         add(LayeredLayout.encloseIn(
-                GridLayout.encloseIn(4, all, featured, popular, myFavorite),
+                GridLayout.encloseIn(3, all, Popular,New),
                 FlowLayout.encloseBottom(arrow)
         ));
         
@@ -117,19 +95,18 @@ public class DisplayGallery extends BaseForm {
             updateArrowPosition(all, arrow);
         });
         bindButtonSelection(all, arrow);
-        bindButtonSelection(featured, arrow);
-        bindButtonSelection(popular, arrow);
-        bindButtonSelection(myFavorite, arrow);
+        bindButtonSelection(Popular, arrow);
+        bindButtonSelection(New, arrow);
         
         // special case for rotation
         addOrientationListener(e -> {
             updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
         });
         
-        addButton(res.getImage("news-item-1.jpg"), "Morbi per tincidunt tellus sit of amet eros laoreet.", false, 26, 32);
-        addButton(res.getImage("news-item-2.jpg"), "Fusce ornare cursus masspretium tortor integer placera.", true, 15, 21);
-        addButton(res.getImage("news-item-3.jpg"), "Maecenas eu risus blanscelerisque massa non amcorpe.", false, 36, 15);
-        addButton(res.getImage("news-item-4.jpg"), "Pellentesque non lorem diam. Proin at ex sollicia.", false, 11, 9);
+        addButton(res.getImage("news-item-1.jpg"), "aa", false, 50,50);
+        addButton(res.getImage("news-item-2.jpg"), "aa", true, 15, 21);
+        addButton(res.getImage("news-item-3.jpg"), "aa", false, 36, 15);
+        addButton(res.getImage("news-item-4.jpg"), "aa", false, 11, 9);
     }
     
     private void updateArrowPosition(Button b, Label arrow) {
@@ -178,8 +155,8 @@ public class DisplayGallery extends BaseForm {
     }
     
    private void addButton(Image img, String title, boolean liked, int likeCount, int commentCount) {
-       int height = Display.getInstance().convertToPixels(11.5f);
-       int width = Display.getInstance().convertToPixels(14f);
+       int height = Display.getInstance().convertToPixels(22f);
+       int width = Display.getInstance().convertToPixels(22f);
        Button image = new Button(img.fill(width, height));
        image.setUIID("Label");
        Container cnt = BorderLayout.west(image);
