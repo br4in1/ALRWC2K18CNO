@@ -38,8 +38,10 @@ import com.codename1.ui.util.Resources;
  * @author dell
  */
 public class DisplayGallery extends BaseForm {
+	Container cnt2 = new Container();
   public DisplayGallery(Resources res) {
         super("", BoxLayout.y());
+		
 		 Toolbar tb = new Toolbar(true);
         setToolbar(tb);
         getTitleArea().setUIID("Container");
@@ -107,6 +109,7 @@ public class DisplayGallery extends BaseForm {
         addButton(res.getImage("news-item-2.jpg"), "aa", true, 15, 21);
         addButton(res.getImage("news-item-3.jpg"), "aa", false, 36, 15);
         addButton(res.getImage("news-item-4.jpg"), "aa", false, 11, 9);
+		 add(cnt2);
     }
     
     private void updateArrowPosition(Button b, Label arrow) {
@@ -136,7 +139,7 @@ public class DisplayGallery extends BaseForm {
         ScaleImageLabel image = new ScaleImageLabel(img);
         image.setUIID("Container");
         image.setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);
-        Label overlay = new Label(" ", "ImageOverlay");
+        Label overlay = new Label("", "ImageOverlay");
         
         Container page1 = 
             LayeredLayout.encloseIn(
@@ -184,13 +187,15 @@ public class DisplayGallery extends BaseForm {
                        ta,
                        BoxLayout.encloseX(likes, comments)
                ));
-       add(cnt);
+       //add(cnt);
+	   cnt2.add(cnt);
        image.addActionListener(e -> ToastBar.showMessage(title, FontImage.MATERIAL_INFO));
    }
     
     private void bindButtonSelection(Button b, Label arrow) {
         b.addActionListener(e -> {
             if(b.isSelected()) {
+				cnt2.removeAll();
                 updateArrowPosition(b, arrow);
             }
         });
