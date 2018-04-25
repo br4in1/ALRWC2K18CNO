@@ -5,6 +5,7 @@
  */
 package com.alpha.Service;
 
+import com.alpha.Entite.Divertissement;
 import com.alpha.Entite.Hotel;
 import com.alpha.Entite.Stadium;
 import com.codename1.io.CharArrayReader;
@@ -127,5 +128,10 @@ public class ServiceGuide {
 		NetworkManager.getInstance().addToQueueAndWait(con);
 		return listhotel2;
 	}
+	
+	
+
+
+
 	
 }
