@@ -48,7 +48,7 @@ public class ServiceTeam {
 				t.setCoach(obj.get("coach").toString());
 				t.setPresident(obj.get("president").toString());
 				t.setArea(obj.get("area").toString());
-				t.setGamesPlayed(Integer.parseInt(obj.get("gameplayed").toString()));
+//				t.setGamesPlayed(Integer.parseInt(obj.get("gameplayed").toString()));
 				/*t.setGoalScored(Integer.parseInt(obj.get("goalscored").toString()));
 				t.setGoalAgainst(Integer.parseInt(obj.get("goalagainst").toString()));
 				t.setParticipations(Integer.parseInt(obj.get("participations").toString()));

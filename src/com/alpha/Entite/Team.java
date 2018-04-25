@@ -39,6 +39,7 @@ public class Team {
     private String video ;//23
 	
 	public Team (){}
+	public Team(String name){this.name= name ;}
 
     public Team(int id, String name, String coach, String president, String area, int gamesPlayed, int goalScored, int goalAgainst, int participations, Date fifaDate, String wcGroup, int win, int loose, int draw, int points, int fifaRank, String flagPhoto, String logoPhoto, String squadPhoto, String descriptionPhoto, String description, String website, String video) {
         this.id = id;
