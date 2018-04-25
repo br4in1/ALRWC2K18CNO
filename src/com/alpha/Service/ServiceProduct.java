@@ -44,8 +44,7 @@ public class ServiceProduct {
 				p.setLabel(obj.get("label").toString());
 				p.setPrice(Float.parseFloat(obj.get("price").toString()));
 				p.setRemaining((int)Float.parseFloat(obj.get("remaining").toString()));
-				p.setPic1(obj.get("pic1").toString());
-				System.out.println(p.getPic1());
+				p.setPic1(""+obj.get("pic1"));
 				listProducts.add(p);
 			}
 

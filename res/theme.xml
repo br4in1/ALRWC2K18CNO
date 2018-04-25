@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <resource majorVersion="1" minorVersion="9" useXmlUI="false">
+    <image name="1.jpg"  />
     <image name="activation-background.jpg"  />
     <image name="confirmation-background.jpg"  />
     <image name="dog.jpg"  />

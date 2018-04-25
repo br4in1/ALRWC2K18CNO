@@ -113,10 +113,6 @@ public class TeamForm extends BaseForm {
 			System.out.println(e.getFlagPhoto());
 			addButton(e.getFlagPhoto(), e.getName(), false, 11, 9, 0);
 		}
-			     
-
-	
-
 	}
 
 	

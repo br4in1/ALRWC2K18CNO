@@ -31,6 +31,7 @@ import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.layouts.Layout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
+import java.io.IOException;
 
 /**
  * Base class for the forms with common functionality
@@ -86,6 +87,17 @@ public class BaseForm extends Form {
 		tb.addMaterialCommandToSideMenu("Teams", FontImage.MATERIAL_FLAG, e -> new TeamForm(res).show());
 		tb.addMaterialCommandToSideMenu("Guide", FontImage.MATERIAL_HOME, e -> new GuideAffichage(res).show());
 		tb.addMaterialCommandToSideMenu("Gallery", FontImage.MATERIAL_IMAGE, e -> new DisplayGallery(res).show());
-		tb.addMaterialCommandToSideMenu("Shop", FontImage.MATERIAL_SHOP, e -> new Shop(res).show());
+		tb.addMaterialCommandToSideMenu("Shop", FontImage.MATERIAL_SHOP, e -> {
+			try {
+				new Shop(res).show();
+			} catch (IOException ex) {
+			}
+		});
+		tb.addMaterialCommandToSideMenu("My Cart", FontImage.MATERIAL_CREDIT_CARD, e -> {
+			try {
+				new Cart(res).show();
+			} catch (IOException ex) {
+			}
+		});
 	}
 }

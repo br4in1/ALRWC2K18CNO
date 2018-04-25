@@ -51,24 +51,25 @@ import java.util.ArrayList;
  *
  * @author br4in
  */
-public class Shop extends BaseForm {
+public class Cart extends BaseForm {
 
 	Form f;
 	SpanLabel lb;
 	Database db;
+	public static ArrayList<Product> staticList = new ArrayList<Product>();
+	ArrayList<Product> MyCart;
 
-	public Shop(Resources res) throws IOException {
+	public Cart(Resources res) throws IOException {
 		super("Teams", BoxLayout.y());
-		db = Database.openOrCreate("Russia2018.db");
-		db.execute("create table if not exists cart (id NUMBER, quantity NUMBER);");
+		MyCart = staticList;
 		Toolbar tb = new Toolbar(true);
 		setToolbar(tb);
 		getTitleArea().setUIID("Container");
-		setTitle("Shop");
+		setTitle("Cart");
 		getContentPane().setScrollVisible(false);
 
 		ButtonGroup barGroup = new ButtonGroup();
-		RadioButton teamsButton = RadioButton.createToggle("  ", barGroup);
+		RadioButton teamsButton = RadioButton.createToggle("My Cart", barGroup);
 		teamsButton.setUIID("SelectBar");
 
 		add(LayeredLayout.encloseIn(
@@ -88,17 +89,16 @@ public class Shop extends BaseForm {
 		swipe.hideTabs();
 
 		add(LayeredLayout.encloseIn(swipe));
-		//bindButtonSelection(voidBut00, arrow);
-
-		//ArrayList<Team> listeq=new ArrayList<>();
 		f = new Form();
 		lb = new SpanLabel("");
 		f.add(lb);
-
-		ServiceProduct ser = new ServiceProduct();
-		ArrayList<Product> products = ser.getList2();
-		for (int i = 0; i < products.size(); i++) {
-			addButton(products.get(i),res.getImage("1.jpg"));
+		reloadData(res);
+	}
+	
+	public void reloadData(Resources res) throws IOException{
+		f.removeAll();
+		for (int i = 0; i < MyCart.size(); i++) {
+			addButton(MyCart.get(i),res.getImage("1.jpg"));
 		}
 	}
 
@@ -170,7 +170,6 @@ public class Shop extends BaseForm {
 					}
 					if (!found) {
 						db.execute("insert into cart values(" + p.getId() + ",1);");
-						Cart.staticList.add(p);
 					}
 					cur.close();
 				} catch (IOException ex) {
