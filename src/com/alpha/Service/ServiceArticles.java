@@ -42,7 +42,7 @@ public class ServiceArticles {
                 p.setId((int) id);
                 Map< String, Object> auteurMap = (Map< String, Object>) obj.get("auteur");
                 User u = new User(auteurMap.get("username").toString(), auteurMap.get("email").toString(), true, (auteurMap.get("salt") == null) ? "null" : "je sai pas", auteurMap.get("password").toString(), TimeZone.getTimeZone("Europe/Berlin"), auteurMap.get("roles").toString(), auteurMap.get("firstname").toString(), auteurMap.get("lastname").toString());
-                p.setAuteur(u);
+
 
                 p.setArticleImage(obj.get("articleimage").toString());
                 p.setTitre(obj.get("titre").toString());

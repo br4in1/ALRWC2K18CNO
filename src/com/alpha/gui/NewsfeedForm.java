@@ -62,6 +62,7 @@ public class NewsfeedForm extends BaseForm {
         //ServiceArticles sa = new ServiceArticles();
         //ArrayList<Article> articles = sa.getList2();
 
+ 
         this.res = res;
         Toolbar tb = new Toolbar(true);
         setToolbar(tb);
