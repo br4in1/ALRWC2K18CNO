@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  *
@@ -39,16 +40,18 @@ public class ServiceArticles {
                 Article p = new Article();
                 float id = Float.parseFloat(obj.get("id").toString());
                 p.setId((int) id);
-                Map < String, Object > auteurMap = (Map < String, Object > ) obj.get("auteur");
-                User u = new User(auteurMap.get(""), json, Boolean.FALSE, json, json, last_login, json, json, json)
-                System.out.println();
-                //p.setArticleImage(obj.get("articleImage").toString());
-                           // Map<String, Object> auteur = j.parseJSON(new CharArrayReader(obj.get));
+                Map< String, Object> auteurMap = (Map< String, Object>) obj.get("auteur");
+                User u = new User(auteurMap.get("username").toString(), auteurMap.get("email").toString(), true, (auteurMap.get("salt") == null) ? "null" : "je sai pas", auteurMap.get("password").toString(), TimeZone.getTimeZone("Europe/Berlin"), auteurMap.get("roles").toString(), auteurMap.get("firstname").toString(), auteurMap.get("lastname").toString());
+                p.setAuteur(u);
 
-                          //  List<Map<String, Object>> auteur = (List<Map<String, Object>>) obj.get("auteur");
-                           // System.out.println(auteur);
-                //Map<String,Object> auteurs = j.parseJSON(new CharArrayReader(obj.get("auteur").toString()));
-                
+                p.setArticleImage(obj.get("articleimage").toString());
+                p.setTitre(obj.get("titre").toString());
+                p.setId(1);
+                //  p.setId(Integer.parseInt(obj.get("id").toString().trim()));
+                //p.setNum_comments((Integer.parseInt(obj.get("numComments").toString()) == 0) ? 0 : Integer.parseInt(obj.get("numComments").toString()));
+                p.setNum_comments(2);
+
+                //trim()
                 listArticles.add(p);
             }
 
@@ -56,20 +59,20 @@ public class ServiceArticles {
         }
         return listArticles;
     }
-    	public ArrayList<Article> listArticles2 = new ArrayList<Article>();
+    public ArrayList<Article> listArticles2 = new ArrayList<Article>();
 
     public ArrayList<Article> getList2() {
-		ConnectionRequest con = new ConnectionRequest();
-		con.setUrl("http://localhost/russie2k18/web/app_dev.php/articles/mobile/all");
+        ConnectionRequest con = new ConnectionRequest();
+        con.setUrl("http://localhost/russie2k18/web/app_dev.php/articles/mobile/all");
 
-		con.addResponseListener(new ActionListener<NetworkEvent>() {
-			@Override
-			public void actionPerformed(NetworkEvent evt) {
-				ServiceArticles ser = new ServiceArticles();
-				listArticles2 = ser.getListProducts(new String(con.getResponseData()));
-			}
-		});
-		NetworkManager.getInstance().addToQueueAndWait(con);
-		return listArticles2;
-	}
+        con.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                ServiceArticles ser = new ServiceArticles();
+                listArticles2 = ser.getListProducts(new String(con.getResponseData()));
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+        return listArticles2;
+    }
 }

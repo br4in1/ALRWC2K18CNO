@@ -20,16 +20,14 @@ public class Article {
     private String typeEntity;
     private Date datePublication;
     private Date derniereModification;
-    private int auteur;
+    private User auteur;
     private String articleImage;
     private String permalink;
     private String is_commentable;
-    private String num_comments;
+    private int num_comments;
     private String last_comment_at;
 
-    
-
-    public Article(int id, String titre, String contenu, int idEntity, String typeEntity, Date datePublication, Date derniereModification, int auteur,String articleImage) {
+    public Article(int id, String titre, String contenu, int idEntity, String typeEntity, Date datePublication, Date derniereModification, User auteur, String articleImage) {
         this.id = id;
         this.titre = titre;
         this.contenu = contenu;
@@ -41,7 +39,7 @@ public class Article {
         this.articleImage = articleImage;
     }
 
-    public Article(int id, String titre, String contenu, int idEntity, String typeEntity, Date datePublication, Date derniereModification, int auteur, String articleImage, String permalink, String is_commentable, String num_comments, String last_comment_at) {
+    public Article(int id, String titre, String contenu, int idEntity, String typeEntity, Date datePublication, Date derniereModification, User auteur, String articleImage, String permalink, String is_commentable, int num_comments, String last_comment_at) {
         this.id = id;
         this.titre = titre;
         this.contenu = contenu;
@@ -56,7 +54,7 @@ public class Article {
         this.num_comments = num_comments;
         this.last_comment_at = last_comment_at;
     }
-    
+
     public Article() {
     }
 
@@ -128,11 +126,11 @@ public class Article {
         this.derniereModification = derniereModification;
     }
 
-    public int getAuteur() {
+    public User getAuteur() {
         return auteur;
     }
 
-    public void setAuteur(int auteur) {
+    public void setAuteur(User auteur) {
         this.auteur = auteur;
     }
 
@@ -143,7 +141,7 @@ public class Article {
     public void setArticleImage(String articleImage) {
         this.articleImage = articleImage;
     }
-    
+
     public String getPermalink() {
         return permalink;
     }
@@ -160,11 +158,11 @@ public class Article {
         this.is_commentable = is_commentable;
     }
 
-    public String getNum_comments() {
+    public int getNum_comments() {
         return num_comments;
     }
 
-    public void setNum_comments(String num_comments) {
+    public void setNum_comments(int num_comments) {
         this.num_comments = num_comments;
     }
 
@@ -181,6 +179,4 @@ public class Article {
         return "Article{" + "id=" + id + ", titre=" + titre + ", contenu=" + contenu + ", idEntity=" + idEntity + ", typeEntity=" + typeEntity + ", datePublication=" + datePublication + ", derniereModification=" + derniereModification + ", auteur=" + auteur + ", articleImage=" + articleImage + ", permalink=" + permalink + ", is_commentable=" + is_commentable + ", num_comments=" + num_comments + ", last_comment_at=" + last_comment_at + '}';
     }
 
-   
- 
 }

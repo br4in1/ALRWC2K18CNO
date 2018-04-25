@@ -18,6 +18,7 @@
  */
 package com.alpha.gui;
 
+import com.alpha.Entite.Article;
 import com.alpha.Service.ServiceArticles;
 import com.codename1.components.ImageViewer;
 import com.codename1.components.ScaleImageLabel;
@@ -45,6 +46,7 @@ import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
+import java.util.ArrayList;
 
 /**
  * The newsfeed form
@@ -57,8 +59,9 @@ public class NewsfeedForm extends BaseForm {
 
     public NewsfeedForm(Resources res) {
         super("Newsfeed", BoxLayout.y());
-        ServiceArticles sa = new ServiceArticles();
-        sa.getList2();
+        //ServiceArticles sa = new ServiceArticles();
+        //ArrayList<Article> articles = sa.getList2();
+
         this.res = res;
         Toolbar tb = new Toolbar(true);
         setToolbar(tb);
@@ -146,11 +149,11 @@ public class NewsfeedForm extends BaseForm {
         addOrientationListener(e -> {
             updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
         });
+        /*for (int i = 0; i < articles.size(); i++) {
+            addButton(articles.get(i).getArticleImage(), articles.get(i).getTitre(), false, 0, articles.get(i).getNum_comments(), articles.get(i).getId());
 
-        addButton("http://res.cloudinary.com/pidev/image/upload/16da4deb2949a191cc26cf11f10d72c1", "Morbi per tincidunt tellus sit of amet eros laoreet.", false, 26, 32, 0);
-        addButton("http://res.cloudinary.com/pidev/image/upload/16da4deb2949a191cc26cf11f10d72c1", "Fusce ornare cursus masspretium tortor integer placera.", true, 15, 21, 0);
-        addButton("http://res.cloudinary.com/pidev/image/upload/16da4deb2949a191cc26cf11f10d72c1", "Maecenas eu risus blanscelerisque massa non amcorpe.", false, 36, 15, 0);
-        addButton("http://res.cloudinary.com/pidev/image/upload/16da4deb2949a191cc26cf11f10d72c1", "Pellentesque non lorem diam. Proin at ex sollicia.", false, 11, 9, 0);
+        }*/
+
     }
 
     private void updateArrowPosition(Button b, Label arrow) {
@@ -242,10 +245,9 @@ public class NewsfeedForm extends BaseForm {
         });
     }
 
- 
-private void bindButtonSelection(Button b, Label arrow) {
+    private void bindButtonSelection(Button b, Label arrow) {
         b.addActionListener(e -> {
-            if(b.isSelected()) {
+            if (b.isSelected()) {
                 updateArrowPosition(b, arrow);
             }
         });

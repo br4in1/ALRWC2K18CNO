@@ -49,7 +49,7 @@ public class articleForm extends BaseForm {
 
     Resources res;
 
-    public articleForm(Resources res, int id)  {
+    public articleForm(Resources res, int id) {
         super("Newsfeed", BoxLayout.y());
         this.res = res;
         Toolbar tb = new Toolbar(true);
@@ -118,12 +118,8 @@ public class articleForm extends BaseForm {
                 + "</body>\n"
                 + "</html>\n";
         browser.setPage(htmlcode, null);
-      
         add(browser);
-        /* addButton(res.getImage("news-item-1.jpg"), "Morbi per tincidunt tellus sit of amet eros laoreet.", false, 26, 32, 0);
-        addButton(res.getImage("news-item-2.jpg"), "Fusce ornare cursus masspretium tortor integer placera.", true, 15, 21, 0);
-        addButton(res.getImage("news-item-3.jpg"), "Maecenas eu risus blanscelerisque massa non amcorpe.", false, 36, 15, 0);
-        addButton(res.getImage("news-item-4.jpg"), "Pellentesque non lorem diam. Proin at ex sollicia.", false, 11, 9, 0);*/
+
     }
 
     private void addTab(Tabs swipe, Image img, Label spacer, String likesStr, String commentsStr, String text) {
