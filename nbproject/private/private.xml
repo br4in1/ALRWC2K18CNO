@@ -3,6 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/Applications/MAMP/htdocs/projet/ALRWC2K18CNOMobile/src/com/alpha/Service/ServiceTask.java</file>
+            <file>file:/Applications/MAMP/htdocs/projet/ALRWC2K18CNOMobile/src/com/alpha/Entite/Team.java</file>
+            <file>file:/Applications/MAMP/htdocs/projet/ALRWC2K18CNOMobile/src/com/alpha/gui/TeamForm.java</file>
+            <file>file:/Applications/MAMP/htdocs/projet/ALRWC2K18CNOMobile/src/com/alpha/Service/ServiceProduct.java</file>
+            <file>file:/Applications/MAMP/htdocs/projet/ALRWC2K18CNOMobile/src/com/alpha/gui/DisplayGallery.java</file>
+            <file>file:/Applications/MAMP/htdocs/projet/ALRWC2K18CNOMobile/src/com/alpha/Service/ServiceArticles.java</file>
+            <file>file:/Applications/MAMP/htdocs/projet/ALRWC2K18CNOMobile/src/com/alpha/Service/ServiceGuide.java</file>
+            <file>file:/Applications/MAMP/htdocs/projet/ALRWC2K18CNOMobile/src/com/alpha/Service/ServiceTeam.java</file>
+            <file>file:/Applications/MAMP/htdocs/projet/ALRWC2K18CNOMobile/src/com/alpha/Service/ServiceGallery.java</file>
+            <file>file:/Applications/MAMP/htdocs/projet/ALRWC2K18CNOMobile/src/com/alpha/gui/NewsfeedForm.java</file>
+            <file>file:/Applications/MAMP/htdocs/projet/ALRWC2K18CNOMobile/src/com/alpha/Service/ServicePlayer.java</file>
+        </group>
     </open-files>
 </project-private>

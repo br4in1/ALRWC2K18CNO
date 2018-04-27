@@ -42,8 +42,10 @@ import java.util.ArrayList;
  */
 public class TeamForm extends BaseForm {
 
+	public static Team team = new Team();
 	Form f;
-    SpanLabel lb;
+	SpanLabel lb;
+
 	public TeamForm(Resources res) {
 		super("Teams", BoxLayout.y());
 		Toolbar tb = new Toolbar(true);
@@ -71,7 +73,7 @@ public class TeamForm extends BaseForm {
 		ButtonGroup barGroup = new ButtonGroup();
 		RadioButton teamsButton = RadioButton.createToggle("Teams", barGroup);
 		teamsButton.setUIID("SelectBar");
-		
+
 		RadioButton voidBut00 = RadioButton.createToggle("", barGroup);
 		voidBut00.setUIID("SelectBar");
 		RadioButton voidBut01 = RadioButton.createToggle("", barGroup);
@@ -93,36 +95,28 @@ public class TeamForm extends BaseForm {
 			updateArrowPosition(teamsButton, arrow);
 		});
 		bindButtonSelection(teamsButton, arrow);
-		//bindButtonSelection(voidBut00, arrow);
 
 		// special case for rotation
 		addOrientationListener(e -> {
 			updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
-		});
-		//Team t1 = new Team("test") ;
-		//ArrayList<Team> listeq=new ArrayList<>();
-		
-		f = new Form();
-        lb = new SpanLabel("");
-        f.add(lb);
-		
-		ServiceTeam serviceTeam = new ServiceTeam() ; 
 
-		for(Team  e:serviceTeam.getList2())
-		{
-			System.out.println(e.getFlagPhoto());
-			addButton(e.getFlagPhoto(), e.getName(), false, 11, 9, 0);
+		});
+
+		f = new Form();
+		lb = new SpanLabel("");
+		f.add(lb);
+
+		ServiceTeam serviceTeam = new ServiceTeam();
+
+		for (Team e : serviceTeam.getList2()) {
+			//System.out.println(e.getFlagPhoto());
+
+			//addButton(e.getFlagPhoto(), e.getName(), false, e.getFifaRank(), e.getPoints(), 0);
+			addButton(e,res);
 		}
 	}
 
-	
-	public Form getF() {
-        return f;
-    }
 
-    public void setF(Form f) {
-        this.f = f;
-    }
 
 	private void updateArrowPosition(Button b, Label arrow) {
 		arrow.getUnselectedStyle().setMargin(LEFT, b.getX() + b.getWidth() / 2 - arrow.getWidth() / 2);
@@ -163,48 +157,58 @@ public class TeamForm extends BaseForm {
 			}
 		});
 	}
-	
-	    private void addButton(String imageUrl, String title, boolean liked, int likeCount, int commentCount, int id) {
 
-        ImageViewer im = new ImageViewer();
+	//private void addButton(String imageUrl, String title, boolean liked, int fifarank, int points, int id) 
+	private void addButton(Team t,Resources res) 		
+	{
 
-        Image placeholder = Image.createImage(45, 45, 0xbfc9d2);
-        EncodedImage encImage = EncodedImage.createFromImage(placeholder, false);
+		ImageViewer im = new ImageViewer();
 
-        im.setImage(URLImage.createToStorage(encImage, "Medium" + imageUrl, imageUrl, URLImage.RESIZE_SCALE));
+		Image placeholder = Image.createImage(45, 45, 0xbfc9d2);
+		EncodedImage encImage = EncodedImage.createFromImage(placeholder, false);
 
-        int height = Display.getInstance().convertToPixels(11.5f);
-        int width = Display.getInstance().convertToPixels(14f);
-        Button image = new Button(im.getImage().fill(width, height));
-        image.setUIID("Label");
-        Container cnt = BorderLayout.west(image);
-        cnt.setLeadComponent(image);
+		im.setImage(URLImage.createToStorage(encImage, "Medium" + t.getFlagPhoto(), t.getFlagPhoto(), URLImage.RESIZE_SCALE));
 
-        TextArea ta = new TextArea(title);
-        ta.setUIID("NewsTopLine");
-        ta.setEditable(false);
+		int height = Display.getInstance().convertToPixels(11.5f);
+		int width = Display.getInstance().convertToPixels(14f);
+		Button image = new Button(im.getImage().fill(width, height));
+		image.setUIID("Label");
+		Container cnt = BorderLayout.west(image);
+		cnt.setLeadComponent(image);
 
-        Label likes = new Label(likeCount + " Likes  ", "NewsBottomLine");
-        likes.setTextPosition(RIGHT);
-        if (!liked) {
-            FontImage.setMaterialIcon(likes, FontImage.MATERIAL_FAVORITE);
-        } else {
-            Style s = new Style(likes.getUnselectedStyle());
-            s.setFgColor(0xff2d55);
-            FontImage heartImage = FontImage.createMaterial(FontImage.MATERIAL_FAVORITE, s);
-            likes.setIcon(heartImage);
-        }
-        Label comments = new Label(commentCount + " Comments", "NewsBottomLine");
-        FontImage.setMaterialIcon(likes, FontImage.MATERIAL_CHAT);
+		TextArea ta = new TextArea(t.getName());
+		ta.setUIID("NewsTopLine");
+		ta.setEditable(false);
 
-        cnt.add(BorderLayout.CENTER,
-                BoxLayout.encloseY(
-                        ta,
-                        BoxLayout.encloseX(likes, comments)
-                ));
-        add(cnt);
-		image.addActionListener(e -> ToastBar.showMessage(title, FontImage.MATERIAL_INFO));
+		Label likes = new Label(" rank : " + t.getFifaRank());
+		likes.setTextPosition(RIGHT);
+		//if (!liked) {
+			//FontImage.setMaterialIcon(likes, FontImage.MATERIAL_FAVORITE);
+		//} else {
+			Style s = new Style(likes.getUnselectedStyle());
+			s.setFgColor(0xff2d55);
+			FontImage heartImage = FontImage.createMaterial(FontImage.MATERIAL_FAVORITE, s);
+			likes.setIcon(heartImage);
+		//}
+		Label comments = new Label(" Points : " + t.getPoints());
+		FontImage.setMaterialIcon(likes, FontImage.MATERIAL_CHAT);
 
-    }
+		cnt.add(BorderLayout.CENTER,
+				BoxLayout.encloseY(
+						ta,
+						BoxLayout.encloseX(likes, comments)
+				));
+		add(cnt);
+		image.addActionListener(
+				e -> {
+					team= t ;
+					System.out.println(team.getName());
+					TeamStatForm h = new TeamStatForm(res);
+					h.show();
+					ToastBar.showMessage(team.getName(), FontImage.MATERIAL_INFO);
+				}
+		);
+
+	}
 
 }

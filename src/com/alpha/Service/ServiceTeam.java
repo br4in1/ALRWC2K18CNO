@@ -55,11 +55,11 @@ public class ServiceTeam {
 				t.setFifaDate(Date.valueOf(obj.get("fifadate").toString()));*/
 				t.setWcGroup(obj.get("wcgroup").toString());
 				
-/*				t.setWin(Integer.parseInt(obj.get("win").toString()));
-				t.setLoose(Integer.parseInt(obj.get("loose").toString()));
-				t.setDraw(Integer.parseInt(obj.get("draw").toString()));
-				t.setPoints(Integer.parseInt(obj.get("points").toString()));
-				t.setFifaRank(Integer.parseInt(obj.get("fifarank").toString()));*/
+				t.setWin((int)Float.parseFloat(obj.get("win").toString()));
+				t.setLoose((int)Float.parseFloat(obj.get("loose").toString()));
+				t.setDraw((int)Float.parseFloat(obj.get("draw").toString()));
+				t.setPoints((int)Float.parseFloat(obj.get("points").toString()));
+				t.setFifaRank((int)Float.parseFloat(obj.get("fifarank").toString()));
 				t.setFlagPhoto(obj.get("flagphoto").toString());
 				t.setLogoPhoto(obj.get("logophoto").toString());
 				t.setSquadPhoto(obj.get("squadphoto").toString());
