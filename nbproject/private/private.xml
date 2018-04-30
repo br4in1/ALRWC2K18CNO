@@ -4,17 +4,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Applications/MAMP/htdocs/projet/ALRWC2K18CNOMobile/src/com/alpha/Service/ServiceTask.java</file>
-            <file>file:/Applications/MAMP/htdocs/projet/ALRWC2K18CNOMobile/src/com/alpha/Entite/Team.java</file>
-            <file>file:/Applications/MAMP/htdocs/projet/ALRWC2K18CNOMobile/src/com/alpha/gui/TeamForm.java</file>
-            <file>file:/Applications/MAMP/htdocs/projet/ALRWC2K18CNOMobile/src/com/alpha/Service/ServiceProduct.java</file>
-            <file>file:/Applications/MAMP/htdocs/projet/ALRWC2K18CNOMobile/src/com/alpha/gui/DisplayGallery.java</file>
-            <file>file:/Applications/MAMP/htdocs/projet/ALRWC2K18CNOMobile/src/com/alpha/Service/ServiceArticles.java</file>
-            <file>file:/Applications/MAMP/htdocs/projet/ALRWC2K18CNOMobile/src/com/alpha/Service/ServiceGuide.java</file>
-            <file>file:/Applications/MAMP/htdocs/projet/ALRWC2K18CNOMobile/src/com/alpha/Service/ServiceTeam.java</file>
-            <file>file:/Applications/MAMP/htdocs/projet/ALRWC2K18CNOMobile/src/com/alpha/Service/ServiceGallery.java</file>
-            <file>file:/Applications/MAMP/htdocs/projet/ALRWC2K18CNOMobile/src/com/alpha/gui/NewsfeedForm.java</file>
-            <file>file:/Applications/MAMP/htdocs/projet/ALRWC2K18CNOMobile/src/com/alpha/Service/ServicePlayer.java</file>
+            <file>file:/Users/br4in/Documents/GitHub/ALRWC2K18CNO/src/com/alpha/gui/DisplayGallery.java</file>
+            <file>file:/Users/br4in/Documents/GitHub/ALRWC2K18CNO/src/com/alpha/gui/Shop.java</file>
+            <file>file:/Users/br4in/Documents/GitHub/ALRWC2K18CNO/src/com/alpha/gui/Cart.java</file>
+            <file>file:/Users/br4in/Documents/GitHub/ALRWC2K18CNO/lib/impl/stubs/com/codename1/braintree/Purchase.java</file>
+            <file>file:/Users/br4in/Documents/GitHub/ALRWC2K18CNO/src/com/alpha/gui/TeamForm.java</file>
         </group>
     </open-files>
 </project-private>

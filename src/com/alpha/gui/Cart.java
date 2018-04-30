@@ -58,10 +58,16 @@ public class Cart extends BaseForm {
 	Database db;
 	public static ArrayList<Product> staticList = new ArrayList<Product>();
 	ArrayList<Product> MyCart;
+	public static Float TotalAmount = 0f;
 
 	public Cart(Resources res) throws IOException {
 		super("Teams", BoxLayout.y());
 		MyCart = staticList;
+		reloadData(res);
+	}
+	
+	public void reloadData(Resources res) throws IOException{
+		this.removeAll();
 		Toolbar tb = new Toolbar(true);
 		setToolbar(tb);
 		getTitleArea().setUIID("Container");
@@ -69,7 +75,7 @@ public class Cart extends BaseForm {
 		getContentPane().setScrollVisible(false);
 
 		ButtonGroup barGroup = new ButtonGroup();
-		RadioButton teamsButton = RadioButton.createToggle("My Cart", barGroup);
+		RadioButton teamsButton = RadioButton.createToggle("", barGroup);
 		teamsButton.setUIID("SelectBar");
 
 		add(LayeredLayout.encloseIn(
@@ -92,14 +98,22 @@ public class Cart extends BaseForm {
 		f = new Form();
 		lb = new SpanLabel("");
 		f.add(lb);
-		reloadData(res);
-	}
-	
-	public void reloadData(Resources res) throws IOException{
-		f.removeAll();
 		for (int i = 0; i < MyCart.size(); i++) {
-			addButton(MyCart.get(i),res.getImage("1.jpg"));
+			addButton(MyCart.get(i),res.getImage("1.jpg"),res);
 		}
+		
+		Container total = new Container(new BorderLayout());
+		Button pay = new Button("Check Out");
+		pay.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				//handle payment
+			}
+		});
+		total.add(BorderLayout.WEST,new Label(TotalAmount.toString()+ " €"));
+		total.add(BorderLayout.EAST,pay);
+		total.getAllStyles().setPadding(20, 20, 20, 20);
+		add(total);
 	}
 
 	public Form getF() {
@@ -150,7 +164,7 @@ public class Cart extends BaseForm {
 		});
 	}
 
-	private void addButton(Product p,Image image) throws IOException {
+	private void addButton(Product p,Image image,Resources res) throws IOException {
 		ImageViewer im = new ImageViewer();
 		Image placeholder = Image.createImage(45, 45, 0xbfc9d2);
         EncodedImage encImage = EncodedImage.createFromImage(placeholder, false);
@@ -159,24 +173,6 @@ public class Cart extends BaseForm {
 		int width = Display.getInstance().convertToPixels(20f);
 		Button image1 = new Button(im.getImage().fill(width, height));
 		image1.setUIID("Label");
-		image1.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent evt) {
-				try {
-					Cursor cur = db.executeQuery("select * from cart where id = " + p.getId());
-					boolean found = false;
-					while (cur.next() && !found) {
-						found = true;
-					}
-					if (!found) {
-						db.execute("insert into cart values(" + p.getId() + ",1);");
-					}
-					cur.close();
-				} catch (IOException ex) {
-
-				}
-			}
-		});
 		Container cnt = BorderLayout.west(image1);
 		Container details = new Container(BoxLayout.y());
 		Label _label = new Label(p.getLabel());
@@ -185,9 +181,23 @@ public class Cart extends BaseForm {
 		Label _price = new Label(String.valueOf(p.getPrice()) + " €");
 		existingFont = _price.getAllStyles().getFont();
 		_price.getAllStyles().setFont(Font.createSystemFont(existingFont.getFace(), Font.STYLE_BOLD, existingFont.getSize()));
+		Button delete = new Button(" X ");
+		delete.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				System.out.println("reloading data");
+				staticList.remove(p);
+				MyCart = staticList;
+				try {
+					reloadData(res);
+				} catch (IOException ex) {
+					
+				}
+			}
+		});
 		details.add(_label);
 		details.add(_price);
-		cnt.setLeadComponent(image1);
+		details.add(delete);
 		cnt.add(BorderLayout.CENTER,
 				BoxLayout.encloseY(
 						details

@@ -9,6 +9,7 @@ import com.alpha.Entite.Product;
 import com.alpha.Entite.Team;
 import com.alpha.Service.ServiceProduct;
 import com.alpha.Service.ServiceTeam;
+import com.codename1.charts.util.ColorUtil;
 import com.codename1.components.ImageViewer;
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.components.SpanLabel;
@@ -98,7 +99,7 @@ public class Shop extends BaseForm {
 		ServiceProduct ser = new ServiceProduct();
 		ArrayList<Product> products = ser.getList2();
 		for (int i = 0; i < products.size(); i++) {
-			addButton(products.get(i),res.getImage("1.jpg"));
+			addButton(products.get(i), res.getImage("1.jpg"));
 		}
 	}
 
@@ -150,34 +151,15 @@ public class Shop extends BaseForm {
 		});
 	}
 
-	private void addButton(Product p,Image image) throws IOException {
+	private void addButton(Product p, Image image) throws IOException {
 		ImageViewer im = new ImageViewer();
 		Image placeholder = Image.createImage(45, 45, 0xbfc9d2);
-        EncodedImage encImage = EncodedImage.createFromImage(placeholder, false);
-        im.setImage(URLImage.createToStorage(encImage, "Product" + p.getPic1(), p.getPic1(), URLImage.RESIZE_SCALE));
+		EncodedImage encImage = EncodedImage.createFromImage(placeholder, false);
+		im.setImage(URLImage.createToStorage(encImage, "Product" + p.getPic1(), p.getPic1(), URLImage.RESIZE_SCALE));
 		int height = Display.getInstance().convertToPixels(20f);
 		int width = Display.getInstance().convertToPixels(20f);
 		Button image1 = new Button(im.getImage().fill(width, height));
 		image1.setUIID("Label");
-		image1.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent evt) {
-				try {
-					Cursor cur = db.executeQuery("select * from cart where id = " + p.getId());
-					boolean found = false;
-					while (cur.next() && !found) {
-						found = true;
-					}
-					if (!found) {
-						db.execute("insert into cart values(" + p.getId() + ",1);");
-						Cart.staticList.add(p);
-					}
-					cur.close();
-				} catch (IOException ex) {
-
-				}
-			}
-		});
 		Container cnt = BorderLayout.west(image1);
 		Container details = new Container(BoxLayout.y());
 		Label _label = new Label(p.getLabel());
@@ -188,7 +170,23 @@ public class Shop extends BaseForm {
 		_price.getAllStyles().setFont(Font.createSystemFont(existingFont.getFace(), Font.STYLE_BOLD, existingFont.getSize()));
 		details.add(_label);
 		details.add(_price);
-		cnt.setLeadComponent(image1);
+		Button addToCart = new Button("+ Add To Cart");
+		if (Cart.staticList.contains(p)) {
+			addToCart.getAllStyles().setFgColor(0xffb3c1);
+		} else {
+			addToCart.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent evt) {
+					if (!Cart.staticList.contains(p)) {
+						Cart.staticList.add(p);
+						Cart.TotalAmount += p.getPrice();
+						addToCart.getListeners().clear();
+						addToCart.getAllStyles().setFgColor(0xffb3c1);
+					}
+				}
+			});
+		}
+		details.add(addToCart);
 		cnt.add(BorderLayout.CENTER,
 				BoxLayout.encloseY(
 						details
