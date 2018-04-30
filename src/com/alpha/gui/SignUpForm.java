@@ -20,6 +20,7 @@
 package com.alpha.gui;
 
 import com.codename1.components.FloatingHint;
+import com.codename1.components.SpanLabel;
 import com.codename1.ui.Button;
 import com.codename1.ui.Container;
 import com.codename1.ui.Display;
@@ -41,13 +42,14 @@ public class SignUpForm extends BaseForm {
 
     public SignUpForm(Resources res) {
         super(new BorderLayout());
-        Toolbar tb = new Toolbar(true);
+        Toolbar tb = new Toolbar(false);
         setToolbar(tb);
         tb.setUIID("Container");
         getTitleArea().setUIID("Container");
         Form previous = Display.getInstance().getCurrent();
         tb.setBackCommand("", e -> previous.showBack());
-        setUIID("SignUp");
+        setUIID("SignIn");
+		//getAllStyles().setBgImage(res.getImage("signup-background.jpg"));
                 
         TextField username = new TextField("", "Username", 20, TextField.ANY);
         TextField email = new TextField("", "E-Mail", 20, TextField.EMAILADDR);

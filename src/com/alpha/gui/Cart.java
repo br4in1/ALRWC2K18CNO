@@ -6,6 +6,7 @@
 package com.alpha.gui;
 
 import com.alpha.Entite.Product;
+import com.codename1.braintree.Purchase;
 import com.alpha.Entite.Team;
 import com.alpha.Service.ServiceProduct;
 import com.alpha.Service.ServiceTeam;
@@ -41,6 +42,7 @@ import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.layouts.LayeredLayout;
+import com.codename1.ui.plaf.Border;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.ImageIO;
 import com.codename1.ui.util.Resources;

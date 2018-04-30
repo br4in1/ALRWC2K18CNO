@@ -20,6 +20,15 @@ public class SimpleUser extends User{
 	private int fidaelitypoints;
 	private String profilepicture;
 	public static SimpleUser current_user = null;
+	
+	public SimpleUser(){
+		super();
+	}
+
+	@Override
+	public String toString() {
+		return "SimpleUser{" + "birthdate=" + birthdate + ", registrationdate=" + registrationdate + ", nationality=" + nationality + ", loggedin=" + loggedin + ", fidaelitypoints=" + fidaelitypoints + ", profilepicture=" + profilepicture + '}';
+	}
 
 	public SimpleUser(Date birthdate, Date registrationdate, String nationality, Boolean loggedin, int fidaelitypoints, String profilepicture, String username, String email, Boolean enabled, String salt, String password, TimeZone last_login, String roles, String firstname, String lastname) {
 		super(username, email, enabled, salt, password, last_login, roles, firstname, lastname);

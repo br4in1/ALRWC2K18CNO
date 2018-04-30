@@ -22,6 +22,10 @@ public class User {
 	protected String roles;
 	protected String firstname;
 	protected String lastname;
+	
+	public User(){
+		
+	}
 
 	public User(String username, String email, Boolean enabled, String salt, String password, TimeZone last_login, String roles, String firstname, String lastname) {
 		this.username = username;
