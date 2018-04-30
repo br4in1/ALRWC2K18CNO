@@ -23,6 +23,16 @@ import java.util.Map;
  * @author dell
  */
 public class ServiceGallery {
+	public void ajoutPhoto(Gallery g) {
+        ConnectionRequest con = new ConnectionRequest();
+      //  String Url = "http://localhost/alrwc2k18/web/app_dev.php/gallery/photo/ajouter/mobile/" + g.getTitre() + "/" + ev.getPrix() + "/" + ev.getDescription() + "/" + ev.getNbPlace() + "/" + ev.getType() + "/" + ev.getLieu() + "/" + ev.getDate() + "/" + ev.getImage();
+     //   con.setUrl(Url);
+        con.addResponseListener((e) -> {
+            String str = new String(con.getResponseData());
+            System.out.println(str);
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+    }
 	
 	public ArrayList<Gallery> getListGallery(String json) {
 

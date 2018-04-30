@@ -96,17 +96,14 @@ public class DisplayGallery extends BaseForm {
 		all.setUIID("SelectBar");
 		all.setName("All");
 
-		RadioButton Popular = RadioButton.createToggle("Popular", barGroup);
-		Popular.setUIID("SelectBar");
-		Popular.setName("Popular");
-
+		
 		RadioButton New = RadioButton.createToggle("New", barGroup);
 		New.setUIID("SelectBar");
 		New.setName("New");
 		Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
 
 		add(LayeredLayout.encloseIn(
-				GridLayout.encloseIn(3, all, Popular, New),
+				GridLayout.encloseIn(2, all, New),
 				FlowLayout.encloseBottom(arrow)
 		));
 
@@ -117,7 +114,6 @@ public class DisplayGallery extends BaseForm {
 			updateArrowPosition(all, arrow);
 		});
 		bindButtonSelection(all, arrow);
-		bindButtonSelection(Popular, arrow);
 		bindButtonSelection(New, arrow);
 
 		// special case for rotation
@@ -223,29 +219,29 @@ public class DisplayGallery extends BaseForm {
 			if (b.isSelected()) {
 				updateArrowPosition(b, arrow);
 				if (b.getName() == "All") {
+					cnt2.removeAll();
 					ServiceGallery ser = new ServiceGallery();
 					ArrayList<Gallery> Tab = ser.getList2();
-					cnt2.removeAll();
 					for (int i = 0; i < Tab.size(); i++) {
 						addButton(Tab.get(i).getImage(), Tab.get(i).getVille() + "  , " + Tab.get(i).getLieu(), false, 11, 9, 2);
 					}
 
-				} else if (b.getName() == "Popular") {
-					cnt2.removeAll();
-				} else {
+				} 
+				else if (b.getName() == "New") {
 					cnt2.removeAll();
 					TextField Ville = new TextField("", "Ville", 20, TextField.ANY);
-					TextArea Lieu = new TextArea("Lieu", TOP, CENTER);
+					TextField Lieu = new TextField("", "Lieu", 20, TextField.ANY);
 					TextField Description = new TextField("", "Description", 20, TextField.ANY);
+					FileChooser file = new FileChooser();
+					Ville.setSingleLineTextArea(false);
 					Lieu.setSingleLineTextArea(false);
 					Description.setSingleLineTextArea(false);
 					Button Valider = new Button("Add your photo");
-
 					cnt2.add(Ville);
 					cnt2.add(Lieu);
 					cnt2.add(Description);
 					cnt2.add(Valider);
-
+					
 				}
 			}
 		});
