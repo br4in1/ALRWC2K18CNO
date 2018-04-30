@@ -18,14 +18,17 @@
  */
 package com.alpha.gui;
 
+import com.alpha.Entite.SimpleUser;
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.ui.Component;
 import com.codename1.ui.Display;
+import com.codename1.ui.EncodedImage;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
 import com.codename1.ui.Toolbar;
+import com.codename1.ui.URLImage;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.layouts.Layout;
@@ -71,14 +74,15 @@ public class BaseForm extends Form {
 		if (img.getHeight() > Display.getInstance().getDisplayHeight() / 2) {
 			img = img.scaledHeight(Display.getInstance().getDisplayHeight() / 2);
 		}
+		Image placeholder = Image.createImage(45, 45, 0xbfc9d2);
+		EncodedImage encImage = EncodedImage.createFromImage(placeholder, false);
 		ScaleImageLabel sl = new ScaleImageLabel(img);
 		sl.setUIID("BottomPad");
 		sl.setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);
-
 		tb.addComponentToSideMenu(LayeredLayout.encloseIn(
 				sl,
 				FlowLayout.encloseCenterBottom(
-						new Label(res.getImage("profile-pic.jpg"), "PictureWhiteBackgrond"))
+						new Label(URLImage.createToStorage(encImage, "User" + SimpleUser.current_user.getProfilepicture(), SimpleUser.current_user.getProfilepicture(), URLImage.RESIZE_SCALE_TO_FILL), "PictureWhiteBackgrond"))
 		));
 
 		tb.addMaterialCommandToSideMenu("Newsfeed", FontImage.MATERIAL_UPDATE, e -> new NewsfeedForm(res).show());
