@@ -42,6 +42,7 @@ import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.paint.Color;
@@ -120,7 +121,10 @@ public class DisplayGallery extends BaseForm {
 		Button Btn  =new Button(" + ");
 		
 		Btn.addActionListener((evt) -> {
-			            new AddGallery(res).show();
+			try {
+				new AddGallery(res).show();
+			} catch (IOException ex) {
+			}
 
 			
 		});
