@@ -44,6 +44,7 @@ import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 
 /**
@@ -51,12 +52,14 @@ import javafx.stage.FileChooser;
  * @author dell
  */
 public class DisplayGallery extends BaseForm {
+    Resources res;
 
 	Container cnt2 = new Container();
+	
 
 	public DisplayGallery(Resources res) {
 		super("", BoxLayout.y());
-
+		getAllStyles().setBgColor(0xE8E8E8);
 		Toolbar tb = new Toolbar(true);
 		setToolbar(tb);
 		getTitleArea().setUIID("Container");
@@ -92,37 +95,43 @@ public class DisplayGallery extends BaseForm {
         rbs[0].setSelected(true); */
 
 		ButtonGroup barGroup = new ButtonGroup();
-		RadioButton all = RadioButton.createToggle("All", barGroup);
+		RadioButton all = RadioButton.createToggle("Gallery photo ", barGroup);
 		all.setUIID("SelectBar");
-		all.setName("All");
 
-		
-		RadioButton New = RadioButton.createToggle("New", barGroup);
-		New.setUIID("SelectBar");
-		New.setName("New");
 		Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
 
 		add(LayeredLayout.encloseIn(
-				GridLayout.encloseIn(2, all, New),
+				GridLayout.encloseIn(1, all),
 				FlowLayout.encloseBottom(arrow)
 		));
 
 		all.setSelected(true);
 		arrow.setVisible(false);
 		addShowListener(e -> {
-			arrow.setVisible(true);
+			arrow.setVisible(false);
 			updateArrowPosition(all, arrow);
 		});
 		bindButtonSelection(all, arrow);
-		bindButtonSelection(New, arrow);
 
 		// special case for rotation
 		addOrientationListener(e -> {
 			updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
 		});
-		ServiceGallery g1 = new ServiceGallery();
+		Button Btn  =new Button(" + ");
+		
+		Btn.addActionListener((evt) -> {
+			            new AddGallery(res).show();
 
+			
+		});
+		cnt2.add(Btn);
 		add(cnt2);
+					ServiceGallery ser = new ServiceGallery();
+					ArrayList<Gallery> Tab = ser.getList2();
+					for (int i = 0; i < Tab.size(); i++) {
+						addButton(Tab.get(i).getImage(), Tab.get(i).getVille() + "  , " + Tab.get(i).getLieu(), false, 11, 9, 2);
+					}
+		
 	}
 
 	private void updateArrowPosition(Button b, Label arrow) {
@@ -218,16 +227,16 @@ public class DisplayGallery extends BaseForm {
 		b.addActionListener(e -> {
 			if (b.isSelected()) {
 				updateArrowPosition(b, arrow);
-				if (b.getName() == "All") {
+				/*if (b.getName() == "All") {
 					cnt2.removeAll();
 					ServiceGallery ser = new ServiceGallery();
 					ArrayList<Gallery> Tab = ser.getList2();
 					for (int i = 0; i < Tab.size(); i++) {
 						addButton(Tab.get(i).getImage(), Tab.get(i).getVille() + "  , " + Tab.get(i).getLieu(), false, 11, 9, 2);
-					}
+					} 
 
 				} 
-				else if (b.getName() == "New") {
+				/*else if (b.getName() == "New") {
 					cnt2.removeAll();
 					TextField Ville = new TextField("", "Ville", 20, TextField.ANY);
 					TextField Lieu = new TextField("", "Lieu", 20, TextField.ANY);
@@ -242,7 +251,7 @@ public class DisplayGallery extends BaseForm {
 					cnt2.add(Description);
 					cnt2.add(Valider);
 					
-				}
+				} */
 			}
 		});
 	}
