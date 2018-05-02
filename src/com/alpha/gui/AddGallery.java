@@ -58,13 +58,13 @@ import java.util.Map;
  */
 public class AddGallery extends BaseForm {
 
-	Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+	Cloudinary cloudinaryy = new Cloudinary(ObjectUtils.asMap(
 			"cloud_name", "russie2k18",
 			"api_key", "451245641369774",
 			"api_secret", "fTOR3y7gDwymp7mztVOArxrP_Rw"));
 
 	File file;
-	File image1 ; 
+	File image1;
 	TextField Ville;
 	TextField Lieu;
 	TextField Description;
@@ -77,6 +77,7 @@ public class AddGallery extends BaseForm {
 		super("", BoxLayout.y());
 
 		getAllStyles().setBgColor(0xE8E8E8);
+		//cloudinaryy = new Cloudinary("cloudinary://212894137142756:7Coi2BsCet7rXqPmDAuBi08ONfQ@dbs7hg9cy");
 
 		Toolbar tb = new Toolbar(true);
 		setToolbar(tb);
@@ -140,13 +141,12 @@ public class AddGallery extends BaseForm {
 			updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
 		});
 
-		Ville = new TextField("", "Ville", 20, TextField.ANY);
-		Lieu = new TextField("", "Lieu", 20, TextField.ANY);
+		Ville = new TextField("","Ville", 20, TextField.ANY);
+		Lieu = new TextField("","Lieu", 20, TextField.ANY);
 		Description = new TextField("", "Description", 20, TextField.ANY);
-
-		Ville.setSingleLineTextArea(false);
-		Lieu.setSingleLineTextArea(false);
-		Description.setSingleLineTextArea(false);
+		Ville.setUIID("TextFieldBlack");
+		Lieu.setUIID("TextFieldBlack");
+		Description.setUIID("TextFieldBlack");
 
 		photo = new Button("Browse");
 		ajouter = new Button("Click here to add your photo ");
@@ -181,23 +181,16 @@ public class AddGallery extends BaseForm {
 		});
 
 		ajouter.addActionListener((evt) -> {
-			/*try {
-				System.out.println("aaaa");
-				Map uploadResult = cloudinary.uploader().upload(file , ObjectUtils.emptyMap());
-				ServiceGallery ser = new ServiceGallery();
-				String ville = Ville.getText();
-				String lieu = Lieu.getText();
-				String description = Description.getText();
-				Gallery gallery = new Gallery(SimpleUser.current_user.getId(),ville,lieu,description,(String) uploadResult.get("url"),"0");
-				ser.ajoutPhoto(gallery);
+			//System.out.println("aaaa");
+			//Map uploadResult = cloudinaryy.uploader().upload(file , ObjectUtils.emptyMap());
+			ServiceGallery ser = new ServiceGallery();
+			String description = Description.getText();
+			String ville = Ville.getText();
+			String lieu = Lieu.getText();
+			int user = SimpleUser.current_user.getId();
+			Gallery g1 = new Gallery(user,ville,lieu,description,"ddf","0");
+			ser.ajoutPhoto(g1);
 
-			} catch (IOException ex) {
-			} */
-			
-			
-			
-			
-		
 		});
 		cnt3.add(Ville);
 		cnt3.add(Lieu);

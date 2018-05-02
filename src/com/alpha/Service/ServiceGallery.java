@@ -23,17 +23,26 @@ import java.util.Map;
  * @author dell
  */
 public class ServiceGallery {
+
 	public void ajoutPhoto(Gallery g) {
-        ConnectionRequest con = new ConnectionRequest();
-       String Url = "http://127.0.0.1:8000/gallery/photo/ajouter/mobile/" + g.getIdUser() + "/" + g.getVille()+ "/" + g.getLieu() + "/" + g.getDescription()+ "/" + g.getImage() + "/" + g.getEtat();
-          con.setUrl(Url);
-            con.addResponseListener((e) -> {
-            String str = new String(con.getResponseData());
-            System.out.println(str);
-        });
-        NetworkManager.getInstance().addToQueueAndWait(con);
-    }
-	
+		ConnectionRequest con = new ConnectionRequest();
+		String Url = "http://127.0.0.1:8000/gallery/photo/ajouter/mobile/"+g.getIdUser()+"/"+g.getVille()+"/" +g.getLieu()+"/"+g.getDescription()+"/"+g.getImage()+"/" +g.getEtat(); 
+		//String Url = "http://127.0.0.1:8000/gallery/photo/ajouter/mobile/10/test/tetsdtg/dsdsqsf/sqsqdsqdd/0";
+		System.out.println(g.getIdUser());
+		System.out.println(g.getVille());
+		System.out.println(g.getLieu());
+		System.out.println(g.getDescription());
+		System.out.println(g.getImage());
+		System.out.println(g.getEtat());
+
+		con.setUrl(Url);
+		con.addResponseListener((e) -> {
+			String str = new String(con.getResponseData());
+			System.out.println(str);
+		});
+		NetworkManager.getInstance().addToQueueAndWait(con);
+	}
+
 	public ArrayList<Gallery> getListGallery(String json) {
 
 		ArrayList<Gallery> listGallery = new ArrayList<Gallery>();
@@ -48,7 +57,7 @@ public class ServiceGallery {
 			for (Map<String, Object> obj : list) {
 				Gallery p = new Gallery();
 				float id = Float.parseFloat(obj.get("id").toString());
-				p.setId((int)id);
+				p.setId((int) id);
 				p.setVille((String) obj.get("ville"));
 				p.setLieu((String) obj.get("lieu"));
 				p.setDescription("description");
@@ -59,11 +68,10 @@ public class ServiceGallery {
 
 		} catch (IOException ex) {
 		}
-	     	return listGallery ;
-				}
-				
+		return listGallery;
+	}
 
-		public ArrayList<Gallery> listGallery1 = new ArrayList<Gallery>();
+	public ArrayList<Gallery> listGallery1 = new ArrayList<Gallery>();
 
 	public ArrayList<Gallery> getList2() {
 		ConnectionRequest con = new ConnectionRequest();
@@ -73,30 +81,12 @@ public class ServiceGallery {
 			@Override
 			public void actionPerformed(NetworkEvent evt) {
 				ServiceGallery ser = new ServiceGallery();
-								System.out.println(new String(con.getResponseData()));
+				System.out.println(new String(con.getResponseData()));
 				listGallery1 = ser.getListGallery(new String(con.getResponseData()));
 			}
 		});
 		NetworkManager.getInstance().addToQueueAndWait(con);
 		return listGallery1;
 	}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	}
-	
-	
-	
-	
-	
+
+}
