@@ -31,6 +31,7 @@ import com.codename1.ui.Toolbar;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
+import com.codename1.ui.spinner.Picker;
 import com.codename1.ui.util.Resources;
 
 /**
@@ -55,6 +56,8 @@ public class SignUpForm extends BaseForm {
         TextField email = new TextField("", "E-Mail", 20, TextField.EMAILADDR);
         TextField password = new TextField("", "Password", 20, TextField.PASSWORD);
         TextField confirmPassword = new TextField("", "Confirm Password", 20, TextField.PASSWORD);
+		Picker datePicker = new Picker();
+		datePicker.setText("Birth Date");
         username.setSingleLineTextArea(false);
         email.setSingleLineTextArea(false);
         password.setSingleLineTextArea(false);
@@ -74,7 +77,9 @@ public class SignUpForm extends BaseForm {
                 new FloatingHint(password),
                 createLineSeparator(),
                 new FloatingHint(confirmPassword),
-                createLineSeparator()
+                createLineSeparator(),
+				datePicker,
+				createLineSeparator()
         );
         content.setScrollableY(true);
         add(BorderLayout.CENTER, content);

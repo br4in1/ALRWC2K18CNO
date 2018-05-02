@@ -76,7 +76,7 @@ public class SignInForm extends BaseForm {
 		);
 		content.setScrollableY(true);
 		//content.getAllStyles().setMarginTop(500);
-		add(BorderLayout.SOUTH, content);
+		add(BorderLayout.CENTER, content);
 		signIn.requestFocus();
 		//signIn.addActionListener(e -> new NewsfeedForm(res).show());
 		signIn.addActionListener(new ActionListener() {
