@@ -6,7 +6,6 @@
 package com.alpha.gui;
 
 import com.alpha.Entite.Product;
-import com.codename1.braintree.Purchase;
 import com.alpha.Entite.Team;
 import com.alpha.Service.ServiceProduct;
 import com.alpha.Service.ServiceTeam;
