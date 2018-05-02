@@ -89,6 +89,7 @@ public class BaseForm extends Form {
 		tb.addMaterialCommandToSideMenu("Profile", FontImage.MATERIAL_SETTINGS, e -> new ProfileForm(res).show());
 		tb.addMaterialCommandToSideMenu("Logout", FontImage.MATERIAL_EXIT_TO_APP, e -> new WalkthruForm(res).show());
 		tb.addMaterialCommandToSideMenu("Teams", FontImage.MATERIAL_FLAG, e -> new TeamForm(res).show());
+		tb.addMaterialCommandToSideMenu("Bets", FontImage.MATERIAL_UPDATE,  e -> new BetForm(res).show());
 		tb.addMaterialCommandToSideMenu("Guide", FontImage.MATERIAL_HOME, e -> {GoogleMapsTestApp a= new GoogleMapsTestApp() ; a.start("tunis");});
 		tb.addMaterialCommandToSideMenu("Gallery", FontImage.MATERIAL_IMAGE, e -> new DisplayGallery(res).show());
 		tb.addMaterialCommandToSideMenu("Shop", FontImage.MATERIAL_SHOP, e -> {
