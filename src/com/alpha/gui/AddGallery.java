@@ -51,17 +51,15 @@ import com.cloudinary.utils.ObjectUtils;
 import com.codename1.io.File;
 import com.cloudinary.*;
 import java.util.Map;
+//import java.io.File;
 
 /**
  *
  * @author dell
  */
 public class AddGallery extends BaseForm {
+	Cloudinary cloudinary = new Cloudinary("cloudinary://451245641369774:fTOR3y7gDwymp7mztVOArxrP_Rw@russie2k18");
 
-	Cloudinary cloudinaryy = new Cloudinary(ObjectUtils.asMap(
-			"cloud_name", "russie2k18",
-			"api_key", "451245641369774",
-			"api_secret", "fTOR3y7gDwymp7mztVOArxrP_Rw"));
 
 	File file;
 	File image1;
@@ -70,6 +68,7 @@ public class AddGallery extends BaseForm {
 	TextField Description;
 	Button photo;
 	Button ajouter;
+	private String filePath;
 
 	Container cnt3 = new Container();
 
@@ -141,8 +140,8 @@ public class AddGallery extends BaseForm {
 			updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
 		});
 
-		Ville = new TextField("","Ville", 20, TextField.ANY);
-		Lieu = new TextField("","Lieu", 20, TextField.ANY);
+		Ville = new TextField("", "Ville", 20, TextField.ANY);
+		Lieu = new TextField("", "Lieu", 20, TextField.ANY);
 		Description = new TextField("", "Description", 20, TextField.ANY);
 		Ville.setUIID("TextFieldBlack");
 		Lieu.setUIID("TextFieldBlack");
@@ -181,15 +180,21 @@ public class AddGallery extends BaseForm {
 		});
 
 		ajouter.addActionListener((evt) -> {
-			//System.out.println("aaaa");
-			//Map uploadResult = cloudinaryy.uploader().upload(file , ObjectUtils.emptyMap());
+
 			ServiceGallery ser = new ServiceGallery();
 			String description = Description.getText();
 			String ville = Ville.getText();
 			String lieu = Lieu.getText();
 			int user = SimpleUser.current_user.getId();
-			Gallery g1 = new Gallery(user,ville,lieu,description,"ddf","0");
-			ser.ajoutPhoto(g1);
+		
+				//Map uploadResult;
+				//uploadResult = cloudinary.uploader().upload(file., ObjectUtils.emptyMap());
+				//System.out.println(uploadResult);
+				Gallery g1 = new Gallery(user, ville, lieu, description, file.getPath(), "0");
+				ser.ajoutPhoto(g1);
+			/*} catch (IOException ex) {
+				System.out.println(ex);
+			}*/
 
 		});
 		cnt3.add(Ville);

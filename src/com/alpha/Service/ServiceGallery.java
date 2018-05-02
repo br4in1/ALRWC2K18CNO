@@ -26,15 +26,9 @@ public class ServiceGallery {
 
 	public void ajoutPhoto(Gallery g) {
 		ConnectionRequest con = new ConnectionRequest();
-		String Url = "http://127.0.0.1:8000/gallery/photo/ajouter/mobile/"+g.getIdUser()+"/"+g.getVille()+"/" +g.getLieu()+"/"+g.getDescription()+"/"+g.getImage()+"/" +g.getEtat(); 
-		//String Url = "http://127.0.0.1:8000/gallery/photo/ajouter/mobile/10/test/tetsdtg/dsdsqsf/sqsqdsqdd/0";
-		System.out.println(g.getIdUser());
-		System.out.println(g.getVille());
-		System.out.println(g.getLieu());
-		System.out.println(g.getDescription());
-		System.out.println(g.getImage());
-		System.out.println(g.getEtat());
-
+		// Url = "http://127.0.0.1:8000/gallery/photo/ajouter/mobile/"+g.getIdUser()+"/"+g.getVille()+"/" +g.getLieu()+"/"+g.getDescription()+"/" +g.getEtat() +"&image="+g.getImage(); 
+		String Url = "http://127.0.0.1:8000/gallery/photo/ajouter/mobile?iduser="+g.getIdUser()+"&ville="+g.getVille()+"&lieu=" +g.getLieu()+"&description="+g.getDescription()+"&etat=" +g.getEtat() +"&image="+g.getImage(); 
+		
 		con.setUrl(Url);
 		con.addResponseListener((e) -> {
 			String str = new String(con.getResponseData());
