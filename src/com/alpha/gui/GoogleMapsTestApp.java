@@ -38,7 +38,7 @@ import java.util.Map;
 public class GoogleMapsTestApp {
      private static final String HTML_API_KEY = "";
     private Form current;
-  private static final String MAPS_KEY = "AIzaSyAuE9d29HjPxeJ4WNbbapJjegGRala6lvg";
+  private static final String MAPS_KEY = "AIzaSyBJubS9yF-ripULQ-z-TPve7cUS4Xr-1AQ";
     public void init(Object context) {
         try {
             Resources theme = Resources.openLayered("/theme");
