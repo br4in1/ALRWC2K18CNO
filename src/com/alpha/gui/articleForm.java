@@ -5,6 +5,8 @@
  */
 package com.alpha.gui;
 
+import com.alpha.Entite.Article;
+import com.alpha.Service.ServiceArticles;
 import com.codename1.components.FloatingHint;
 import com.codename1.components.ImageViewer;
 import com.codename1.components.ScaleImageLabel;
@@ -48,6 +50,7 @@ import java.io.IOException;
 public class articleForm extends BaseForm {
 
     Resources res;
+    Article article;
 
     public articleForm(Resources res, int id) {
         super("Newsfeed", BoxLayout.y());
@@ -57,7 +60,8 @@ public class articleForm extends BaseForm {
         getTitleArea().setUIID("Container");
         setTitle("Article");
         getContentPane().setScrollVisible(false);
-
+        ServiceArticles sa = new ServiceArticles();
+        article = sa.getArticle(id);
         super.addSideMenu(res);
         tb.addSearchCommand(e -> {
         });
@@ -66,7 +70,7 @@ public class articleForm extends BaseForm {
 
         Label spacer1 = new Label();
         Label spacer2 = new Label();
-        addTab(swipe, res.getImage("news-item.jpg"), spacer1, "15 Likes  ", "85 Comments", "Integer ut placerat purued non dignissim neque. ");
+        addTab(swipe, article.getArticleImage(), spacer1, article.getNum_comments() + " Comments ", article.getTitre() + ". ");
 
         swipe.setUIID("Container");
         swipe.getContentPane().setUIID("Container");
@@ -106,52 +110,42 @@ public class articleForm extends BaseForm {
         Component.setSameSize(radioContainer, spacer1, spacer2);
         add(LayeredLayout.encloseIn(swipe, radioContainer));
         BrowserComponent browser = new BrowserComponent();
-
-        String htmlcode = "<!DOCTYPE html>\n"
-                + "<html>\n"
-                + "<body>\n"
-                + "\n"
-                + "<h1>My First Heading</h1>\n"
-                + "\n"
-                + "<p>My first paragraph.</p>\n"
-                + "\n"
-                + "</body>\n"
-                + "</html>\n";
-        browser.setPage(htmlcode, null);
+        browser.setPage(article.getContenu(), null);
         add(browser);
 
     }
 
-    private void addTab(Tabs swipe, Image img, Label spacer, String likesStr, String commentsStr, String text) {
+    private void addTab(Tabs swipe, String imgUrl, Label spacer, String commentsStr, String text) {
         int size = Math.min(Display.getInstance().getDisplayWidth(), Display.getInstance().getDisplayHeight());
-        if (img.getHeight() < size) {
-            img = img.scaledHeight(size);
+
+        ImageViewer im = new ImageViewer();
+        Image placeholder = Image.createImage(45, 45, 0xbfc9d2);
+        if (im.getHeight() < size) {
+            placeholder = placeholder.scaledHeight(size);
         }
-        Label likes = new Label(likesStr);
-        Style heartStyle = new Style(likes.getUnselectedStyle());
-        heartStyle.setFgColor(0xff2d55);
-        FontImage heartImage = FontImage.createMaterial(FontImage.MATERIAL_FAVORITE, heartStyle);
-        likes.setIcon(heartImage);
-        likes.setTextPosition(RIGHT);
 
         Label comments = new Label(commentsStr);
         FontImage.setMaterialIcon(comments, FontImage.MATERIAL_CHAT);
-        if (img.getHeight() > Display.getInstance().getDisplayHeight() / 2) {
-            img = img.scaledHeight(Display.getInstance().getDisplayHeight() / 2);
+
+        if (im.getHeight() > Display.getInstance().getDisplayHeight() / 2) {
+            placeholder = placeholder.scaledHeight(Display.getInstance().getDisplayHeight() / 2);
         }
-        ScaleImageLabel image = new ScaleImageLabel(img);
+        /*ScaleImageLabel image = new ScaleImageLabel(img);
         image.setUIID("Container");
-        image.setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);
+        image.setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);*/
         Label overlay = new Label(" ", "ImageOverlay");
+        EncodedImage encImage = EncodedImage.createFromImage(placeholder, false);
+
+        im.setImage(URLImage.createToStorage(encImage, "Medium" + imgUrl,imgUrl, URLImage.RESIZE_SCALE));
 
         Container page1
                 = LayeredLayout.encloseIn(
-                        image,
+                        im,
                         overlay,
                         BorderLayout.south(
                                 BoxLayout.encloseY(
                                         new SpanLabel(text, "LargeWhiteText"),
-                                        FlowLayout.encloseIn(likes, comments),
+                                        FlowLayout.encloseIn(comments),
                                         spacer
                                 )
                         )

@@ -41,17 +41,13 @@ public class ServiceArticles {
                 float id = Float.parseFloat(obj.get("id").toString());
                 p.setId((int) id);
                 Map< String, Object> auteurMap = (Map< String, Object>) obj.get("auteur");
-                User u = new User(auteurMap.get("username").toString(), auteurMap.get("email").toString(), true, (auteurMap.get("salt") == null) ? "null" : "je sai pas", auteurMap.get("password").toString(), TimeZone.getTimeZone("Europe/Berlin"), auteurMap.get("roles").toString(), auteurMap.get("firstname").toString(), auteurMap.get("lastname").toString());
-
-
+                // User u = new User(auteurMap.get("username").toString(), auteurMap.get("email").toString(), true, (auteurMap.get("salt") == null) ? "null" : "je sais pas", auteurMap.get("password").toString(), TimeZone.getTimeZone("Europe/Berlin"), auteurMap.get("roles").toString(), auteurMap.get("firstname").toString(), auteurMap.get("lastname").toString());
                 p.setArticleImage(obj.get("articleimage").toString());
                 p.setTitre(obj.get("titre").toString());
-                p.setId(1);
-                //  p.setId(Integer.parseInt(obj.get("id").toString().trim()));
-                //p.setNum_comments((Integer.parseInt(obj.get("numComments").toString()) == 0) ? 0 : Integer.parseInt(obj.get("numComments").toString()));
-                p.setNum_comments(2);
-
-                //trim()
+                float numComments = Float.parseFloat(obj.get("numComments").toString());
+                p.setId((int) id);
+                p.setNum_comments((int) numComments);
+                p.setContenu(obj.get("contenu").toString());
                 listArticles.add(p);
             }
 
@@ -74,5 +70,35 @@ public class ServiceArticles {
         });
         NetworkManager.getInstance().addToQueueAndWait(con);
         return listArticles2;
+    }
+
+    public Article getArticle(int id) {
+        // /articles/mobile/get/{id}
+        Article article = new Article();
+        ConnectionRequest con = new ConnectionRequest();
+        String url = "http://localhost/russie2k18/web/app_dev.php/articles/mobile/get/" + id;
+        con.setUrl(url);
+        con.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                JSONParser j = new JSONParser();
+                String json = new String(con.getResponseData());
+                try {
+                    Map<String, Object> art = j.parseJSON(new CharArrayReader(json.toCharArray()));
+                    article.setArticleImage(art.get("articleimage").toString());
+                    article.setTitre(art.get("titre").toString());
+                    float numComments = Float.parseFloat(art.get("numComments").toString());
+                    article.setId((int) id);
+                    article.setNum_comments((int) numComments);
+                    article.setContenu(art.get("contenu").toString());
+                } catch (IOException ex) {
+                    System.out.println("error sql");
+                }
+
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+        return article;
+
     }
 }
