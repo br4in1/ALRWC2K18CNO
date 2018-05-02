@@ -232,7 +232,7 @@
         <val key="SignIn.padUnit" value="0,0,2,0" />
         <val key="SignIn.padding" value="0,3,0,0" />
         <val key="SignIn.transparency" value="255" />
-		<val key="SignUp.bgImage" value="signup-background.jpg" />
+        <val key="SignUp.bgImage" value="signup-background.jpg" />
         <val key="SignUp.bgType" value="33" />
         <val key="SignUp.margin" value="0,0,0,0" />
         <val key="SignUp.padUnit" value="0,0,2,0" />
