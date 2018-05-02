@@ -5,13 +5,15 @@
  */
 package com.alpha.Entite;
 
+import java.util.Map;
+
 /**
  *
  * @author Moez
  */
 public class Bet {
 	int id ;
-	int idGame ;
+	Map<Integer,Object> idGame ;
 	String result ;
 	int idUser ;
 	int points ;
@@ -19,13 +21,13 @@ public class Bet {
 	public Bet() {
 		
 	}
-	public Bet(int idGame, String result, int idUser) {
+	public Bet(Map<Integer,Object> idGame, String result, int idUser) {
 		this.idGame = idGame;
 		this.result = result;
 		this.idUser = idUser;
 
 	}
-	public Bet(int id, int idGame, String result, int idUser, int points) {
+	public Bet(int id, Map<Integer,Object> idGame, String result, int idUser, int points) {
 		this.id = id;
 		this.idGame = idGame;
 		this.result = result;
@@ -41,11 +43,11 @@ public class Bet {
 		this.id = id;
 	}
 
-	public int getIdGame() {
+	public Map<Integer,Object> getIdGame() {
 		return idGame;
 	}
 
-	public void setIdGame(int idGame) {
+	public void setIdGame(Map<Integer,Object> idGame) {
 		this.idGame = idGame;
 	}
 
@@ -72,6 +74,12 @@ public class Bet {
 	public void setPoints(int points) {
 		this.points = points;
 	}
+
+	@Override
+	public String toString() {
+		return "Bet{" + "id=" + id + ", idGame=" + idGame + ", result=" + result + ", idUser=" + idUser + ", points=" + points + '}';
+	}
+	
 	
 	
 }

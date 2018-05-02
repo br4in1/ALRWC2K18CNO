@@ -23,7 +23,8 @@ import java.util.Map;
  * @author Moez
  */
 public class ServiceBet {
-		public ArrayList<Bet> getListBet(String json) {
+
+	public ArrayList<Bet> getListBet(String json) {
 
 		ArrayList<Bet> listBets = new ArrayList<>();
 
@@ -40,41 +41,16 @@ public class ServiceBet {
 				Bet t = new Bet();
 
 				// System.out.println(obj.get("id"));
-				
+				Map<Integer, Object> gameMap = (Map<Integer, Object>) obj.get("idGame");
+				//Map<String,Object>awayteam=(Map<String,Object>)obj.get("awayteam");
 				float id = Float.parseFloat(obj.get("id").toString());
 
 				System.out.println(id);
 				t.setId((int) id);
-				t.setPoints((int)Float.parseFloat(obj.get("points").toString()));
+				t.setPoints((int) Float.parseFloat(obj.get("points").toString()));
 				t.setResult(obj.get("result").toString());
-			//	t.setIdUser((int)Float.parseFloat(obj.get("idUser").toString()));
-			//	t.setIdGame((int)Float.parseFloat(obj.get("idGame").toString()));
-			//	t.setName(obj.get("name").toString());
-			//	t.setCoach(obj.get("coach").toString());
-			//	t.setPresident(obj.get("president").toString());
-			//	t.setArea(obj.get("area").toString());
-//				t.setGamesPlayed(Integer.parseInt(obj.get("gameplayed").toString()));
-				/*t.setGoalScored(Integer.parseInt(obj.get("goalscored").toString()));
-				t.setGoalAgainst(Integer.parseInt(obj.get("goalagainst").toString()));
-				t.setParticipations(Integer.parseInt(obj.get("participations").toString()));
-				t.setFifaDate(Date.valueOf(obj.get("fifadate").toString()));*/
-				/*t.setWcGroup(obj.get("wcgroup").toString());
-				
-				t.setWin((int)Float.parseFloat(obj.get("win").toString()));
-				t.setLoose((int)Float.parseFloat(obj.get("loose").toString()));
-				t.setDraw((int)Float.parseFloat(obj.get("draw").toString()));
-				t.setPoints((int)Float.parseFloat(obj.get("points").toString()));
-				t.setFifaRank((int)Float.parseFloat(obj.get("fifarank").toString()));
-				t.setFlagPhoto(obj.get("flagphoto").toString());
-				t.setLogoPhoto(obj.get("logophoto").toString());
-				t.setSquadPhoto(obj.get("squadphoto").toString());
-				t.setDescriptionPhoto(obj.get("descriptionphoto").toString());
-				t.setDescription(obj.get("description").toString());
-				t.setWebsite(obj.get("website").toString());
-				t.setVideo(obj.get("video").toString());*/
-				
-				
-				
+				//	t.setIdUser((int)Float.parseFloat(obj.get("idUser").toString()));
+				t.setIdGame(gameMap);
 				
 				System.out.println(t);
 				listBets.add(t);
@@ -86,43 +62,43 @@ public class ServiceBet {
 		System.out.println(listBets);
 		return listBets;
 	}
-		
+
 	public void AjouterForum(Bet b) {
-        ConnectionRequest con = new ConnectionRequest();
+		ConnectionRequest con = new ConnectionRequest();
+		System.out.println(b.getIdGame().get("idGame"));
 
+		for (Integer key : b.getIdGame().keySet()) {
+			   System.out.println("Key:" + key +" Value:" + b.getIdGame().get(key));// Get Key and value and count
+			String Url = "http://127.0.0.1:8000/bet/betAddMobile?idUser=" + b.getIdUser() + "&result=" + b.getResult() + "&idGame=" +key + "";
+			con.setUrl(Url);
 
-String Url = "http://127.0.0.1:8000/bet/betAddMobile?idUser="+b.getIdUser()+"&result="+b.getResult()+"&idGame="+b.getIdGame()+"";
+			con.addResponseListener((e) -> {
+				String str = new String(con.getResponseData());
+				System.out.println(str);
+			});
+			NetworkManager.getInstance().addToQueueAndWait(con);
+		}
 
-   //     String Url = "http://localhost:8888/Animaux1/web/app_dev.php/Forum/AddForum?titre="+f.getTitre()+"&auteur="+LoggedUser.username+"&blog="+f.getBlog()+"&tags="+f.getTags()+"";
+		//     String Url = "http://localhost:8888/Animaux1/web/app_dev.php/Forum/AddForum?titre="+f.getTitre()+"&auteur="+LoggedUser.username+"&blog="+f.getBlog()+"&tags="+f.getTags()+"";
+	}
 
-        con.setUrl(Url);
-
-        con.addResponseListener((e) -> {
-            String str = new String(con.getResponseData());
-            System.out.println(str);
-        });
-        NetworkManager.getInstance().addToQueueAndWait(con);
-
-    }
-	
 	public ArrayList<Bet> listTeams2 = new ArrayList<>();
-    
-	 
-    public ArrayList<Bet> getList2(){       
-        ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://127.0.0.1:8000/bet/allBet");  
 
-        con.addResponseListener(new ActionListener<NetworkEvent>() {
-            @Override
-            public void actionPerformed(NetworkEvent evt) {
-                ServiceBet ser = new ServiceBet();
-               // listTeams2 = ser.getListTeam(new String(con.getResponseData()));
-			    listTeams2 = ser.getListBet(new String(con.getResponseData()));
+	public ArrayList<Bet> getList2() {
+		ConnectionRequest con = new ConnectionRequest();
+		con.setUrl("http://127.0.0.1:8000/bet/allBet");
 
-            }
-        });
-        NetworkManager.getInstance().addToQueueAndWait(con);
-        return listTeams2;
-    }
-	
+		con.addResponseListener(new ActionListener<NetworkEvent>() {
+			@Override
+			public void actionPerformed(NetworkEvent evt) {
+				ServiceBet ser = new ServiceBet();
+				// listTeams2 = ser.getListTeam(new String(con.getResponseData()));
+				listTeams2 = ser.getListBet(new String(con.getResponseData()));
+
+			}
+		});
+		NetworkManager.getInstance().addToQueueAndWait(con);
+		return listTeams2;
+	}
+
 }

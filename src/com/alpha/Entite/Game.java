@@ -114,6 +114,12 @@ public class Game {
     public void setReferee(String Referee) {
         this.Referee = Referee;
     }
+
+	@Override
+	public String toString() {
+		return "Game{" + "id=" + id + ", date=" + date + ", homeTeam=" + homeTeam + ", awayTeam=" + awayTeam + ", result=" + result + ", stadium=" + stadium + ", summary=" + summary + ", summaryPhoto=" + summaryPhoto + ", Highlights=" + Highlights + ", Referee=" + Referee + '}';
+	}
+	
     
     
     
