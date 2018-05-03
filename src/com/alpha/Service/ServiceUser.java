@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import org.json.simple.JSONObject;
 import com.alpha.Entite.SimpleUser;
+import com.google.gson.Gson;
 
 /**
  *
@@ -78,6 +79,24 @@ public class ServiceUser {
 		});
 		NetworkManager.getInstance().addToQueueAndWait(con);
 		return U;
+	}
+	
+	public void LoginUserWithFacebook(SimpleUser u){
+		Gson gson = new Gson();
+		String userJsonString = gson.toJson(u);
+		//System.out.println(userJsonString);
+		//System.out.println(u);
+		ConnectionRequest con = new ConnectionRequest();
+		con.setUrl("http://127.0.0.1:8000/api/users/facebookuserlogin");
+		con.setPost(true);
+		con.addArgument("u", userJsonString);
+		con.addResponseListener(new ActionListener<NetworkEvent>() {
+			@Override
+			public void actionPerformed(NetworkEvent evt) {
+				
+			}
+		});
+		NetworkManager.getInstance().addToQueueAndWait(con);
 	}
 
 }

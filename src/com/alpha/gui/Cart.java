@@ -105,6 +105,7 @@ public class Cart extends BaseForm {
 		
 		Container total = new Container(new BorderLayout());
 		Button pay = new Button("Check Out");
+		FontImage.setMaterialIcon(pay, FontImage.MATERIAL_CREDIT_CARD);
 		pay.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
