@@ -4,7 +4,9 @@
     <image name="1.jpg"  />
     <image name="activation-background.jpg"  />
     <image name="confirmation-background.jpg"  />
+    <image name="default_profile_picture.png"  />
     <image name="dog.jpg"  />
+    <image name="facebook-login.png"  />
     <image name="facebook-logo.png" type="multi"  />
     <image name="Logo.png" type="multi"  />
     <image name="news-item-1.jpg"  />

@@ -79,11 +79,21 @@ public class BaseForm extends Form {
 		ScaleImageLabel sl = new ScaleImageLabel(img);
 		sl.setUIID("BottomPad");
 		sl.setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);
-		tb.addComponentToSideMenu(LayeredLayout.encloseIn(
-				sl,
-				FlowLayout.encloseCenterBottom(
-						new Label(URLImage.createToStorage(encImage, "User" + SimpleUser.current_user.getProfilepicture(), SimpleUser.current_user.getProfilepicture(), URLImage.RESIZE_SCALE_TO_FILL), "PictureWhiteBackgrond"))
-		));
+		Image userImage;
+		if (SimpleUser.current_user.getProfilepicture() == null) {
+			userImage = res.getImage("default_profile_picture.png");
+			tb.addComponentToSideMenu(LayeredLayout.encloseIn(
+					sl,
+					FlowLayout.encloseCenterBottom(
+							new Label(userImage))
+			));
+		} else {
+			tb.addComponentToSideMenu(LayeredLayout.encloseIn(
+					sl,
+					FlowLayout.encloseCenterBottom(
+							new Label(URLImage.createToStorage(encImage, "User" + SimpleUser.current_user.getProfilepicture(), SimpleUser.current_user.getProfilepicture(), URLImage.RESIZE_SCALE_TO_FILL), "PictureWhiteBackgrond"))
+			));
+		}
 
 		tb.addMaterialCommandToSideMenu("Newsfeed", FontImage.MATERIAL_UPDATE, e -> new NewsfeedForm(res).show());
 		tb.addMaterialCommandToSideMenu("Profile", FontImage.MATERIAL_SETTINGS, e -> new ProfileForm(res).show());
