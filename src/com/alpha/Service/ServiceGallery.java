@@ -26,7 +26,6 @@ public class ServiceGallery {
 
 	public void ajoutPhoto(Gallery g) {
 		ConnectionRequest con = new ConnectionRequest();
-		// Url = "http://127.0.0.1:8000/gallery/photo/ajouter/mobile/"+g.getIdUser()+"/"+g.getVille()+"/" +g.getLieu()+"/"+g.getDescription()+"/" +g.getEtat() +"&image="+g.getImage(); 
 		String Url = "http://127.0.0.1:8000/gallery/photo/ajouter/mobile?iduser="+g.getIdUser()+"&ville="+g.getVille()+"&lieu=" +g.getLieu()+"&description="+g.getDescription()+"&etat=" +g.getEtat() +"&image="+g.getImage(); 
 		
 		con.setUrl(Url);
