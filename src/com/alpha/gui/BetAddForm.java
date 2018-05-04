@@ -6,6 +6,7 @@
 package com.alpha.gui;
 
 import com.alpha.Entite.Bet;
+import com.alpha.Entite.Game;
 import com.alpha.Entite.SimpleUser;
 import com.alpha.Service.ServiceBet;
 import com.codename1.components.ScaleImageLabel;
@@ -51,7 +52,7 @@ public class BetAddForm extends BaseForm {
 	Form f;
 	SpanLabel lb;
 
-	public BetAddForm(Resources res) {
+	public BetAddForm(Game game,Resources res) {
 		super("Add Bet", BoxLayout.y());
 
 		// ServiceArticles sa = new ServiceArticles();

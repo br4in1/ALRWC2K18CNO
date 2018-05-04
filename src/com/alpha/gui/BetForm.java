@@ -140,10 +140,7 @@ public class BetForm extends BaseForm {
 			addButton(e, res);
 		}
 
-		addBetButton.addActionListener(e -> {
-			BetAddForm betAddF = new BetAddForm(res);
-			betAddF.show();
-		});
+		
 
 	}
 

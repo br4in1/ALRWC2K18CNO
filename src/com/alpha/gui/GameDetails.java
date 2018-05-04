@@ -118,6 +118,7 @@ public class GameDetails extends BaseForm {
 	
 		
 		Button tickets= new Button("Book a Ticket");
+		Button bet= new Button("Bet");
 		Container gameContainer = new Container(new BorderLayout());
 		gameContainer.add(BorderLayout.NORTH,dateCnt);
 		gameContainer.add(BorderLayout.EAST,BoxLayout.encloseY(awayName,imageAway));
@@ -130,7 +131,14 @@ public class GameDetails extends BaseForm {
 				new GameDetails(game,res).show();
 			}
 		});
+		bet.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				new BetAddForm(game,res).show();
+			}
+		});
 		add(gameContainer);
+		add(bet);
 		
 	
 				
