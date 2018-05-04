@@ -19,7 +19,30 @@ public class Gallery {
     private String description;
     private String image;
     private String etat ; 
+	private int likes; 
+	private String comments; 
+
+	public int getLikes() {
+		return likes;
+	}
+
+	public void setLikes(int likes) {
+		this.likes = likes;
+	}
+
 	
+	
+
+	
+	
+	
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
 	
 	
 	

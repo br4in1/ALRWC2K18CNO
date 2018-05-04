@@ -76,7 +76,6 @@ public class ServiceGallery {
 			@Override
 			public void actionPerformed(NetworkEvent evt) {
 				ServiceGallery ser = new ServiceGallery();
-				System.out.println(new String(con.getResponseData()));
 				listGallery1 = ser.getListGallery(new String(con.getResponseData()));
 			}
 		});

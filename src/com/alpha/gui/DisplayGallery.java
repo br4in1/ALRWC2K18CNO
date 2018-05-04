@@ -10,6 +10,7 @@ import com.alpha.Entite.Hotel;
 import com.alpha.Entite.Stadium;
 import com.alpha.Service.ServiceGallery;
 import com.alpha.Service.ServiceGuide;
+import com.alpha.Service.ServiceLikes;
 import com.codename1.components.ImageViewer;
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.components.SpanLabel;
@@ -138,9 +139,13 @@ public class DisplayGallery extends BaseForm {
 		cnt2.add(Btn);
 		add(cnt2);
 					ServiceGallery ser = new ServiceGallery();
+										ServiceLikes ser1 = new ServiceLikes();
+                 Gallery ga =new Gallery();
 					ArrayList<Gallery> Tab = ser.getList2();
 					for (int i = 0; i < Tab.size(); i++) {
-						addButton1(Tab.get(i).getImage(), Tab.get(i).getVille() + "  , " + Tab.get(i).getLieu(), false, 11, 9, Tab.get(i));
+									System.out.println(ser1.getList2(Tab.get(i).getId()).getLikes());	
+
+						addButton1(Tab.get(i).getImage(), Tab.get(i).getVille() + "  , " + Tab.get(i).getLieu(), false,ser1.getList2(Tab.get(i).getId()).getLikes(), 9, Tab.get(i));
 					}
 		
 	}
