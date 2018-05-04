@@ -5,9 +5,10 @@
  */
 package com.alpha.gui;
 
+import com.alpha.Entite.Card;
 import com.alpha.Entite.Game;
+import com.alpha.Entite.Goal;
 import com.alpha.Service.ServiceGame;
-import com.alpha.utils.RunnableDemo;
 import com.codename1.components.ImageViewer;
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.components.SpanLabel;
@@ -16,7 +17,6 @@ import com.codename1.ui.ButtonGroup;
 import com.codename1.ui.Container;
 import com.codename1.ui.Display;
 import com.codename1.ui.EncodedImage;
-import com.codename1.ui.FontImage;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
 import com.codename1.ui.RadioButton;
@@ -42,8 +42,12 @@ import com.alpha.utils.RunnableDemo;
  */
 public class GameDetails extends BaseForm {
 
+	public static GameDetails thisClass;
+	public ArrayList<Card> cards;
+	public ArrayList<Goal> goals;
 	public GameDetails(Game game, Resources res) {
 		super(BoxLayout.y());
+		thisClass = this;
 		RunnableDemo runnableDemo = new RunnableDemo(game.getId());
 		runnableDemo.start();
 		Toolbar tb = new Toolbar(true);
@@ -79,9 +83,12 @@ public class GameDetails extends BaseForm {
 		ArrayList<Game> games = new ArrayList<Game>(serviceGame.getListGames());
 											
 		addButton(res,game,game.getHomeTeam().get("flagphoto").toString(),game.getAwayTeam().get("flagphoto").toString(),game.getHomeTeam().get("name").toString(),game.getAwayTeam().get("name").toString(),game.getDate().toString(),game.getResult());
-			
-		
 	}
+	
+	public void reloadGameData(){
+		//TODO : update horizontal line
+	}
+	
 	private void addButton(Resources res,Game game,String imgHome,String imgAway, String home, String away, String gDate, String score) {
 
         ImageViewer im = new ImageViewer();

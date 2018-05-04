@@ -5,7 +5,9 @@
  */
 package com.alpha.Service;
 
+import com.alpha.Entite.Card;
 import com.alpha.Entite.Game;
+import com.alpha.Entite.Goal;
 import com.codename1.io.CharArrayReader;
 import com.codename1.io.ConnectionRequest;
 import com.codename1.io.JSONParser;
@@ -25,6 +27,38 @@ import java.util.Map;
  * @author simo
  */
 public class ServiceGame {
+	
+	public ArrayList<Game> listGames2 = new ArrayList<Game>();
+	public ArrayList<Card> listCards2 = new ArrayList<Card>();
+	public ArrayList<Goal> listGoals2 = new ArrayList<Goal>();
+	
+	public ArrayList<Card> getCardsFromDb(int game_id){
+		ConnectionRequest con = new ConnectionRequest();
+		con.setUrl("http://127.0.0.1:8000/games/allGames");
+
+		con.addResponseListener(new ActionListener<NetworkEvent>() {
+			@Override
+			public void actionPerformed(NetworkEvent evt) {
+				ServiceGame ser = new ServiceGame();
+			}
+		});
+		NetworkManager.getInstance().addToQueueAndWait(con);
+		return listCards2;
+	}
+	
+	public ArrayList<Goal> getGoalsFromDb(int game_id){
+		ConnectionRequest con = new ConnectionRequest();
+		con.setUrl("http://127.0.0.1:8000/games/allGames");
+
+		con.addResponseListener(new ActionListener<NetworkEvent>() {
+			@Override
+			public void actionPerformed(NetworkEvent evt) {
+				ServiceGame ser = new ServiceGame();
+			}
+		});
+		NetworkManager.getInstance().addToQueueAndWait(con);
+		return listGoals2;
+	}
 	
 	public ArrayList<Game> getListGames(String json) throws ParseException {
 		ArrayList<Game> listGames = new ArrayList<Game>();
@@ -68,7 +102,6 @@ public class ServiceGame {
 		return listGames;
 
 	}
-	public ArrayList<Game> listGames2 = new ArrayList<Game>();
 
 	public ArrayList<Game> getListGames() {
 		ConnectionRequest con = new ConnectionRequest();

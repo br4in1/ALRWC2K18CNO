@@ -5,8 +5,8 @@
  */
 package com.alpha.utils;
 
-import javafx.application.Platform;
-
+import com.alpha.Service.ServiceGame;
+import com.alpha.gui.GameDetails;
 /**
  *
  * @author br4in
@@ -24,12 +24,10 @@ public class RunnableDemo implements Runnable {
 	public void run() {
 		try {
 			while (indicator == 1) {
-				Platform.runLater(new Runnable() {
-					@Override
-					public void run() {
-						
-					}
-				});
+				ServiceGame ser = new ServiceGame();
+				GameDetails.thisClass.cards = ser.getCardsFromDb(this.game_id);
+				GameDetails.thisClass.goals = ser.getGoalsFromDb(this.game_id);
+				GameDetails.thisClass.reloadGameData();
 				Thread.sleep(5000);
 			}
 		} catch (InterruptedException e) {
