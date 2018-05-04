@@ -28,11 +28,11 @@ public class ServiceTeam {
 		ArrayList<Team> listTeams = new ArrayList<>();
 
 		try {
-			System.out.println(json);
+			//System.out.println(json);
 			JSONParser j = new JSONParser();
 
 			Map<String, Object> lTeamMap = j.parseJSON(new CharArrayReader(json.toCharArray()));
-			System.out.println(lTeamMap);
+		//	System.out.println(lTeamMap);
 
 			List<Map<String, Object>> list = (List<Map<String, Object>>) lTeamMap.get("root");
 
@@ -42,7 +42,7 @@ public class ServiceTeam {
 				// System.out.println(obj.get("id"));
 				float id = Float.parseFloat(obj.get("id").toString());
 
-				System.out.println(id);
+				//System.out.println(id);
 				t.setId((int) id);
 				t.setName(obj.get("name").toString());
 				t.setCoach(obj.get("coach").toString());
@@ -74,7 +74,7 @@ public class ServiceTeam {
 
 		} catch (IOException ex) {
 		}
-		System.out.println(listTeams);
+		//System.out.println(listTeams);
 		return listTeams;
 	}
 	

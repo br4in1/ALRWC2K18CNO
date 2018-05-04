@@ -5,10 +5,12 @@
  */
 package com.alpha.gui;
 
+import com.alpha.Entite.Commentaire;
 import com.alpha.Entite.Gallery;
 import com.alpha.Entite.Likes;
 import com.alpha.Entite.SimpleUser;
 import com.alpha.Service.ServiceArticles;
+import com.alpha.Service.ServiceCommentaire;
 import com.alpha.Service.ServiceGallery;
 import com.alpha.Service.ServiceLikes;
 import com.codename1.components.ImageViewer;
@@ -32,6 +34,7 @@ import com.codename1.ui.Label;
 import com.codename1.ui.RadioButton;
 import com.codename1.ui.Tabs;
 import com.codename1.ui.TextArea;
+import com.codename1.ui.TextField;
 import com.codename1.ui.Toolbar;
 import com.codename1.ui.URLImage;
 import com.codename1.ui.events.ActionEvent;
@@ -55,6 +58,12 @@ public class DisplayOne extends BaseForm {
 
 	Gallery gallery;
 	Resources res;
+	TextField Commentaire;
+
+	@Override
+	public boolean visibleBoundsContains(int x, int y) {
+		return super.visibleBoundsContains(x, y); //To change body of generated methods, choose Tools | Templates.
+	}
 
 	Container cnt2 = new Container();
 	private int x = 0;
@@ -74,13 +83,11 @@ public class DisplayOne extends BaseForm {
 		Label spacer2 = new Label();
 		addTab(swipe, res.getImage("news-item.jpg"), spacer1, "15 Likes  ", "85 Comments", "Integer ut placerat purued non dignissim neque. ");
 		addTab(swipe, res.getImage("dog.jpg"), spacer2, "100 Likes  ", "66 Comments", "Dogs are cute: story at 11");
-   Button back =  new Button("Back"); 
+		Button back = new Button("Back");
 		back.addActionListener((evt) -> {
-						 new DisplayGallery(res).show();
+			new DisplayGallery(res).show();
 
-			
 		});
-				cnt2.add(back);
 		ButtonGroup bg = new ButtonGroup();
 		int size = Display.getInstance().convertToPixels(1);
 		Image unselectedWalkthru = Image.createImage(size, size, 0);
@@ -119,7 +126,6 @@ public class DisplayOne extends BaseForm {
 				GridLayout.encloseIn(1, all),
 				FlowLayout.encloseBottom(arrow)
 		));
-		
 
 		all.setSelected(true);
 		arrow.setVisible(false);
@@ -134,9 +140,6 @@ public class DisplayOne extends BaseForm {
 			updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
 		});
 
-		add(cnt2);
-		Label test = new Label("");
-		Label test1 = new Label("");
 
 		Label likes = new Label(" Like");
 		Style heartStyle = new Style(likes.getUnselectedStyle());
@@ -144,9 +147,6 @@ public class DisplayOne extends BaseForm {
 		FontImage heartImage = FontImage.createMaterial(FontImage.MATERIAL_FAVORITE_BORDER, heartStyle);
 		likes.setIcon(heartImage);
 		likes.setTextPosition(RIGHT);
-		cnt2.add(likes);
-		cnt2.add(test);
-		cnt2.add(test1);
 
 		Label dislike = new Label("");
 		Style heartStylee = new Style(dislike.getUnselectedStyle());
@@ -155,7 +155,6 @@ public class DisplayOne extends BaseForm {
 		dislike.setIcon(heartImagee);
 		dislike.setTextPosition(RIGHT);
 		dislike.setVisible(false);
-		cnt2.add(dislike);
 
 		likes.addPointerPressedListener(new ActionListener() {
 			@Override
@@ -176,16 +175,26 @@ public class DisplayOne extends BaseForm {
 			}
 		});
 
-	
 		ServiceGallery ser = new ServiceGallery();
 		addButton(g1.getImage(), g1.getVille() + "  , " + g1.getLieu(), false, 11, 9, g1.getId());
-		
-		
 
+		Commentaire = new TextField("", "Commenaitre", 20, TextField.ANY);
+		Button comment = new Button("Comment");
+		comment.addActionListener((evt) -> {
+
+			ServiceCommentaire ser1 = new ServiceCommentaire();
+			Commentaire com = new Commentaire(SimpleUser.current_user.getId(), g1.getId(), Commentaire.getText());
+			ser1.CommentPhoto(com);
+		});
+		Container cont = BorderLayout.west(likes);
+		//cnt2.add(dislike);
+		//cnt2.add(likes);
+		cnt2.add(Commentaire);
+		cnt2.add(comment);
+	    cnt2.add(back);
+		add(cont);
+		add(cnt2);
 	}
-	
-	
-	
 
 	private void updateArrowPosition(Button b, Label arrow) {
 		arrow.getUnselectedStyle().setMargin(LEFT, b.getX() + b.getWidth() / 2 - arrow.getWidth() / 2);

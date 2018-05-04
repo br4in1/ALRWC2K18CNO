@@ -22,6 +22,7 @@ public class Game {
     private String Highlights;
     private String Referee;
 
+	public Game(){}
     public Game(Date date, String homeTeam, String awayTeam, String result, String stadium, String summary, String summaryPhoto, String Highlights, String Referee) {
     
         this.date = date;

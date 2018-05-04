@@ -7,13 +7,9 @@ package com.alpha.gui;
 
 import com.alpha.Entite.Bet;
 import com.alpha.Entite.SimpleUser;
-import com.alpha.Entite.Team;
 import com.alpha.Service.ServiceBet;
-import com.alpha.Service.ServiceTeam;
-import com.codename1.components.ImageViewer;
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.components.SpanLabel;
-import com.codename1.components.ToastBar;
 import com.codename1.ui.Button;
 import com.codename1.ui.ButtonGroup;
 import com.codename1.ui.Component;
@@ -24,7 +20,6 @@ import static com.codename1.ui.Component.RIGHT;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
-import com.codename1.ui.EncodedImage;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.Graphics;
@@ -35,7 +30,6 @@ import com.codename1.ui.Tabs;
 import com.codename1.ui.TextArea;
 import com.codename1.ui.TextField;
 import com.codename1.ui.Toolbar;
-import com.codename1.ui.URLImage;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
@@ -45,19 +39,20 @@ import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
 import java.util.HashMap;
 import java.util.Map;
+import java.lang.NullPointerException;
 
 /**
  *
  * @author Moez
  */
-public class BetForm extends BaseForm {
+public class BetAddForm extends BaseForm {
 
 	public static Bet team = new Bet();
 	Form f;
 	SpanLabel lb;
 
-	public BetForm(Resources res) {
-		super("Bet", BoxLayout.y());
+	public BetAddForm(Resources res) {
+		super("Add Bet", BoxLayout.y());
 
 		// ServiceArticles sa = new ServiceArticles();
 		//ArrayList<Article> articles = sa.getList2();
@@ -75,7 +70,7 @@ public class BetForm extends BaseForm {
 
 		Label spacer1 = new Label();
 		Label spacer2 = new Label();
-		addTab(swipe, res.getImage("news-item.jpg"), spacer1, "Bets display");
+		addTab(swipe, res.getImage("news-item.jpg"), spacer1, "Add bet");
 
 		FlowLayout flow = new FlowLayout(CENTER);
 		flow.setValign(BOTTOM);
@@ -100,49 +95,67 @@ public class BetForm extends BaseForm {
 				FlowLayout.encloseBottom(arrow)
 		));
 
-		all.setSelected(true);
+		addBetButton.setSelected(true);
 		arrow.setVisible(false);
 		addShowListener(e -> {
 			arrow.setVisible(true);
-			updateArrowPosition(all, arrow);
+			updateArrowPosition(addBetButton, arrow);
 		});
-		bindButtonSelection(all, arrow);
+		bindButtonSelection(addBetButton, arrow);
 		//	bindButtonSelection(addBetButton, arrow);
 
 		addOrientationListener(e -> {
 			updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
 		});
+		TextField resultField = new TextField("", "result", 20, TextField.ANY);
+		resultField.setUIID("TextFieldBlack");
 
-		f = new Form();
-		lb = new SpanLabel("");
-		f.add(lb);
+		TextField idGameField = new TextField("", "id Game", 20, TextField.NUMERIC);
+		
+		super.add(resultField);
+		super.add(idGameField);
+		
+		Button Ajouter = new Button("Add bet");
 
-		TextArea ta = new TextArea("Result");
-		ta.setUIID("TextField");
-		ta.setEditable(false);
+		Ajouter.setUIID("Button");
+		super.add(Ajouter);
+		Ajouter.addActionListener((e) -> {
+			if (idGameField.getText().equals("") || resultField.getText().equals("")) {
+				Dialog.show("Error", "Please set all fields ", "OK", null);
+			} else {
+				if (Integer.parseInt(idGameField.getText()) > 0) {
+					System.out.println(resultField.getText() + "  ! ssssss ");
+					if (resultField.getText().equals("x") || resultField.getText().equals("y") || resultField.getText().equals("z")) {
+						ServiceBet fs = new ServiceBet();
 
-		TextArea ta2 = new TextArea("Bets");
-		ta2.setUIID("TextField");
-		ta2.setEditable(false);
+						if (fs.getList3(Integer.parseInt(idGameField.getText())).get(0).getId() == 0) {
+							Dialog.show("Error", "Game does not exist ! ", "OK", null);
+						} else {
+							Map<Integer, Object> mapIdGame = new HashMap<Integer, Object>();
+							mapIdGame.put(Integer.parseInt(idGameField.getText()), "");
+							//System.out.println(mapIdGame);
+							Bet f = new Bet(mapIdGame, resultField.getText(), SimpleUser.current_user.getId());
+							fs.AjouterForum(f);
+							Dialog.show("Success", "added ! ", "OK", null);
+						}
+					} else {
+						Dialog.show("Error", "Result must be x or y or z ! ", "OK", null);
+					}
+				} else {
+					Dialog.show("Error", "ID game can't be negative ! ", "OK", null);
+				}
+			}
 
-		TextArea ta3 = new TextArea("W/L");
-		ta3.setUIID("TextField");
-		ta3.setEditable(false);
+		});
 
-		f.add(ta);
-		f.add(ta2);
-		f.add(ta3);
-		super.add(f);
-
-		ServiceBet serviceBet = new ServiceBet();
-
-		for (Bet e : serviceBet.getList2()) {
-			addButton(e, res);
-		}
-
+		all.addActionListener(e -> {
+			
+			BetForm betF = new BetForm(res);
+			betF.show();
+		});
 		addBetButton.addActionListener(e -> {
-			BetAddForm betAddF = new BetAddForm(res);
-			betAddF.show();
+			// updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
+
 		});
 
 	}
@@ -187,45 +200,6 @@ public class BetForm extends BaseForm {
 		});
 	}
 
-	private void addButton(Bet t, Resources res) {
-		
-		TextArea ta = new TextArea("   " + t.getIdGame().get("result").toString());
-		ta.setUIID("TextField");
-		ta.setEditable(false);
-
-		TextArea ta2 = new TextArea("   " + t.getResult());
-		ta2.setUIID("TextField");
-		ta2.setEditable(false);
-
-		String ch = "";
-		String result = t.getIdGame().get("result").toString();
-	
-
-		if (t.getResult().equals("x") && result.charAt(0) > result.charAt(2)
-				|| t.getResult().equals("y") && result.charAt(0) < result.charAt(2)
-				|| t.getResult().equals("z") && result.charAt(0) == result.charAt(2)) {
-			ch = "win";
-		} else {
-			ch = "loose";
-		}
-
-		TextArea ta3 = new TextArea(" " + ch);
-		ta3.setUIID("TextField");
-		ta3.setEditable(false);
-
-		
-		Container cnt = new Container();
-
-		f = new Form();
-
-		cnt.add(ta);
-		cnt.add(ta2);
-		cnt.add(ta3);
-
-		//cnt.add(f);
-		add(cnt);
-
-	}
 
 
 }

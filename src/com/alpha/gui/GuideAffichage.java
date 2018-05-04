@@ -46,15 +46,15 @@ import java.util.ArrayList;
  */
 public class GuideAffichage extends BaseForm {
 	Resources res;
-	Container CntStades = new Container(); ; 
+	Container CntStades = new Container(); 
 	 public GuideAffichage(Resources res) {
-		 super("Newsfeed", BoxLayout.y());
+		 super("", BoxLayout.y());
 		 this.res = res ; 
         
         Toolbar tb = new Toolbar(true);
         setToolbar(tb);
         getTitleArea().setUIID("Container");
-        setTitle("Newsfeed");
+        setTitle("");
         getContentPane().setScrollVisible(false);
         
         super.addSideMenu(res);
@@ -148,7 +148,7 @@ public class GuideAffichage extends BaseForm {
 	 
 		 for(int i = 0 ; i < Tab.size() ; i++)
 			  {
-		 addButtonStade(Tab.get(i).getPhoto(), Tab.get(i).getName()+" "+Tab.get(i).getCapacity(), false, 11, 9,Tab.get(i).getId(),Tab.get(i));
+		 addButtonStade(Tab.get(i).getPhoto(), Tab.get(i).getName(), false, 11, 9,Tab.get(i).getId(),Tab.get(i));
 		
 		}
 		 add(CntStades);
@@ -219,23 +219,20 @@ public class GuideAffichage extends BaseForm {
         ta.setUIID("NewsTopLine");
         ta.setEditable(false);
 
-        Label likes = new Label(likeCount + " Likes  ", "NewsBottomLine");
+        Label likes = new Label("City : "+stade.getCity(), "NewsBottomLine");
         likes.setTextPosition(RIGHT);
-        if (!liked) {
-            FontImage.setMaterialIcon(likes, FontImage.MATERIAL_FAVORITE);
-        } else {
-            Style s = new Style(likes.getUnselectedStyle());
-            s.setFgColor(0xff2d55);
-            FontImage heartImage = FontImage.createMaterial(FontImage.MATERIAL_FAVORITE, s);
-            likes.setIcon(heartImage);
-        }
-        Label comments = new Label(commentCount + " Comments", "NewsBottomLine");
-        FontImage.setMaterialIcon(likes, FontImage.MATERIAL_CHAT);
-
+      
+            FontImage.setMaterialIcon(likes, FontImage.MATERIAL_MAP);
+     Label capac = new Label("Capacity :"+stade.getCapacity(), "NewsBottomLine");
+        capac.setTextPosition(RIGHT);
+        
+            FontImage.setMaterialIcon(capac, FontImage.MATERIAL_AIRLINE_SEAT_FLAT);
+        
         cnt.add(BorderLayout.CENTER,
                 BoxLayout.encloseY(
                         ta,
-                        BoxLayout.encloseX(likes, comments)
+                        BoxLayout.encloseX(likes),
+                        BoxLayout.encloseX(capac)
                 ));
        CntStades.add(cnt);
 
@@ -261,23 +258,21 @@ public class GuideAffichage extends BaseForm {
         ta.setUIID("NewsTopLine");
         ta.setEditable(false);
 
-        Label likes = new Label(likeCount + " Likes  ", "NewsBottomLine");
+        Label likes = new Label("City :"+h.getCity() , "NewsBottomLine");
         likes.setTextPosition(RIGHT);
-        if (!liked) {
-            FontImage.setMaterialIcon(likes, FontImage.MATERIAL_FAVORITE);
-        } else {
-            Style s = new Style(likes.getUnselectedStyle());
-            s.setFgColor(0xff2d55);
-            FontImage heartImage = FontImage.createMaterial(FontImage.MATERIAL_FAVORITE, s);
-            likes.setIcon(heartImage);
-        }
-        Label comments = new Label(commentCount + " Comments", "NewsBottomLine");
-        FontImage.setMaterialIcon(likes, FontImage.MATERIAL_CHAT);
-
+        
+            FontImage.setMaterialIcon(likes, FontImage.MATERIAL_MAP);
+         Label capac = new Label("Stars :"+h.getNbEtoiles(), "NewsBottomLine");
+        capac.setTextPosition(RIGHT);
+        
+            FontImage.setMaterialIcon(capac, FontImage.MATERIAL_STAR);
+     
+      
         cnt.add(BorderLayout.CENTER,
                 BoxLayout.encloseY(
                         ta,
-                        BoxLayout.encloseX(likes, comments)
+                        BoxLayout.encloseX(likes),
+                        BoxLayout.encloseX(capac)
                 ));
        CntStades.add(cnt);
 
@@ -300,13 +295,13 @@ public class GuideAffichage extends BaseForm {
 	 
 		 for(int i = 0 ; i < Tab.size() ; i++)
 			  {
-				  addButtonStade(Tab.get(i).getPhoto(), Tab.get(i).getName()+" "+Tab.get(i).getCapacity(), false, 11, 9,Tab.get(i).getId(),Tab.get(i));
+				  addButtonStade(Tab.get(i).getPhoto(), Tab.get(i).getName(), false, 11, 9,Tab.get(i).getId(),Tab.get(i));
 			}
 				 ArrayList<Hotel> Tab2 =  ser.getListHotel();
 	 
 		 for(int i = 0 ; i < Tab2.size() ; i++)
 			  {
-				   addButtonHotel(Tab2.get(i).getImage(), Tab2.get(i).getNom()+" "+Tab2.get(i).getCity(), false, 11, 9,Tab2.get(i).getId(),Tab2.get(i));
+				   addButtonHotel(Tab2.get(i).getImage(), Tab2.get(i).getNom(), false, 11, 9,Tab2.get(i).getId(),Tab2.get(i));
 		
 			 }
 				
@@ -316,14 +311,14 @@ public class GuideAffichage extends BaseForm {
 				
 				}
 				else if(b.getName()=="Stadiums")
-				{
+				{CntStades.removeAll();
 					   ServiceGuide ser= new  ServiceGuide();
 		 ArrayList<Stadium> Tab =  ser.getListStade();
 	 
 				  CntStades.removeAll();
 		 for(int i = 0 ; i < Tab.size() ; i++)
 			  {
-				 addButtonStade(Tab.get(i).getPhoto(), Tab.get(i).getName()+" "+Tab.get(i).getCapacity(), false, 11, 9,Tab.get(i).getId(),Tab.get(i));
+				 addButtonStade(Tab.get(i).getPhoto(), Tab.get(i).getName(), false, 11, 9,Tab.get(i).getId(),Tab.get(i));
 			}
 		 
 				}
@@ -336,7 +331,7 @@ public class GuideAffichage extends BaseForm {
 				  CntStades.removeAll();
 		 for(int i = 0 ; i < Tab.size() ; i++)
 			  {
-				   addButtonHotel(Tab.get(i).getImage(), Tab.get(i).getNom()+" "+Tab.get(i).getCity(), false, 11, 9,Tab.get(i).getId(),Tab.get(i));
+				   addButtonHotel(Tab.get(i).getImage(), Tab.get(i).getNom(), false, 11, 9,Tab.get(i).getId(),Tab.get(i));
 		
 			 }
 				}
