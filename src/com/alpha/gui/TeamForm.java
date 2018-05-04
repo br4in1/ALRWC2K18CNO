@@ -180,23 +180,21 @@ public class TeamForm extends BaseForm {
 		ta.setUIID("NewsTopLine");
 		ta.setEditable(false);
 
-		Label likes = new Label(" rank : " + t.getFifaRank());
-		likes.setTextPosition(RIGHT);
-		//if (!liked) {
-			//FontImage.setMaterialIcon(likes, FontImage.MATERIAL_FAVORITE);
-		//} else {
-			Style s = new Style(likes.getUnselectedStyle());
+		Label rankLabel = new Label(" rank : " + t.getFifaRank());
+		rankLabel.setTextPosition(RIGHT);
+		
+			Style s = new Style(rankLabel.getUnselectedStyle());
 			s.setFgColor(0xff2d55);
 			FontImage heartImage = FontImage.createMaterial(FontImage.MATERIAL_FAVORITE, s);
-			likes.setIcon(heartImage);
-		//}
-		Label comments = new Label(" Points : " + t.getPoints());
-		FontImage.setMaterialIcon(likes, FontImage.MATERIAL_CHAT);
+			rankLabel.setIcon(heartImage);
+		
+		Label pointsLabel = new Label(" Points : " + t.getPoints());
+		FontImage.setMaterialIcon(rankLabel, FontImage.MATERIAL_CHAT);
 
 		cnt.add(BorderLayout.CENTER,
 				BoxLayout.encloseY(
 						ta,
-						BoxLayout.encloseX(likes, comments)
+						BoxLayout.encloseX(rankLabel, pointsLabel)
 				));
 		add(cnt);
 		image.addActionListener(

@@ -104,16 +104,13 @@ public class ServiceBet {
 	public ArrayList<Game> getListGame(String json) {
 		ArrayList<Game> listBets = new ArrayList<>();
 		try {
-			//System.out.println(json);
 			JSONParser j = new JSONParser();
 			Map<String, Object> lBetMap = j.parseJSON(new CharArrayReader(json.toCharArray()));
 			System.out.println(lBetMap);
 			
-			//for (String key : lBetMap.keySet()) {
 			System.out.println(" Value:" + lBetMap.get("id"));// Get Key and value and count
 			Game t = new Game();
 			
-		//	System.out.println("id:" + t.getId());// Get Key and value and count
 			
 			if(lBetMap.get("id")==null){
 				t.setId(0);
@@ -123,28 +120,10 @@ public class ServiceBet {
 				t.setId((int) Float.parseFloat(lBetMap.get("id").toString()));
 				listBets.add(t);
 			}
-			//}
 			
-			//List<Map<String, Object>> list = (List<Map<String, Object>>) lBetMap.get("root");
-			
-			//System.out.println(list);
-
-		/*	for (Map<String, Object> obj : list) {
-			//	Game t = new Game();
-				//System.out.println(obj.get("id"));
-				//Map<Integer, Object> gameMap = (Map<Integer, Object>) obj.get("idGame");
-				//Map<String,Object>awayteam=(Map<String,Object>)obj.get("awayteam");
-				//float id = Float.parseFloat(obj.get("id").toString());
-			//	System.out.println(id + "issss");
-				//t.setId((int) id);
-			//	t.setId((int) Float.parseFloat(obj.get("id").toString()));
-				//System.out.println(t.getId() + "dsssss");
-				//System.out.println(t);
-				//listBets.add(t);
-			}*/
+		
 		} catch (IOException ex) {
 		}
-		//System.out.println(listBets);
 		return listBets;
 	}
 
@@ -158,9 +137,7 @@ public class ServiceBet {
 			@Override
 			public void actionPerformed(NetworkEvent evt) {
 				ServiceBet ser = new ServiceBet();
-				// listTeams2 = ser.getListTeam(new String(con.getResponseData()));
 				listBetsGame2 = ser.getListGame(new String(con.getResponseData()));
-
 			}
 		});
 		NetworkManager.getInstance().addToQueueAndWait(con);
