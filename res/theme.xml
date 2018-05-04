@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<resource majorVersion="1" minorVersion="7" useXmlUI="false">
+<resource majorVersion="1" minorVersion="9" useXmlUI="false">
     <image name="1.jpg"  />
     <image name="activation-background.jpg"  />
+    <image name="avatar_author.png"  />
+    <image name="avatar_comm.jpg"  />
     <image name="confirmation-background.jpg"  />
     <image name="default_profile_picture.png"  />
     <image name="dog.jpg"  />
@@ -127,7 +129,7 @@
         <val key="InputContainerBackgroundSofien.margin" value="0,0,0,0" />
         <val key="InputContainerBackgroundSofien.transparency" value="255" />
         <val key="InputContainerForeground.bgColor" value="ffffff" />
-        <border key="InputContainerForeground.border" type="line" thickness="2" color="16007990" />
+        <border key="InputContainerForeground.border" type="line" millimeters="false" thickness="2.0" color="16007990" />
         <val key="InputContainerForeground.marUnit" value="2,2,2,2" />
         <val key="InputContainerForeground.margin" value="5,3,3,3" />
         <val key="InputContainerForeground.padUnit" value="2,0,0,0" />
@@ -365,6 +367,8 @@
         <val key="WhiteSeparator.margin" value="0,0,0,0" />
         <val key="WhiteSeparator.padding" value="1,1,1,1" />
         <val key="WhiteSeparator.transparency" value="26" />
+        <font key="commentaires.font" type="ttf" face="0" style="2" size="0" name="native:ItalicLight" family="native:ItalicLight" sizeSettings="4" actualSize="19.0" />
+        <font key="ktiba_kbira.font" type="system" face="32" style="1" size="16" />
         <val key="transparency" value="0" />
     </theme>
     <image name="timeline-background.jpg"  />
