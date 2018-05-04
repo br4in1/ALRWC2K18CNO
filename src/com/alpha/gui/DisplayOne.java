@@ -31,6 +31,8 @@ import com.codename1.ui.Tabs;
 import com.codename1.ui.TextArea;
 import com.codename1.ui.Toolbar;
 import com.codename1.ui.URLImage;
+import com.codename1.ui.events.ActionEvent;
+import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
@@ -40,36 +42,36 @@ import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
 import java.io.IOException;
 import java.util.ArrayList;
+import javafx.scene.image.ImageView;
 
 /**
  *
  * @author dell
  */
-public class DisplayOne extends BaseForm{
-	 Gallery gallery;
-	     Resources res;
+public class DisplayOne extends BaseForm {
 
+	Gallery gallery;
+	Resources res;
 
+	Container cnt2 = new Container();
+	private  int x =0 ; 
 
-  Container cnt2 = new Container();
-	
-
-	public DisplayOne(Resources res ,Gallery g1 ) {
+	public DisplayOne(Resources res, Gallery g1) {
 		super("", BoxLayout.y());
-		this.res=res;	
+		this.res = res;
 		Toolbar tb = new Toolbar(true);
 		setToolbar(tb);
 		getTitleArea().setUIID("Container");
 		getContentPane().setScrollVisible(false);
 
-		super.addSideMenu(res);
+		//super.addSideMenu(res);
 
-		     Tabs swipe = new Tabs();
+		Tabs swipe = new Tabs();
 
-        Label spacer1 = new Label();
-        Label spacer2 = new Label();
-        addTab(swipe, res.getImage("news-item.jpg"), spacer1, "15 Likes  ", "85 Comments", "Integer ut placerat purued non dignissim neque. ");
-        addTab(swipe, res.getImage("dog.jpg"), spacer2, "100 Likes  ", "66 Comments", "Dogs are cute: story at 11");
+		Label spacer1 = new Label();
+		Label spacer2 = new Label();
+		addTab(swipe, res.getImage("news-item.jpg"), spacer1, "15 Likes  ", "85 Comments", "Integer ut placerat purued non dignissim neque. ");
+		addTab(swipe, res.getImage("dog.jpg"), spacer2, "100 Likes  ", "66 Comments", "Dogs are cute: story at 11");
 
 		ButtonGroup bg = new ButtonGroup();
 		int size = Display.getInstance().convertToPixels(1);
@@ -84,22 +86,23 @@ public class DisplayOne extends BaseForm{
 		g.setColor(0xffffff);
 		g.setAntiAliased(true);
 		g.fillArc(0, 0, size, size, 0, 360);
-		
-        RadioButton[] rbs = new RadioButton[swipe.getTabCount()];
-        FlowLayout flow = new FlowLayout(CENTER);
-        flow.setValign(BOTTOM);
-        Container radioContainer = new Container(flow);
-        for(int iter = 0 ; iter < rbs.length ; iter++) {
-            rbs[iter] = RadioButton.createToggle(unselectedWalkthru, bg);
-            rbs[iter].setPressedIcon(selectedWalkthru);
-            rbs[iter].setUIID("Label");
-            radioContainer.add(rbs[iter]);
-        } 
-                
-        rbs[0].setSelected(true); 
+
+		RadioButton[] rbs = new RadioButton[swipe.getTabCount()];
+		FlowLayout flow = new FlowLayout(CENTER);
+		flow.setValign(BOTTOM);
+		Container radioContainer = new Container(flow);
+		for (int iter = 0; iter < rbs.length; iter++) {
+			rbs[iter] = RadioButton.createToggle(unselectedWalkthru, bg);
+			rbs[iter].setPressedIcon(selectedWalkthru);
+			rbs[iter].setUIID("Label");
+			radioContainer.add(rbs[iter]);
+		}
+
+		rbs[0].setSelected(true);
 
 		ButtonGroup barGroup = new ButtonGroup();
-		RadioButton all = RadioButton.createToggle("Gallery photo ", barGroup);
+
+		RadioButton all = RadioButton.createToggle("Prise à " + g1.getVille(), barGroup);
 		all.setUIID("SelectBar");
 
 		Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
@@ -107,6 +110,10 @@ public class DisplayOne extends BaseForm{
 		add(LayeredLayout.encloseIn(
 				GridLayout.encloseIn(1, all),
 				FlowLayout.encloseBottom(arrow)
+		));
+		Label arrow1 = new Label(res.getImage("local.png"), "Container");
+		add(LayeredLayout.encloseIn(
+				FlowLayout.encloseBottom(arrow1)
 		));
 
 		all.setSelected(true);
@@ -121,13 +128,80 @@ public class DisplayOne extends BaseForm{
 		addOrientationListener(e -> {
 			updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
 		});
-		
-		
+
 		add(cnt2);
-				ServiceGallery ser = new ServiceGallery();
-						addButton(g1.getImage(), g1.getVille() + "  , " + g1.getLieu(), false, 11, 9, g1.getId());
-				
+		Label test = new Label("");
+		Label test1 = new Label("");
+       
+		Label likes = new Label("a");
+		Style heartStyle = new Style(likes.getUnselectedStyle());
+		heartStyle.setFgColor(0xff2d55);
+		FontImage heartImage = FontImage.createMaterial(FontImage.MATERIAL_FAVORITE_BORDER, heartStyle);
+		likes.setIcon(heartImage);
+		likes.setTextPosition(RIGHT);
+		cnt2.add(likes);
+		cnt2.add(test);
+		cnt2.add(test1);
 		
+		Label dislike = new Label("a");
+	    Style heartStylee = new Style(dislike.getUnselectedStyle());
+		heartStylee.setFgColor(0xff2d55);
+		FontImage heartImagee = FontImage.createMaterial(FontImage.MATERIAL_FAVORITE, heartStylee);
+		dislike.setIcon(heartImagee);
+		dislike.setTextPosition(RIGHT);
+		dislike.setVisible(false); 
+		cnt2.add(dislike);
+		
+		likes.addPointerPressedListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				if(x==0)
+				{
+					likes.setIcon(FontImage.createMaterial(FontImage.MATERIAL_FAVORITE, heartStyle));
+					x=1;
+				} else {
+						likes.setIcon(FontImage.createMaterial(FontImage.MATERIAL_FAVORITE_BORDER, heartStyle));
+					x=0;
+				}
+			}
+		});
+		
+		/*likes.addPointerPressedListener((evt) -> {
+						//likes.setVisible(false);
+			//dislike.setVisible(true);
+			if (likes.getName().equals("liked")){
+				System.out.println("equals");
+			likes.setIcon(heartImage);
+			}else {
+				System.out.println("equals pas");
+					likes.setIcon(FontImage.createMaterial(FontImage.MATERIAL_FAVORITE_BORDER, heartStyle));
+			}
+		}); */
+		
+		
+		/*dislike.addPointerPressedListener((evt) -> {
+				likes.setVisible(true);
+			dislike.setVisible(false);
+			System.out.println("aaaa");
+			
+		});*/
+
+
+
+		//Image s = new Image(Image.createImage());
+		//ImageView img2 = new ImageView(Image.createImage(""));
+
+		/*n.addPointerPressedListener((evt) -> {
+			//n.setVisible(false);
+			System.out.println("hellooo");
+			n1.setVisible(true);
+		}); */
+		Label l = new Label("Ville : ");
+		l.setUIID("Test");
+		cnt2.add(l);
+		ServiceGallery ser = new ServiceGallery();
+		addButton(g1.getImage(), g1.getVille() + "  , " + g1.getLieu(), false, 11, 9, g1.getId());
+
 	}
 
 	private void updateArrowPosition(Button b, Label arrow) {
@@ -163,7 +237,7 @@ public class DisplayOne extends BaseForm{
 						image,
 						overlay,
 						BorderLayout.south(
-								BoxLayout.encloseY(
+								BoxLayout.encloseX(
 										new SpanLabel(text, "LargeWhiteText"),
 										FlowLayout.encloseIn(likes, comments),
 										spacer
@@ -174,7 +248,7 @@ public class DisplayOne extends BaseForm{
 		swipe.addTab("", page1);
 	}
 
-	private void addButton(String imageUrl, String title, boolean liked, int likeCount, int commentCount, int id  ) {
+	private void addButton(String imageUrl, String title, boolean liked, int likeCount, int commentCount, int id) {
 
 		ImageViewer im = new ImageViewer();
 
@@ -206,8 +280,6 @@ public class DisplayOne extends BaseForm{
 		}
 		Label comments = new Label(commentCount + " Comments", "NewsBottomLine");
 		FontImage.setMaterialIcon(likes, FontImage.MATERIAL_CHAT);
-		
-	
 
 		cnt.add(BorderLayout.CENTER,
 				BoxLayout.encloseY(
@@ -216,7 +288,6 @@ public class DisplayOne extends BaseForm{
 				));
 		add(cnt);
 
-		
 	}
 
 	private void bindButtonSelection(Button b, Label arrow) {
@@ -251,5 +322,5 @@ public class DisplayOne extends BaseForm{
 			}
 		});
 	}
-	
+
 }
