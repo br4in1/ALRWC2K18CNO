@@ -79,17 +79,32 @@ public class BaseForm extends Form {
 		ScaleImageLabel sl = new ScaleImageLabel(img);
 		sl.setUIID("BottomPad");
 		sl.setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);
-		tb.addComponentToSideMenu(LayeredLayout.encloseIn(
-				sl,
-				FlowLayout.encloseCenterBottom(
-						new Label(URLImage.createToStorage(encImage, "User" + SimpleUser.current_user.getProfilepicture(), SimpleUser.current_user.getProfilepicture(), URLImage.RESIZE_SCALE_TO_FILL), "PictureWhiteBackgrond"))
-		));
+		Image userImage;
+		if (SimpleUser.current_user.getProfilepicture() == null) {
+			userImage = res.getImage("default_profile_picture.png");
+			tb.addComponentToSideMenu(LayeredLayout.encloseIn(
+					sl,
+					FlowLayout.encloseCenterBottom(
+							new Label(userImage))
+			));
+		} else {
+			tb.addComponentToSideMenu(LayeredLayout.encloseIn(
+					sl,
+					FlowLayout.encloseCenterBottom(
+							new Label(URLImage.createToStorage(encImage, "User" + SimpleUser.current_user.getProfilepicture(), SimpleUser.current_user.getProfilepicture(), URLImage.RESIZE_SCALE_TO_FILL), "PictureWhiteBackgrond"))
+			));
+		}
 
 		tb.addMaterialCommandToSideMenu("Newsfeed", FontImage.MATERIAL_UPDATE, e -> new NewsfeedForm(res).show());
 		tb.addMaterialCommandToSideMenu("Profile", FontImage.MATERIAL_SETTINGS, e -> new ProfileForm(res).show());
 		tb.addMaterialCommandToSideMenu("Logout", FontImage.MATERIAL_EXIT_TO_APP, e -> new WalkthruForm(res).show());
 		tb.addMaterialCommandToSideMenu("Teams", FontImage.MATERIAL_FLAG, e -> new TeamForm(res).show());
+<<<<<<< HEAD
+		tb.addMaterialCommandToSideMenu("Guide", FontImage.MATERIAL_HOME, e -> new GuideAffichage(res).show());
+=======
+		tb.addMaterialCommandToSideMenu("Bets", FontImage.MATERIAL_UPDATE,  e -> new BetForm(res).show());
 		tb.addMaterialCommandToSideMenu("Guide", FontImage.MATERIAL_HOME, e -> {GoogleMapsTestApp a= new GoogleMapsTestApp() ; a.start("tunis");});
+>>>>>>> 19e55e25bd30ed100825a12728e7837c88ba6f5f
 		tb.addMaterialCommandToSideMenu("Gallery", FontImage.MATERIAL_IMAGE, e -> new DisplayGallery(res).show());
 		tb.addMaterialCommandToSideMenu("Shop", FontImage.MATERIAL_SHOP, e -> {
 			try {

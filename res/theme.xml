@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<resource majorVersion="1" minorVersion="9" useXmlUI="false">
+<resource majorVersion="1" minorVersion="7" useXmlUI="false">
     <image name="1.jpg"  />
     <image name="activation-background.jpg"  />
     <image name="confirmation-background.jpg"  />
+    <image name="default_profile_picture.png"  />
     <image name="dog.jpg"  />
+    <image name="facebook-login.png"  />
     <image name="facebook-logo.png" type="multi"  />
+    <image name="fondsofien.jpg" type="multi"  />
     <image name="Logo.png" type="multi"  />
     <image name="news-item-1.jpg"  />
     <image name="news-item-2.jpg"  />
@@ -104,6 +107,32 @@
         <val key="Form.transparency" value="255" />
         <val key="ImageOverlay.bgColor" value="14134b" />
         <val key="ImageOverlay.transparency" value="60" />
+        <val key="InputAvatar.align" value="4" />
+        <val key="InputAvatar.margin" value="0,0,0,0" />
+        <val key="InputAvatar.padding" value="0,0,0,0" />
+        <val key="InputAvatar.transparency" value="0" />
+        <val key="InputAvatarImage.align" value="4" />
+        <val key="InputAvatarImage.bgColor" value="f44336" />
+        <val key="InputAvatarImage.fgColor" value="ffffff" />
+        <val key="InputAvatarImage.padding" value="2,2,2,2" />
+        <val key="InputAvatarImage.transparency" value="255" />
+        <val key="InputContainerBackground.bgColor" value="9e9e9e" />
+        <val key="InputContainerBackground.bgImage" value="signup-background.jpg" />
+        <val key="InputContainerBackground.bgType" value="1" />
+        <val key="InputContainerBackground.margin" value="0,0,0,0" />
+        <val key="InputContainerBackground.transparency" value="255" />
+        <val key="InputContainerBackgroundSofien.bgColor" value="9e9e9e" />
+        <val key="InputContainerBackgroundSofien.bgImage" value="fondsofien.jpg" />
+        <val key="InputContainerBackgroundSofien.bgType" value="1" />
+        <val key="InputContainerBackgroundSofien.margin" value="0,0,0,0" />
+        <val key="InputContainerBackgroundSofien.transparency" value="255" />
+        <val key="InputContainerForeground.bgColor" value="ffffff" />
+        <border key="InputContainerForeground.border" type="line" thickness="2" color="16007990" />
+        <val key="InputContainerForeground.marUnit" value="2,2,2,2" />
+        <val key="InputContainerForeground.margin" value="5,3,3,3" />
+        <val key="InputContainerForeground.padUnit" value="2,0,0,0" />
+        <val key="InputContainerForeground.padding" value="5,2,2,2" />
+        <val key="InputContainerForeground.transparency" value="255" />
         <val key="Label.fgColor" value="a2a1b8" />
         <font key="Label.font" type="ttf" face="0" style="0" size="0" name="native:MainLight" family="native:MainLight" sizeSettings="3" actualSize="2.5" />
         <val key="Label.transparency" value="0" />
@@ -158,6 +187,9 @@
         <font key="NewsTopLine.sel#font" type="ttf" face="0" style="0" size="0" name="native:MainLight" family="native:MainLight" sizeSettings="3" actualSize="2.0" />
         <val key="NewsTopLine.sel#transparency" value="0" />
         <val key="NewsTopLine.transparency" value="0" />
+        <val key="PaddedContainer.bgImage" value="activation-background.jpg" />
+        <val key="PaddedContainer.bgType" value="1" />
+        <val key="PaddedContainer.padding" value="1,1,1,1" />
         <val key="PaddedLabel.fgColor" value="a2a1b8" />
         <font key="PaddedLabel.font" type="ttf" face="0" style="0" size="0" name="native:MainLight" family="native:MainLight" sizeSettings="3" actualSize="2.5" />
         <val key="PaddedLabel.padUnit" value="2,2,2,2" />
@@ -260,10 +292,10 @@
         <val key="StatusBarSideMenu.padding" value="0,0,0,0" />
         <val key="TextField.align" value="4" />
         <border key="TextField.border" type="empty" />
-        <val key="TextField.fgColor" value="ffffff" />
-        <val key="TextField.margin" value="0,0,0,0" />
+        <val key="TextField.fgColor" value="cc0099" />
+        <val key="TextField.margin" value="0.0,0.0,0.0,0.0" />
         <val key="TextField.padUnit" value="2,2,2,2" />
-        <val key="TextField.padding" value="2,2,2,2" />
+        <val key="TextField.padding" value="2.0,2.0,2.0,2.0" />
         <val key="TextField.sel#align" value="4" />
         <border key="TextField.sel#border" type="empty" />
         <val key="TextField.sel#fgColor" value="ffffff" />

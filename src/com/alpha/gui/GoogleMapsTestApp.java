@@ -5,6 +5,8 @@
  */
 package com.alpha.gui;
 
+import com.alpha.Entite.Hotel;
+import com.alpha.Entite.Stadium;
 import com.codename1.components.ToastBar;
 import com.codename1.googlemaps.MapContainer;
 import com.codename1.io.ConnectionRequest;
@@ -24,8 +26,10 @@ import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
+import com.codename1.util.Callback;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -49,6 +53,84 @@ public class GoogleMapsTestApp {
             e.printStackTrace();
         }
     }
+     public static Coord[] decode(final String encodedPath) {
+        int len = encodedPath.length();
+        final ArrayList<Coord> path = new ArrayList<Coord>();
+        int index = 0;
+        int lat = 0;
+        int lng = 0;
+
+        while (index < len) {
+            int result = 1;
+            int shift = 0;
+            int b;
+            do {
+                b = encodedPath.charAt(index++) - 63 - 1;
+                result += b << shift;
+                shift += 5;
+            } while (b >= 0x1f);
+            lat += (result & 1) != 0 ? ~(result >> 1) : (result >> 1);
+
+            result = 1;
+            shift = 0;
+            do {
+                b = encodedPath.charAt(index++) - 63 - 1;
+                result += b << shift;
+                shift += 5;
+            } while (b >= 0x1f);
+            lng += (result & 1) != 0 ? ~(result >> 1) : (result >> 1);
+
+            path.add(new Coord(lat * 1e-5, lng * 1e-5));
+        }
+        Coord[] p = new Coord[path.size()];
+        for (int i = 0; i < path.size(); i++) {
+            p[i] = path.get(i);
+        }
+
+        return p;
+    }
+     public static String getRoutesEncoded(Coord src, Coord dest) {
+        String ret = "";
+        try {
+            ConnectionRequest request = new ConnectionRequest("https://maps.googleapis.com/maps/api/directions/json", false);
+            request.addArgument("key", MAPS_KEY);
+            request.addArgument("origin", src.getLatitude() + "," + src.getLongitude());
+            request.addArgument("destination", dest.getLatitude() + "," + dest.getLongitude());
+
+            NetworkManager.getInstance().addToQueueAndWait(request);
+            Map<String, Object> response = new JSONParser().parseJSON(new InputStreamReader(new ByteArrayInputStream(request.getResponseData()), "UTF-8"));
+            if (response.get("routes") != null) {
+                ArrayList routes = (ArrayList) response.get("routes");
+                if (routes.size() > 0)
+                    ret = ((LinkedHashMap) ((LinkedHashMap) ((ArrayList) response.get("routes")).get(0)).get("overview_polyline")).get("points").toString();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ret;
+    }
+    public static void getRoutesEncodedAsync(Coord src, Coord dest, Callback callback) {
+        ConnectionRequest request = new ConnectionRequest("https://maps.googleapis.com/maps/api/directions/json", false) {
+            @Override
+            protected void readResponse(InputStream input) throws IOException {
+                String ret = "";
+                Map<String, Object> response = new JSONParser().parseJSON(new InputStreamReader(input, "UTF-8"));
+                if (response.get("routes") != null) {
+                    ArrayList routes = (ArrayList) response.get("routes");
+                    if (routes.size() > 0)
+                        ret = ((LinkedHashMap) ((LinkedHashMap) ((ArrayList) response.get("routes")).get(0)).get("overview_polyline")).get("points").toString();
+                }
+                callback.onSucess(ret);
+            }
+
+
+        };
+        request.addArgument("key", MAPS_KEY);
+        request.addArgument("origin", src.getLatitude() + "," + src.getLongitude());
+        request.addArgument("destination", dest.getLatitude() + "," + dest.getLongitude());
+
+        NetworkManager.getInstance().addToQueue(request);
+    }
   public static Coord getCoords(String address) {
         Coord ret = null;
         try {
@@ -70,30 +152,33 @@ public class GoogleMapsTestApp {
         }
         return ret;
     }
-    public void start(String emplacement) {
+    public void start(double geolat , double geolong , Resources resss , Stadium st ) {
         if (current != null) {
             current.show();
             return;
         }
-        Form hi = new Form("l'emplacement du vétérinaire");
+        Form hi = new Form("Stadium's position : ");
         hi.setLayout(new BorderLayout());
         final MapContainer cnt = new MapContainer(HTML_API_KEY);
- Coord coords = getCoords(emplacement);
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +coords.getLatitude());
-        Button btnMoveCamera = new Button("Move Camera");
-        btnMoveCamera.addActionListener(e->{
-            cnt.setCameraPosition(coords);
-        });
-        Style s = new Style();
-        s.setFgColor(0xff0000);
-        s.setBgTransparency(0);
-        FontImage markerImg = FontImage.createMaterial(FontImage.MATERIAL_PLACE, s, Display.getInstance().convertToPixels(3));
+        cnt.setMapType(2);
+        cnt.setCameraPosition(new Coord(geolat, geolong));
+         Coord src = new Coord(31.2001, 29.9187);
+        Coord dest = new Coord(30.0444, 31.2357);
+        // get the routes using google directions api
+        String encoded = getRoutesEncoded(src, dest);
+        // decode the routes in an arry of coords
+        Coord[] coords = decode(encoded);
 
-        Button btnAddMarker = new Button("Show Marker");
-        btnAddMarker.addActionListener(e->{
-
-            cnt.setCameraPosition(coords);
-            cnt.addMarker(
+        cnt.addPath(coords);
+         Style s = new Style();
+         s.setBgTransparency(0);
+        s.setFgColor(0x007700);
+        cnt.addMarker(FontImage.createMaterial(FontImage.MATERIAL_LOCATION_ON, s).toEncodedImage(), src, "", "", null);
+        cnt.addMarker(FontImage.createMaterial(FontImage.MATERIAL_LOCATION_ON, s).toEncodedImage(), dest, "", "", null);
+        
+        FontImage markerImg = FontImage.createMaterial(FontImage.MATERIAL_LOCATION_ON, s, Display.getInstance().convertToPixels(3));
+       
+         cnt.addMarker(
                     EncodedImage.createFromImage(markerImg, false),
                     cnt.getCameraPosition(),
                     "Hi marker",
@@ -102,30 +187,100 @@ public class GoogleMapsTestApp {
                              ToastBar.showMessage("You clicked the marker", FontImage.MATERIAL_PLACE);
                      }
             );
-
+        
+        Button btnMoveCamera = new Button("Back");
+        btnMoveCamera.addActionListener(e->{
+             new AfficherSingleStade(resss,st).show();
         });
-
-        Button btnAddPath = new Button("Add Path");
-        btnAddPath.addActionListener(e->{
-
-            cnt.addPath(
+         Button btnAddMarker = new Button("Show Marker");
+        btnAddMarker.addActionListener(e->{
+                        cnt.setMapType(2);
+                        cnt.zoom(new Coord(geolat, geolong), 16);
+            cnt.setCameraPosition(new Coord(geolat, geolong));
+            cnt.addMarker(
+                    EncodedImage.createFromImage(markerImg, false),
                     cnt.getCameraPosition(),
-                   coords // Sydney
-                   
+                    st.getName(),
+                    st.getCity(),
+                     evt -> {
+                             ToastBar.showMessage("It's Here ! ", FontImage.MATERIAL_PLACE);
+                     }
             );
-        });
 
-        Button btnClearAll = new Button("Clear All");
-        btnClearAll.addActionListener(e->{
-            cnt.clearMapLayers();
         });
-
-      
 
         Container root = LayeredLayout.encloseIn(
                 BorderLayout.center(cnt),
                 BorderLayout.south(
-                        FlowLayout.encloseBottom(btnMoveCamera, btnAddMarker, btnAddPath, btnClearAll)
+                        FlowLayout.encloseBottom(btnMoveCamera, btnAddMarker)
+                )
+        );
+
+        hi.add(BorderLayout.CENTER, root);
+        hi.show();
+
+    }
+     public void start(double geolat , double geolong , Resources resss , Hotel h ) {
+        if (current != null) {
+            current.show();
+            return;
+        }
+        Form hi = new Form("Hotel's position : ");
+        hi.setLayout(new BorderLayout());
+        final MapContainer cnt = new MapContainer(HTML_API_KEY);
+        cnt.setMapType(2);
+        cnt.setCameraPosition(new Coord(geolat, geolong));
+         Coord src = new Coord(31.2001, 29.9187);
+        Coord dest = new Coord(30.0444, 31.2357);
+        // get the routes using google directions api
+        String encoded = getRoutesEncoded(src, dest);
+        // decode the routes in an arry of coords
+        Coord[] coords = decode(encoded);
+
+        cnt.addPath(coords);
+         Style s = new Style();
+         s.setBgTransparency(0);
+        s.setFgColor(0x007700);
+        cnt.addMarker(FontImage.createMaterial(FontImage.MATERIAL_LOCATION_ON, s).toEncodedImage(), src, "", "", null);
+        cnt.addMarker(FontImage.createMaterial(FontImage.MATERIAL_LOCATION_ON, s).toEncodedImage(), dest, "", "", null);
+        
+        FontImage markerImg = FontImage.createMaterial(FontImage.MATERIAL_LOCATION_ON, s, Display.getInstance().convertToPixels(3));
+       
+         cnt.addMarker(
+                    EncodedImage.createFromImage(markerImg, false),
+                    cnt.getCameraPosition(),
+                    "Hi marker",
+                    "Optional long description",
+                     evt -> {
+                             ToastBar.showMessage("You clicked the marker", FontImage.MATERIAL_PLACE);
+                     }
+            );
+        
+        Button btnMoveCamera = new Button("Back");
+        btnMoveCamera.addActionListener(e->{
+             new AfficherSingleHotel(resss,h).show();
+        });
+         Button btnAddMarker = new Button("Show Marker");
+        btnAddMarker.addActionListener(e->{
+                        cnt.setMapType(2);
+                        cnt.zoom(new Coord(geolat, geolong), 16);
+            cnt.setCameraPosition(new Coord(geolat, geolong));
+            cnt.addMarker(
+                    EncodedImage.createFromImage(markerImg, false),
+                    cnt.getCameraPosition(),
+                    h.getNom(),
+                    h.getCity(),
+                     evt -> {
+                             ToastBar.showMessage("It's Here ! ", FontImage.MATERIAL_PLACE);
+                     }
+            );
+
+        });
+
+        Container root = LayeredLayout.encloseIn(
+                BorderLayout.center(cnt),
+                BorderLayout.south(
+                        FlowLayout.encloseBottom(btnMoveCamera, btnAddMarker)
                 )
         );
 

@@ -5,27 +5,12 @@
  */
 package com.alpha.gui;
 
-import com.alpha.Entite.Hotel;
-import com.alpha.Entite.Stade;
-import com.alpha.Entite.Stadium;
-import static com.alpha.gui.GoogleMapsTestApp.getCoords;
-import com.codename1.capture.Capture;
-import com.codename1.components.FloatingHint;
-import com.codename1.components.ImageViewer;
 import com.codename1.components.OnOffSwitch;
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.components.SpanLabel;
 import com.codename1.components.ToastBar;
-import com.codename1.googlemaps.MapContainer;
-import com.codename1.io.ConnectionRequest;
-import com.codename1.io.JSONParser;
-import com.codename1.io.Log;
-import com.codename1.io.NetworkManager;
-import com.codename1.maps.Coord;
-import com.codename1.ui.AutoCompleteTextField;
 import com.codename1.ui.Button;
 import com.codename1.ui.ButtonGroup;
-import com.codename1.ui.CheckBox;
 import com.codename1.ui.Component;
 import static com.codename1.ui.Component.BOTTOM;
 import static com.codename1.ui.Component.CENTER;
@@ -34,7 +19,6 @@ import static com.codename1.ui.Component.RIGHT;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
-import com.codename1.ui.EncodedImage;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.Graphics;
@@ -45,34 +29,22 @@ import com.codename1.ui.Tabs;
 import com.codename1.ui.TextArea;
 import com.codename1.ui.TextField;
 import com.codename1.ui.Toolbar;
-import com.codename1.ui.URLImage;
 import com.codename1.ui.animations.CommonTransitions;
-import com.codename1.ui.events.ActionEvent;
-import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
-import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
-import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.spinner.Picker;
 import com.codename1.ui.table.TableLayout;
 import com.codename1.ui.util.Resources;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import javafx.scene.control.Alert;
 
 /**
  *
  * @author Sof
  */
-public class AfficherSingleStade  extends BaseForm {
-      private void addComps(Form parent, Container cnt, Component... cmps) {
+public class AddingCarPooling extends BaseForm {
+       private void addComps(Form parent, Container cnt, Component... cmps) {
         if(Display.getInstance().isTablet() || !Display.getInstance().isPortrait()) {
             TableLayout tl = new TableLayout(cmps.length / 2, 2);
             cnt.setLayout(tl);
@@ -103,7 +75,7 @@ public class AfficherSingleStade  extends BaseForm {
             }
         }
     }
-	public AfficherSingleStade(Resources res , Stadium s ){
+	public AddingCarPooling(Resources res){
 	 super("", BoxLayout.y());
         Toolbar tb = new Toolbar(true);
         setToolbar(tb);
@@ -112,32 +84,127 @@ public class AfficherSingleStade  extends BaseForm {
         getContentPane().setScrollVisible(false);
         
         super.addSideMenu(res);
-        Container cncn = new Container();
-       ImageViewer im = new ImageViewer();
+        Tabs swipe = new Tabs();
 
-        Image placeholder1 = Image.createImage(300, 300, 0xbfc9d2);
-        EncodedImage encImage = EncodedImage.createFromImage(placeholder1, true);
-
-        im.setImage(URLImage.createToStorage(encImage, "High" + s.getPhoto(), s.getPhoto(), URLImage.RESIZE_SCALE_TO_FILL));
-
-        cncn.add(im);
-       
-        Label InfoStade = new Label("Details : ");
-        Label nom = new Label("Name : "+s.getName());
-        Label capacity = new Label("Capacity : "+s.getCapacity());
-        Label city = new Label("City : "+s.getCity());
-        InfoStade.setUIID("SideCommand");
-        Button Voir = new Button("Show Location");
-        Voir.setUIID("Button");
-        Voir.addActionListener(e->{
-        GoogleMapsTestApp x = new GoogleMapsTestApp();
-        x.start(s.getGetLat(),s.getGetLong(),res,s);
+        Label spacer1 = new Label();
+        addTab(swipe, res.getImage("news-item.jpg"), spacer1, "15 Likes  ", "85 Comments", "Integer ut placerat purued non dignissim neque. ");
+                
+        swipe.setUIID("Container");
+        swipe.getContentPane().setUIID("Container");
+        swipe.hideTabs();
+        
+        ButtonGroup bg = new ButtonGroup();
+        int size = Display.getInstance().convertToPixels(1);
+        Image unselectedWalkthru = Image.createImage(size, size, 0);
+        Graphics g = unselectedWalkthru.getGraphics();
+        g.setColor(0xffffff);
+        g.setAlpha(100);
+        g.setAntiAliased(true);
+        g.fillArc(0, 0, size, size, 0, 360);
+        Image selectedWalkthru = Image.createImage(size, size, 0);
+        g = selectedWalkthru.getGraphics();
+        g.setColor(0xffffff);
+        g.setAntiAliased(true);
+        g.fillArc(0, 0, size, size, 0, 360);
+        RadioButton[] rbs = new RadioButton[swipe.getTabCount()];
+        FlowLayout flow = new FlowLayout(CENTER);
+        flow.setValign(BOTTOM);
+        Container radioContainer = new Container(flow);
+        for(int iter = 0 ; iter < rbs.length ; iter++) {
+            rbs[iter] = RadioButton.createToggle(unselectedWalkthru, bg);
+            rbs[iter].setPressedIcon(selectedWalkthru);
+            rbs[iter].setUIID("Label");
+            radioContainer.add(rbs[iter]);
+        }
+                
+        rbs[0].setSelected(true);
+        swipe.addSelectionListener((i, ii) -> {
+            if(!rbs[ii].isSelected()) {
+                rbs[ii].setSelected(true);
+            }
         });
-        cncn.add(BoxLayout.encloseY(
-                 BorderLayout.center(InfoStade),nom,capacity,city,BorderLayout.center(Voir)
-         ));
-       cncn.setUIID("InputContainerBackgroundSofien");
-       add(cncn);
+        
+        Component.setSameSize(radioContainer, spacer1);
+        add(LayeredLayout.encloseIn(swipe, radioContainer));
+   
+        
+        
+        
+         TextField name = new TextField("", "Name", 20, TextField.ANY);
+        FontImage.setMaterialIcon(name.getHintLabel(), FontImage.MATERIAL_PERSON);
+        TextField email = new TextField("", "E-mail", 20, TextField.EMAILADDR);
+        FontImage.setMaterialIcon(email.getHintLabel(), FontImage.MATERIAL_EMAIL);
+        TextField password = new TextField("", "Password", 20, TextField.PASSWORD);
+        FontImage.setMaterialIcon(password.getHintLabel(), FontImage.MATERIAL_LOCK);
+        TextField bio = new TextField("", "Bio", 2, 20);
+        FontImage.setMaterialIcon(bio.getHintLabel(), FontImage.MATERIAL_LIBRARY_BOOKS);
+        Picker birthday = new Picker();
+        birthday.setType(Display.PICKER_TYPE_DATE);
+        OnOffSwitch joinMailingList = new OnOffSwitch();
+        bio.setSingleLineTextArea(false);
+        
+        Container comps = new Container();
+        addComps(this, comps, 
+                new Label("Name", "InputContainerLabel"), 
+                name,
+                new Label("E-Mail", "InputContainerLabel"),
+                email,
+                new Label("Password", "InputContainerLabel"),
+                password,
+                BorderLayout.center(new Label("Birthday", "InputContainerLabel")).
+                        add(BorderLayout.EAST, birthday),
+                new Label("Bio", "InputContainerLabel"),
+                bio,
+                BorderLayout.center(new Label("Join Mailing List", "InputContainerLabel")).
+                        add(BorderLayout.EAST, joinMailingList));
+        
+        comps.setScrollableY(true);
+        comps.setUIID("PaddedContainer");
+        
+        Container content = BorderLayout.center(comps);
+        
+        Button save = new Button("Save");
+        save.setUIID("InputAvatarImage");
+        content.add(BorderLayout.SOUTH, save);
+        save.addActionListener(e -> {
+            ToastBar.showMessage("Save pressed...", FontImage.MATERIAL_INFO);
+        });
+        
+        content.setUIID("InputContainerForeground");
+        
+        Button avatar = new Button("");
+        avatar.setUIID("InputAvatar");
+        Image defaultAvatar = FontImage.createMaterial(FontImage.MATERIAL_CAMERA, "InputAvatarImage", 8);
+        Image circleMaskImage = res.getImage("smily.png");
+        defaultAvatar = defaultAvatar.scaled(circleMaskImage.getWidth(), circleMaskImage.getHeight());
+        defaultAvatar = ((FontImage)defaultAvatar).toEncodedImage();
+        Object circleMask = circleMaskImage.createMask();
+        defaultAvatar = defaultAvatar.applyMask(circleMask);
+        avatar.setIcon(defaultAvatar);
+        Container actualContent = LayeredLayout.encloseIn(content, 
+                        FlowLayout.encloseCenter(avatar));
+        
+        Container input;
+        if(!Display.getInstance().isTablet()) {
+            Label placeholder = new Label(" ");
+
+            Component.setSameHeight(actualContent, placeholder);
+            Component.setSameWidth(actualContent, placeholder);
+
+            input = BorderLayout.center(placeholder);
+
+            addShowListener(e -> {
+                if(placeholder.getParent() != null) {
+                    input.replace(placeholder, actualContent, CommonTransitions.createFade(1500));
+                }
+            });
+        } else {
+            input = BorderLayout.center(actualContent);
+        }
+        input.setUIID("InputContainerBackground");
+        add(input);
+       
+       
         }
     
     private void updateArrowPosition(Button b, Label arrow) {
@@ -217,7 +284,15 @@ public class AfficherSingleStade  extends BaseForm {
                ));
        add(cnt);
 	   
-       image.addActionListener(e ->   Dialog.show("Alerte", "Etes vous pret pour ce module ?", "oui","non"));
+       image.addActionListener(e ->  { Boolean x = Dialog.show("Alerte", "Etes vous pret pour ce module ?", "oui","non");
+                        if(x)
+                        {
+                            
+                        }
+                        else {
+                        
+                        }
+       });
    }
     
     private void bindButtonSelection(Button b, Label arrow) {
@@ -229,5 +304,4 @@ public class AfficherSingleStade  extends BaseForm {
             }
         });
     }
-	
 }
