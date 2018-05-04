@@ -5,6 +5,7 @@
  */
 package com.alpha.Entite;
 import java.util.Date;
+import java.util.Map;
 
 /**
  *
@@ -13,17 +14,17 @@ import java.util.Date;
 public class Game {
     private int id;
     private Date date;
-    private String homeTeam;
-    private String awayTeam;
+    private Map<String,Object> homeTeam;
+    private Map<String,Object> awayTeam;
     private String result;
-    private String stadium;
+    private Map<String,Object> stadium;
     private String summary;
     private String summaryPhoto;
     private String Highlights;
     private String Referee;
+	private int cost;
 
-	public Game(){}
-    public Game(Date date, String homeTeam, String awayTeam, String result, String stadium, String summary, String summaryPhoto, String Highlights, String Referee) {
+    public Game(Date date, Map<String,Object> homeTeam, Map<String,Object> awayTeam, String result, Map<String,Object> stadium, String summary, String summaryPhoto, String Highlights, String Referee, int cost) {
     
         this.date = date;
         this.homeTeam = homeTeam;
@@ -34,7 +35,11 @@ public class Game {
         this.summaryPhoto = summaryPhoto;
         this.Highlights = Highlights;
         this.Referee = Referee;
+		this.cost = cost;
     }
+
+	public Game() {
+	}
 
     public int getId() {
         return id;
@@ -52,19 +57,19 @@ public class Game {
         this.date = date;
     }
 
-    public String getHomeTeam() {
+    public Map<String,Object> getHomeTeam() {
         return homeTeam;
     }
 
-    public void setHomeTeam(String homeTeam) {
+    public void setHomeTeam(Map<String,Object> homeTeam) {
         this.homeTeam = homeTeam;
     }
 
-    public String getAwayTeam() {
+    public Map<String,Object> getAwayTeam() {
         return awayTeam;
     }
 
-    public void setAwayTeam(String awayTeam) {
+    public void setAwayTeam(Map<String,Object> awayTeam) {
         this.awayTeam = awayTeam;
     }
 
@@ -76,11 +81,11 @@ public class Game {
         this.result = result;
     }
 
-    public String getStadium() {
+    public Map<String,Object> getStadium() {
         return stadium;
     }
 
-    public void setStadium(String stadium) {
+    public void setStadium(Map<String,Object> stadium) {
         this.stadium = stadium;
     }
 
@@ -116,14 +121,20 @@ public class Game {
         this.Referee = Referee;
     }
 
+	public int getCost() {
+		return cost;
+	}
+
+	public void setCost(int cost) {
+		this.cost = cost;
+	}
+	
+
 	@Override
 	public String toString() {
 		return "Game{" + "id=" + id + ", date=" + date + ", homeTeam=" + homeTeam + ", awayTeam=" + awayTeam + ", result=" + result + ", stadium=" + stadium + ", summary=" + summary + ", summaryPhoto=" + summaryPhoto + ", Highlights=" + Highlights + ", Referee=" + Referee + '}';
 	}
-	
-    
-    
-    
+   
     
 }
 

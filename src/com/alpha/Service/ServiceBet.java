@@ -52,6 +52,7 @@ public class ServiceBet {
 				t.setResult(obj.get("result").toString());
 				//	t.setIdUser((int)Float.parseFloat(obj.get("idUser").toString()));
 				t.setIdGame(gameMap);
+				t.setIdUser((int) Float.parseFloat(obj.get("idUser").toString()));
 
 				//System.out.println(t);
 				listBets.add(t);

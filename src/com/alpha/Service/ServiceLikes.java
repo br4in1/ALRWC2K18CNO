@@ -85,7 +85,7 @@ public class ServiceLikes {
 	public Gallery listGallery1 = new Gallery();
 	public Gallery getList2(int id) {
 		ConnectionRequest con = new ConnectionRequest();
-		con.setUrl("http://127.0.0.1:8000/gallery/photo/comment/mobile/"+id);
+		con.setUrl("http://127.0.0.1:8000/gallery/photo/likee/mobile/"+id);
 
 		con.addResponseListener(new ActionListener<NetworkEvent>() {
 			@Override

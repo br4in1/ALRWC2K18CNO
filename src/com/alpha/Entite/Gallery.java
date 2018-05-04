@@ -20,7 +20,7 @@ public class Gallery {
     private String image;
     private String etat ; 
 	private int likes; 
-	private String comments; 
+	private int comments; 
 
 	public int getLikes() {
 		return likes;
@@ -30,20 +30,15 @@ public class Gallery {
 		this.likes = likes;
 	}
 
-	
-	
-
-	
-	
-	
-	public String getComments() {
+	public int getComments() {
 		return comments;
 	}
 
-	public void setComments(String comments) {
+	public void setComments(int comments) {
 		this.comments = comments;
 	}
-	
+
+
 	
 	
 

@@ -6,6 +6,7 @@
 package com.alpha.gui;
 
 import com.alpha.Entite.Bet;
+import com.alpha.Entite.Game;
 import com.alpha.Entite.SimpleUser;
 import com.alpha.Service.ServiceBet;
 import com.codename1.components.ScaleImageLabel;
@@ -51,7 +52,7 @@ public class BetAddForm extends BaseForm {
 	Form f;
 	SpanLabel lb;
 
-	public BetAddForm(Resources res) {
+	public BetAddForm(Game game,Resources res) {
 		super("Add Bet", BoxLayout.y());
 
 		// ServiceArticles sa = new ServiceArticles();
@@ -107,43 +108,49 @@ public class BetAddForm extends BaseForm {
 		addOrientationListener(e -> {
 			updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
 		});
-		TextField resultField = new TextField("", "result", 20, TextField.ANY);
+		TextField resultField = new TextField("", "your bet", 20, TextField.ANY);
 		resultField.setUIID("TextFieldBlack");
 
-		TextField idGameField = new TextField("", "id Game", 20, TextField.NUMERIC);
 		
-		super.add(resultField);
-		super.add(idGameField);
 		
 		Button Ajouter = new Button("Add bet");
+		
+		TextArea homeField = new TextField("", "1 for win of home team ", 20, TextField.ANY);
+		homeField.setUIID("TextFieldBlack");
+		TextArea drawField = new TextField("", "x for draw", 20, TextField.ANY);
+		drawField.setUIID("TextFieldBlack");
+		TextArea awayField = new TextField("", "2 for win of away team ", 20, TextField.ANY);
+		awayField.setUIID("TextFieldBlack");
+		
 
 		Ajouter.setUIID("Button");
+		
+		super.add(resultField);
 		super.add(Ajouter);
+		super.add(homeField);
+		super.add(drawField);
+		super.add(awayField);
 		Ajouter.addActionListener((e) -> {
-			if (idGameField.getText().equals("") || resultField.getText().equals("")) {
-				Dialog.show("Error", "Please set all fields ", "OK", null);
+			if (resultField.getText().equals("")) {
+				Dialog.show("Error", "Please set value in your bet ", "OK", null);
 			} else {
-				if (Integer.parseInt(idGameField.getText()) > 0) {
-					System.out.println(resultField.getText() + "  ! ssssss ");
-					if (resultField.getText().equals("x") || resultField.getText().equals("y") || resultField.getText().equals("z")) {
+				
+					if (resultField.getText().equals("x") || resultField.getText().equals("1") || resultField.getText().equals("2")) {
 						ServiceBet fs = new ServiceBet();
 
-						if (fs.getList3(Integer.parseInt(idGameField.getText())).get(0).getId() == 0) {
-							Dialog.show("Error", "Game does not exist ! ", "OK", null);
-						} else {
 							Map<Integer, Object> mapIdGame = new HashMap<Integer, Object>();
-							mapIdGame.put(Integer.parseInt(idGameField.getText()), "");
+							mapIdGame.put(game.getId(), "");
 							//System.out.println(mapIdGame);
 							Bet f = new Bet(mapIdGame, resultField.getText(), SimpleUser.current_user.getId());
 							fs.AjouterForum(f);
 							Dialog.show("Success", "added ! ", "OK", null);
-						}
+						
 					} else {
-						Dialog.show("Error", "Result must be x or y or z ! ", "OK", null);
+						Dialog.show("Error", "Result must be x or 1 or 2 ! ", "OK", null);
 					}
-				} else {
-					Dialog.show("Error", "ID game can't be negative ! ", "OK", null);
-				}
+				//} else {
+					//Dialog.show("Error", "ID game can't be negative ! ", "OK", null);
+				//}
 			}
 
 		});

@@ -5,6 +5,7 @@
  */
 package com.alpha.gui;
 
+import com.alpha.Entite.Covoiturage;
 import com.alpha.Entite.Hotel;
 import com.alpha.Entite.Stadium;
 import com.codename1.components.ToastBar;
@@ -274,6 +275,70 @@ public class GoogleMapsTestApp {
                              ToastBar.showMessage("It's Here ! ", FontImage.MATERIAL_PLACE);
                      }
             );
+
+        });
+
+        Container root = LayeredLayout.encloseIn(
+                BorderLayout.center(cnt),
+                BorderLayout.south(
+                        FlowLayout.encloseBottom(btnMoveCamera, btnAddMarker)
+                )
+        );
+
+        hi.add(BorderLayout.CENTER, root);
+        hi.show();
+
+    }
+     
+     
+     
+     public void start(String src1 , String dest1, Resources resss , Covoiturage h,String k ) {
+        if (current != null) {
+            current.show();
+            return;
+        }
+        Form hi = new Form("Hotel's position : ");
+        hi.setLayout(new BorderLayout());
+        final MapContainer cnt = new MapContainer(HTML_API_KEY);
+        cnt.setMapType(2);
+         Coord src = getCoords(src1);
+         Coord dest = getCoords(dest1);
+         if(src==null||dest==null)
+         {System.out.println("soko");
+             if(src==null)
+             {src=new Coord(55.751244, 37.618423);
+                }
+             if(dest==null){
+                 dest =new Coord(45.039268, 38.987221);
+       
+         }}
+         else{
+         System.out.println("1"+src.getLatitude()+src.getLongitude());
+         System.out.println("2"+dest.getLatitude()+dest.getLongitude());}
+        // get the routes using google directions api
+        String encoded = getRoutesEncoded(src, dest);
+        // decode the routes in an arry of coords
+        Coord[] coords = decode(encoded);
+
+        cnt.addPath(coords);
+         Style s = new Style();
+         s.setBgTransparency(0);
+        s.setFgColor(0x007700);
+        cnt.addMarker(FontImage.createMaterial(FontImage.MATERIAL_LOCATION_ON, s).toEncodedImage(), src, "", "", null);
+        cnt.addMarker(FontImage.createMaterial(FontImage.MATERIAL_LOCATION_ON, s).toEncodedImage(), dest, "", "", null);
+        
+  
+        
+        Button btnMoveCamera = new Button("Back");
+        btnMoveCamera.addActionListener(e->{
+             new SingleCarpool(resss,h,k).show();
+        });
+         Button btnAddMarker = new Button("Show Marker");
+        btnAddMarker.addActionListener(e->{
+                        cnt.setMapType(2);
+                       
+            cnt.setCameraPosition(new Coord(55.751244, 37.618423));
+            
 
         });
 

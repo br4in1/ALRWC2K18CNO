@@ -16,6 +16,7 @@ import com.codename1.capture.Capture;
 import com.codename1.components.ImageViewer;
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.components.SpanLabel;
+import com.codename1.components.ToastBar;
 import com.codename1.ui.Button;
 import com.codename1.ui.ButtonGroup;
 import com.codename1.ui.Component;
@@ -258,7 +259,24 @@ public class CarpoolingList extends BaseForm {
                 ));
        CntStades.add(cnt);
 
-        // image.addActionListener(e -> new AfficherSingleStade(this.res,stade).show());
+       image.addActionListener(e ->
+               
+       {
+       if(cov.getNbPlaceRestantes()==0)
+       {
+        ToastBar.showMessage("Sorry, No more Seats Available", FontImage.MATERIAL_CLOSE);
+                    
+       }
+       else
+       {
+       new SingleCarpool(res,cov,imageUrl).show();
+       }
+       
+       
+       }
+               
+               
+               );
     }   
    
       
@@ -268,11 +286,37 @@ public class CarpoolingList extends BaseForm {
         b.addActionListener(e -> {
             if(b.isSelected()) {
                 updateArrowPosition(b, arrow);
-				if(b.getName()=="all")
-				{}
-				else if(b.getName()=="Stadiums")
-				{}
-				else if(b.getName()=="Hotels")
+				if(b.getName()=="Carpooling")
+				{CntStades.removeAll();
+                                     ServiceGuide ser= new  ServiceGuide();
+		 ArrayList<Covoiturage> Tab =  ser.getListCarpooling();
+	 ServiceUser serU = new ServiceUser();
+         
+		 for(int i = 0 ; i < Tab.size() ; i++)
+			  {
+                               SimpleUser u = serU.getUserData(Tab.get(i).getIdUser());
+                          
+		 addCovoiturage(u.getProfilepicture(),Tab.get(i));
+		
+		}
+                                }
+				else if(b.getName()=="My Rides")
+				{CntStades.removeAll();
+                                
+                                 ServiceGuide ser= new  ServiceGuide();
+		 ArrayList<Covoiturage> Tab =  ser.getListCarpooling();
+	 ServiceUser serU = new ServiceUser();
+         
+		 for(int i = 0 ; i < Tab.size() ; i++)
+			  {
+                              if(SimpleUser.current_user.getId()==Tab.get(i).getIdUser())
+                              {SimpleUser u = serU.getUserData(Tab.get(i).getIdUser());
+                          
+		 addCovoiturage(u.getProfilepicture(),Tab.get(i));
+                              }
+		}
+                                }
+				else if(b.getName()=="My Routes")
 				{}
 				else {
 					CntStades.removeAll();

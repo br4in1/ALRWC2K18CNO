@@ -140,7 +140,6 @@ public class DisplayOne extends BaseForm {
 			updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
 		});
 
-
 		Label likes = new Label(" Like");
 		Style heartStyle = new Style(likes.getUnselectedStyle());
 		heartStyle.setFgColor(0xff2d55);
@@ -165,6 +164,8 @@ public class DisplayOne extends BaseForm {
 					Likes l1 = new Likes(SimpleUser.current_user.getId(), g1.getId());
 					ser.LikedPhoto(l1);
 					x = 1;
+								new DisplayOne(res, (Gallery) g1).show();
+
 				} else {
 					ServiceLikes ser = new ServiceLikes();
 					Likes l1 = new Likes(SimpleUser.current_user.getId(), g1.getId());
@@ -176,8 +177,10 @@ public class DisplayOne extends BaseForm {
 		});
 
 		ServiceGallery ser = new ServiceGallery();
-		addButton(g1.getImage(), g1.getVille() + "  , " + g1.getLieu(), false, 11, 9, g1.getId());
+		ServiceLikes ser2 = new ServiceLikes();
+		ServiceCommentaire ser3 = new ServiceCommentaire();
 
+		addButton(g1.getImage(), g1.getVille() + "  , " + g1.getLieu(), false, ser2.getList2(g1.getId()).getLikes(), ser3.getList3(g1.getId()).getComments(), g1.getId());
 		Commentaire = new TextField("", "Commenaitre", 20, TextField.ANY);
 		Button comment = new Button("Comment");
 		comment.addActionListener((evt) -> {
@@ -191,7 +194,7 @@ public class DisplayOne extends BaseForm {
 		//cnt2.add(likes);
 		cnt2.add(Commentaire);
 		cnt2.add(comment);
-	    cnt2.add(back);
+		cnt2.add(back);
 		add(cont);
 		add(cnt2);
 	}

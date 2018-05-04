@@ -43,6 +43,7 @@ import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
+import com.codename1.ui.spinner.Picker;
 import com.codename1.ui.util.ImageIO;
 import com.codename1.ui.util.Resources;
 import java.io.IOException;
@@ -57,9 +58,13 @@ public class Shop extends BaseForm {
 	Form f;
 	SpanLabel lb;
 	Database db;
+	ArrayList<Product> products;
+	Container productsContainer;
+	public static Shop thisClass;
 
 	public Shop(Resources res) throws IOException {
 		super("Teams", BoxLayout.y());
+		thisClass = this;
 		db = Database.openOrCreate("Russia2018.db");
 		db.execute("create table if not exists cart (id NUMBER, quantity NUMBER);");
 		Toolbar tb = new Toolbar(true);
@@ -67,6 +72,7 @@ public class Shop extends BaseForm {
 		getTitleArea().setUIID("Container");
 		setTitle("Shop");
 		getContentPane().setScrollVisible(false);
+		productsContainer = new Container(BoxLayout.y());
 
 		ButtonGroup barGroup = new ButtonGroup();
 		RadioButton teamsButton = RadioButton.createToggle("  ", barGroup);
@@ -88,16 +94,37 @@ public class Shop extends BaseForm {
 		swipe.getContentPane().setUIID("Container");
 		swipe.hideTabs();
 
+		ServiceProduct ser = new ServiceProduct();
 		add(LayeredLayout.encloseIn(swipe));
+		Picker cat = new Picker();
+		cat.setStrings(ser.getCategories());
+		cat.setLabelForComponent(new Label("Pick a category ..."));
 		//bindButtonSelection(voidBut00, arrow);
 
 		//ArrayList<Team> listeq=new ArrayList<>();
 		f = new Form();
 		lb = new SpanLabel("");
 		f.add(lb);
-
-		ServiceProduct ser = new ServiceProduct();
-		ArrayList<Product> products = ser.getList2();
+		add(cat);
+		products = ser.getList2();
+		add(productsContainer);
+		cat.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				ServiceProduct ser = new ServiceProduct();
+				products = ser.getProductsByCategory(cat.getSelectedString());
+				System.out.println(products);
+				try {
+					Shop.thisClass.reloadData(res);
+				} catch (IOException ex) {
+				}
+			}
+		});
+		reloadData(res);
+	}
+	
+	public void reloadData(Resources res) throws IOException{
+		productsContainer.removeAll();
 		for (int i = 0; i < products.size(); i++) {
 			addButton(products.get(i), res.getImage("1.jpg"));
 		}
@@ -192,7 +219,7 @@ public class Shop extends BaseForm {
 						details
 				));
 		cnt.getAllStyles().setPaddingTop(30);
-		add(cnt);
+		productsContainer.add(cnt);
 	}
 
 }
