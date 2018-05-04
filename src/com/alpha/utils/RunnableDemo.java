@@ -5,8 +5,6 @@
  */
 package com.alpha.utils;
 
-import com.alpha.Entite.SimpleUser;
-import java.util.List;
 import javafx.application.Platform;
 
 /**

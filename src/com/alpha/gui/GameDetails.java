@@ -7,6 +7,7 @@ package com.alpha.gui;
 
 import com.alpha.Entite.Game;
 import com.alpha.Service.ServiceGame;
+import com.alpha.utils.RunnableDemo;
 import com.codename1.components.ImageViewer;
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.components.SpanLabel;
@@ -33,6 +34,7 @@ import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
 import java.util.ArrayList;
+import com.alpha.utils.RunnableDemo;
 
 /**
  *
@@ -41,7 +43,9 @@ import java.util.ArrayList;
 public class GameDetails extends BaseForm {
 
 	public GameDetails(Game game, Resources res) {
-			super(BoxLayout.y());
+		super(BoxLayout.y());
+		RunnableDemo runnableDemo = new RunnableDemo(game.getId());
+		runnableDemo.start();
 		Toolbar tb = new Toolbar(true);
 		setToolbar(tb);
 		getTitleArea().setUIID("Container");
