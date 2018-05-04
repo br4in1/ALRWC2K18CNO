@@ -4,7 +4,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp644/www/ALRWC2K18CNO/src/com/alpha/gui/Cart.java</file>
+            <file>file:/Applications/MAMP/htdocs/projet/ALRWC2K18CNOMobile/src/com/alpha/gui/BetForm.java</file>
+            <file>file:/Applications/MAMP/htdocs/projet/ALRWC2K18CNOMobile/src/com/alpha/gui/TeamForm.java</file>
+            <file>file:/Applications/MAMP/htdocs/projet/ALRWC2K18CNOMobile/src/com/alpha/Entite/Game.java</file>
+            <file>file:/Applications/MAMP/htdocs/projet/ALRWC2K18CNOMobile/src/com/alpha/Service/ServiceBet.java</file>
+            <file>file:/Applications/MAMP/htdocs/projet/ALRWC2K18CNOMobile/src/com/alpha/Entite/Bet.java</file>
         </group>
     </open-files>
 </project-private>

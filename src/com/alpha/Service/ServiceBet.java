@@ -32,10 +32,10 @@ public class ServiceBet {
 			System.out.println(json);
 			JSONParser j = new JSONParser();
 
-			Map<String, Object> etudiants = j.parseJSON(new CharArrayReader(json.toCharArray()));
-			System.out.println(etudiants);
+			Map<String, Object> lBetMap = j.parseJSON(new CharArrayReader(json.toCharArray()));
+			System.out.println(lBetMap);
 
-			List<Map<String, Object>> list = (List<Map<String, Object>>) etudiants.get("root");
+			List<Map<String, Object>> list = (List<Map<String, Object>>) lBetMap.get("root");
 
 			for (Map<String, Object> obj : list) {
 				Bet t = new Bet();
@@ -79,7 +79,6 @@ public class ServiceBet {
 			NetworkManager.getInstance().addToQueueAndWait(con);
 		}
 
-		//     String Url = "http://localhost:8888/Animaux1/web/app_dev.php/Forum/AddForum?titre="+f.getTitre()+"&auteur="+LoggedUser.username+"&blog="+f.getBlog()+"&tags="+f.getTags()+"";
 	}
 
 	public ArrayList<Bet> listTeams2 = new ArrayList<>();

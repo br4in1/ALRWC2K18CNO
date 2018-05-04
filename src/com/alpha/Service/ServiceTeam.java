@@ -31,10 +31,10 @@ public class ServiceTeam {
 			System.out.println(json);
 			JSONParser j = new JSONParser();
 
-			Map<String, Object> etudiants = j.parseJSON(new CharArrayReader(json.toCharArray()));
-			System.out.println(etudiants);
+			Map<String, Object> lTeamMap = j.parseJSON(new CharArrayReader(json.toCharArray()));
+			System.out.println(lTeamMap);
 
-			List<Map<String, Object>> list = (List<Map<String, Object>>) etudiants.get("root");
+			List<Map<String, Object>> list = (List<Map<String, Object>>) lTeamMap.get("root");
 
 			for (Map<String, Object> obj : list) {
 				Team t = new Team();
@@ -48,11 +48,7 @@ public class ServiceTeam {
 				t.setCoach(obj.get("coach").toString());
 				t.setPresident(obj.get("president").toString());
 				t.setArea(obj.get("area").toString());
-//				t.setGamesPlayed(Integer.parseInt(obj.get("gameplayed").toString()));
-				/*t.setGoalScored(Integer.parseInt(obj.get("goalscored").toString()));
-				t.setGoalAgainst(Integer.parseInt(obj.get("goalagainst").toString()));
-				t.setParticipations(Integer.parseInt(obj.get("participations").toString()));
-				t.setFifaDate(Date.valueOf(obj.get("fifadate").toString()));*/
+
 				t.setWcGroup(obj.get("wcgroup").toString());
 				
 				t.setWin((int)Float.parseFloat(obj.get("win").toString()));
@@ -61,17 +57,17 @@ public class ServiceTeam {
 				t.setPoints((int)Float.parseFloat(obj.get("points").toString()));
 				t.setFifaRank((int)Float.parseFloat(obj.get("fifarank").toString()));
 				t.setFlagPhoto(obj.get("flagphoto").toString());
-				t.setLogoPhoto(obj.get("logophoto").toString());
+				/*t.setLogoPhoto(obj.get("logophoto").toString());
 				t.setSquadPhoto(obj.get("squadphoto").toString());
 				t.setDescriptionPhoto(obj.get("descriptionphoto").toString());
 				t.setDescription(obj.get("description").toString());
 				t.setWebsite(obj.get("website").toString());
 				t.setVideo(obj.get("video").toString());
+				*/
 				
 				
 				
-				
-				System.out.println(t);
+			//	System.out.println(t);
 				listTeams.add(t);
 
 			}
