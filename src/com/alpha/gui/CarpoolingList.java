@@ -5,7 +5,19 @@
  */
 package com.alpha.gui;
 
+import com.alpha.Entite.Covoiturage;
+import com.alpha.Service.ServiceGuide;
+import com.alpha.Service.ServiceUser;
+import com.codename1.capture.Capture;
+import com.codename1.ui.Container;
+import com.codename1.ui.Display;
+import com.codename1.ui.Graphics;
+import com.codename1.ui.Image;
+import com.codename1.ui.Label;
+import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.util.Resources;
+import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  *
@@ -13,9 +25,11 @@ import com.codename1.ui.util.Resources;
  */
 public class CarpoolingList extends BaseForm {
     
-    public CarpoolingList(Resources res)
+    public CarpoolingList(Resources res) throws IOException
     {
-    
+        ServiceGuide ser = new ServiceGuide();
+        ArrayList<Covoiturage> L = ser.getListCarpooling();
+              
     }
     
 }

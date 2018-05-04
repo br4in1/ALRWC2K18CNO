@@ -5,6 +5,7 @@
  */
 package com.alpha.Service;
 
+import com.alpha.Entite.Covoiturage;
 import com.alpha.Entite.Divertissement;
 import com.alpha.Entite.Hotel;
 import com.alpha.Entite.Stadium;
@@ -16,6 +17,7 @@ import com.codename1.io.NetworkManager;
 import com.codename1.ui.events.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -127,6 +129,75 @@ public class ServiceGuide {
 		});
 		NetworkManager.getInstance().addToQueueAndWait(con);
 		return listhotel2;
+	}
+        
+        
+        
+        
+        
+        public ArrayList<Covoiturage> getListCarpooling(String json) {
+
+		ArrayList<Covoiturage> listProducts = new ArrayList<Covoiturage>();
+
+		try {
+			JSONParser j = new JSONParser();
+
+			Map<String, Object> covoiturages = j.parseJSON(new CharArrayReader(json.toCharArray()));
+
+			List<Map<String, Object>> list = (List<Map<String, Object>>) covoiturages.get("root");
+
+			for (Map<String, Object> obj : list) {
+				Covoiturage p = new Covoiturage();
+				float id = Float.parseFloat(obj.get("id").toString());
+				p.setId((int)id);
+				p.setBagage(obj.get("bagage").toString());
+				p.setCouleur(obj.get("city").toString());
+                                Map<String, Object> dateDepart = (Map<String, Object>) obj.get("dateDepart");
+                                String d = dateDepart.get("timestamp").toString();
+                                float ts = Float.parseFloat(d);
+                                Date dat = new Date((long) ts *1000);
+                                
+				p.setDateDepart(dat);
+				p.setDepart(obj.get("depart").toString());
+				p.setDestination(obj.get("destination").toString());
+				p.setDuree(obj.get("duree").toString());
+				p.setIdUser(Integer.parseInt(obj.get("idUser").toString()));
+                                p.setKilometrage(Integer.parseInt(obj.get("kilometrage").toString()));
+				p.setLangue(obj.get("langage").toString());
+				p.setNameUser(obj.get("nameUser").toString());
+				p.setNbPlaceRestantes(Integer.parseInt(obj.get("nbPlaceRestantes").toString()));
+				p.setNbPlaceTot(Integer.parseInt(obj.get("nbPlaceTot").toString()));
+				p.setNumCompteBancaire(Integer.parseInt(obj.get("numCompteBancaire").toString()));
+				p.setPrixPlace(Integer.parseInt(obj.get("prixPlace").toString()));
+				p.setSmoking(Float.parseFloat(obj.get("smoking").toString()));
+				p.setVoiture(obj.get("voiture").toString());
+				
+				listProducts.add(p);
+				
+			}
+
+		} catch (IOException ex) {
+		}
+		return listProducts;
+
+	}
+	public ArrayList<Covoiturage> listCarpooling2 = new ArrayList<Covoiturage>();
+
+	public ArrayList<Covoiturage> getListCarpooling() {
+		ConnectionRequest con = new ConnectionRequest();
+		con.setUrl("http://localhost/alrwc2k18/web/app_dev.php/guide/AfficherToutHotelMobile");
+
+		con.addResponseListener(new ActionListener<NetworkEvent>() {
+			@Override
+			public void actionPerformed(NetworkEvent evt) {
+				ServiceGuide ser = new ServiceGuide();
+				System.out.println(new String (con.getResponseData()));
+				listCarpooling2 = ser.getListCarpooling(new String(con.getResponseData()));
+				
+			}
+		});
+		NetworkManager.getInstance().addToQueueAndWait(con);
+		return listCarpooling2;
 	}
 	
 	
