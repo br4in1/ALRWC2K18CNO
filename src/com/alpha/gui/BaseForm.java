@@ -80,18 +80,19 @@ public class BaseForm extends Form {
 		sl.setUIID("BottomPad");
 		sl.setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);
 		Image userImage;
-		if (SimpleUser.current_user.getProfilepicture() == null) {
+		System.out.println("user profile picture is "+ SimpleUser.current_user.getProfilepicture());
+		if (SimpleUser.current_user.getProfilepicture().equals("null")) {
 			userImage = res.getImage("default_profile_picture.png");
 			tb.addComponentToSideMenu(LayeredLayout.encloseIn(
 					sl,
 					FlowLayout.encloseCenterBottom(
-							new Label(userImage))
+							new Label(userImage.scaled(200, 200)))
 			));
 		} else {
 			tb.addComponentToSideMenu(LayeredLayout.encloseIn(
 					sl,
 					FlowLayout.encloseCenterBottom(
-							new Label(URLImage.createToStorage(encImage, "User" + SimpleUser.current_user.getProfilepicture(), SimpleUser.current_user.getProfilepicture(), URLImage.RESIZE_SCALE_TO_FILL), "PictureWhiteBackgrond"))
+							new Label(URLImage.createToStorage(encImage, "User" + SimpleUser.current_user.getProfilepicture(), SimpleUser.current_user.getProfilepicture(), URLImage.RESIZE_SCALE_TO_FILL).scaled(200, 200), "PictureWhiteBackgrond"))
 			));
 		}
 

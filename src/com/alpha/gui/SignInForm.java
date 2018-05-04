@@ -107,7 +107,6 @@ public class SignInForm extends BaseForm {
 							db = Database.openOrCreate("Russia2018.db");
 							db.execute("delete from appstates");
 							db.execute("insert into appstates(loggedin,loggeduserid) values (1," + u.getId() + ");");
-							System.out.println(db);
 							NewsfeedForm h = new NewsfeedForm(res);
 							h.show();
 						} catch (IOException ex) {

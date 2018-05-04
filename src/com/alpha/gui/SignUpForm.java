@@ -16,9 +16,12 @@
  * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
  */
-
 package com.alpha.gui;
 
+import com.alpha.Entite.SimpleUser;
+import com.alpha.Service.CountriesList;
+import com.alpha.Service.ServiceUser;
+import com.codename1.charts.views.DialChart;
 import com.codename1.components.FloatingHint;
 import com.codename1.components.SpanLabel;
 import com.codename1.ui.Button;
@@ -33,6 +36,10 @@ import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.spinner.Picker;
 import com.codename1.ui.util.Resources;
+import java.util.ArrayList;
+import com.codename1.l10n.L10NManager;
+import com.codename1.ui.Dialog;
+import java.util.Date;
 
 /**
  * Signup UI
@@ -41,54 +48,94 @@ import com.codename1.ui.util.Resources;
  */
 public class SignUpForm extends BaseForm {
 
-    public SignUpForm(Resources res) {
-        super(new BorderLayout());
-        Toolbar tb = new Toolbar(false);
-        setToolbar(tb);
-        tb.setUIID("Container");
-        getTitleArea().setUIID("Container");
-        Form previous = Display.getInstance().getCurrent();
-        tb.setBackCommand("", e -> previous.showBack());
-        setUIID("SignIn");
+	public SignUpForm(Resources res) {
+		super(new BorderLayout());
+		Toolbar tb = new Toolbar(false);
+		setToolbar(tb);
+		tb.setUIID("Container");
+		getTitleArea().setUIID("Container");
+		Form previous = Display.getInstance().getCurrent();
+		tb.setBackCommand("", e -> previous.showBack());
+		setUIID("SignIn");
 		//getAllStyles().setBgImage(res.getImage("signup-background.jpg"));
-                
-        TextField username = new TextField("", "Username", 20, TextField.ANY);
-        TextField email = new TextField("", "E-Mail", 20, TextField.EMAILADDR);
-        TextField password = new TextField("", "Password", 20, TextField.PASSWORD);
-        TextField confirmPassword = new TextField("", "Confirm Password", 20, TextField.PASSWORD);
+
+		TextField username = new TextField("", "Username", 20, TextField.ANY);
+		TextField email = new TextField("", "E-Mail", 20, TextField.EMAILADDR);
+		TextField password = new TextField("", "Password", 20, TextField.PASSWORD);
+		TextField confirmPassword = new TextField("", "Confirm Password", 20, TextField.PASSWORD);
 		Picker datePicker = new Picker();
 		datePicker.setText("Birth Date");
-        username.setSingleLineTextArea(false);
-        email.setSingleLineTextArea(false);
-        password.setSingleLineTextArea(false);
-        confirmPassword.setSingleLineTextArea(false);
-        Button next = new Button("Next");
-        Button signIn = new Button("Sign In");
-        signIn.addActionListener(e -> previous.showBack());
-        signIn.setUIID("Link");
-        Label alreadHaveAnAccount = new Label("Already have an account?");
-        
-        Container content = BoxLayout.encloseY(
-                new Label("Sign Up", "LogoLabel"),
-                new FloatingHint(username),
-                createLineSeparator(),
-                new FloatingHint(email),
-                createLineSeparator(),
-                new FloatingHint(password),
-                createLineSeparator(),
-                new FloatingHint(confirmPassword),
-                createLineSeparator(),
+		username.setSingleLineTextArea(true);
+		email.setSingleLineTextArea(true);
+		password.setSingleLineTextArea(true);
+		confirmPassword.setSingleLineTextArea(true);
+		Button next = new Button("Next");
+		Button signIn = new Button("Sign In");
+		signIn.addActionListener(e -> previous.showBack());
+		signIn.setUIID("Link");
+		Label alreadHaveAnAccount = new Label("Already have an account?");
+		Picker country = new Picker();
+		country.setStrings(CountriesList.countries);
+		country.setText("Country");
+		Container content = BoxLayout.encloseY(
+				new Label("Sign Up", "LogoLabel"),
+				new FloatingHint(username),
+				createLineSeparator(),
+				new FloatingHint(email),
+				createLineSeparator(),
+				new FloatingHint(password),
+				createLineSeparator(),
+				new FloatingHint(confirmPassword),
+				createLineSeparator(),
 				datePicker,
-				createLineSeparator()
-        );
-        content.setScrollableY(true);
-        add(BorderLayout.CENTER, content);
-        add(BorderLayout.SOUTH, BoxLayout.encloseY(
-                next,
-                FlowLayout.encloseCenter(alreadHaveAnAccount, signIn)
-        ));
-        next.requestFocus();
-        next.addActionListener(e -> new ActivateForm(res).show());
-    }
-    
+				createLineSeparator(),
+				country
+		);
+		content.setScrollableY(true);
+		add(BorderLayout.CENTER, content);
+		add(BorderLayout.SOUTH, BoxLayout.encloseY(
+				next,
+				FlowLayout.encloseCenter(alreadHaveAnAccount, signIn)
+		));
+		next.requestFocus();
+		next.addActionListener(e -> {
+			if(username.getText().length() < 5){
+				Dialog.show("Error","Username is required and must contains at least 5 characters.","OK","");
+			}
+			else if(password.getText().length() < 5){
+				Dialog.show("Error","Password is required and must contains at least 8 characters.","OK","");
+			}
+			else if(email.getText().length() == 0 || !email.getText().contains("@") || !email.getText().contains(".")){
+				Dialog.show("Error","Please enter a valid email address.","OK","");
+			}
+			else if(!confirmPassword.getText().equals(password.getText())){
+				Dialog.show("Error","Please check your password confirmation.","OK","");
+			}
+			else if(datePicker.getDate().getTime() > new Date().getTime()){
+				Dialog.show("Error","The date of birth must not bypass today's date.","OK","");
+			}
+			else if(country.getSelectedString() == null || country.getSelectedString().equals("Country")){
+				Dialog.show("Error","Please pick a country from the list.","OK","");
+			}
+			else{
+				SimpleUser u = new SimpleUser();
+				u.setEmail(email.getText());
+				u.setPassword(password.getText());
+				u.setUsername(username.getText());
+				u.setBirthdate(datePicker.getDate());
+				u.setNationality(country.getSelectedString());
+				ServiceUser ser = new ServiceUser();
+				String ans = ser.SignUpUser(u);
+				System.out.println("ans == "+ans);
+				if(ans.equals("OK")) new SignInForm(res).show();
+				else if(ans.equals("username")){
+					Dialog.show("Error", "This username is already in use.", "OK","");
+				}
+				else{
+					Dialog.show("Error", "This email address is already in use.", "OK","");
+				}
+			}
+		});
+	}
+
 }
