@@ -6,8 +6,11 @@
 package com.alpha.gui;
 
 import com.alpha.Entite.Gallery;
+import com.alpha.Entite.Likes;
+import com.alpha.Entite.SimpleUser;
 import com.alpha.Service.ServiceArticles;
 import com.alpha.Service.ServiceGallery;
+import com.alpha.Service.ServiceLikes;
 import com.codename1.components.ImageViewer;
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.components.SpanLabel;
@@ -54,7 +57,7 @@ public class DisplayOne extends BaseForm {
 	Resources res;
 
 	Container cnt2 = new Container();
-	private  int x =0 ; 
+	private int x = 0;
 
 	public DisplayOne(Resources res, Gallery g1) {
 		super("", BoxLayout.y());
@@ -65,14 +68,19 @@ public class DisplayOne extends BaseForm {
 		getContentPane().setScrollVisible(false);
 
 		//super.addSideMenu(res);
-
 		Tabs swipe = new Tabs();
 
 		Label spacer1 = new Label();
 		Label spacer2 = new Label();
 		addTab(swipe, res.getImage("news-item.jpg"), spacer1, "15 Likes  ", "85 Comments", "Integer ut placerat purued non dignissim neque. ");
 		addTab(swipe, res.getImage("dog.jpg"), spacer2, "100 Likes  ", "66 Comments", "Dogs are cute: story at 11");
+   Button back =  new Button("Back"); 
+		back.addActionListener((evt) -> {
+						 new DisplayGallery(res).show();
 
+			
+		});
+				cnt2.add(back);
 		ButtonGroup bg = new ButtonGroup();
 		int size = Display.getInstance().convertToPixels(1);
 		Image unselectedWalkthru = Image.createImage(size, size, 0);
@@ -111,10 +119,7 @@ public class DisplayOne extends BaseForm {
 				GridLayout.encloseIn(1, all),
 				FlowLayout.encloseBottom(arrow)
 		));
-		Label arrow1 = new Label(res.getImage("local.png"), "Container");
-		add(LayeredLayout.encloseIn(
-				FlowLayout.encloseBottom(arrow1)
-		));
+		
 
 		all.setSelected(true);
 		arrow.setVisible(false);
@@ -132,8 +137,8 @@ public class DisplayOne extends BaseForm {
 		add(cnt2);
 		Label test = new Label("");
 		Label test1 = new Label("");
-       
-		Label likes = new Label("a");
+
+		Label likes = new Label(" Like");
 		Style heartStyle = new Style(likes.getUnselectedStyle());
 		heartStyle.setFgColor(0xff2d55);
 		FontImage heartImage = FontImage.createMaterial(FontImage.MATERIAL_FAVORITE_BORDER, heartStyle);
@@ -142,67 +147,45 @@ public class DisplayOne extends BaseForm {
 		cnt2.add(likes);
 		cnt2.add(test);
 		cnt2.add(test1);
-		
-		Label dislike = new Label("a");
-	    Style heartStylee = new Style(dislike.getUnselectedStyle());
+
+		Label dislike = new Label("");
+		Style heartStylee = new Style(dislike.getUnselectedStyle());
 		heartStylee.setFgColor(0xff2d55);
 		FontImage heartImagee = FontImage.createMaterial(FontImage.MATERIAL_FAVORITE, heartStylee);
 		dislike.setIcon(heartImagee);
 		dislike.setTextPosition(RIGHT);
-		dislike.setVisible(false); 
+		dislike.setVisible(false);
 		cnt2.add(dislike);
-		
+
 		likes.addPointerPressedListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
-				if(x==0)
-				{
+				if (x == 0) {
 					likes.setIcon(FontImage.createMaterial(FontImage.MATERIAL_FAVORITE, heartStyle));
-					x=1;
+					ServiceLikes ser = new ServiceLikes();
+					Likes l1 = new Likes(SimpleUser.current_user.getId(), g1.getId());
+					ser.LikedPhoto(l1);
+					x = 1;
 				} else {
-						likes.setIcon(FontImage.createMaterial(FontImage.MATERIAL_FAVORITE_BORDER, heartStyle));
-					x=0;
+					ServiceLikes ser = new ServiceLikes();
+					Likes l1 = new Likes(SimpleUser.current_user.getId(), g1.getId());
+					ser.DislikedPhoto(l1);
+					likes.setIcon(FontImage.createMaterial(FontImage.MATERIAL_FAVORITE_BORDER, heartStyle));
+					x = 0;
 				}
 			}
 		});
-		
-		/*likes.addPointerPressedListener((evt) -> {
-						//likes.setVisible(false);
-			//dislike.setVisible(true);
-			if (likes.getName().equals("liked")){
-				System.out.println("equals");
-			likes.setIcon(heartImage);
-			}else {
-				System.out.println("equals pas");
-					likes.setIcon(FontImage.createMaterial(FontImage.MATERIAL_FAVORITE_BORDER, heartStyle));
-			}
-		}); */
-		
-		
-		/*dislike.addPointerPressedListener((evt) -> {
-				likes.setVisible(true);
-			dislike.setVisible(false);
-			System.out.println("aaaa");
-			
-		});*/
 
-
-
-		//Image s = new Image(Image.createImage());
-		//ImageView img2 = new ImageView(Image.createImage(""));
-
-		/*n.addPointerPressedListener((evt) -> {
-			//n.setVisible(false);
-			System.out.println("hellooo");
-			n1.setVisible(true);
-		}); */
-		Label l = new Label("Ville : ");
-		l.setUIID("Test");
-		cnt2.add(l);
+	
 		ServiceGallery ser = new ServiceGallery();
 		addButton(g1.getImage(), g1.getVille() + "  , " + g1.getLieu(), false, 11, 9, g1.getId());
+		
+		
 
 	}
+	
+	
+	
 
 	private void updateArrowPosition(Button b, Label arrow) {
 		arrow.getUnselectedStyle().setMargin(LEFT, b.getX() + b.getWidth() / 2 - arrow.getWidth() / 2);

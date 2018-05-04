@@ -196,6 +196,13 @@ public class AddGallery extends BaseForm {
 			}*/
 
 		});
+		Button back =  new Button("Back"); 
+		back.addActionListener((evt) -> {
+						 new DisplayGallery(res).show();
+
+			
+		});
+				cnt3.add(back);
 		cnt3.add(Ville);
 		cnt3.add(Lieu);
 		cnt3.add(Description);
@@ -290,9 +297,7 @@ public class AddGallery extends BaseForm {
 				));
 		add(cnt);
 
-		image.addActionListener(e -> {
-
-		});
+		
 	}
 
 	private void bindButtonSelection(Button b, Label arrow) {

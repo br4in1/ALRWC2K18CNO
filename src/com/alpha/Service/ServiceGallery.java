@@ -6,6 +6,7 @@
 package com.alpha.Service;
 
 import com.alpha.Entite.Gallery;
+import com.alpha.Entite.Likes;
 import com.alpha.Entite.Product;
 import com.codename1.io.CharArrayReader;
 import com.codename1.io.ConnectionRequest;
@@ -35,6 +36,7 @@ public class ServiceGallery {
 		});
 		NetworkManager.getInstance().addToQueueAndWait(con);
 	}
+
 
 	public ArrayList<Gallery> getListGallery(String json) {
 
