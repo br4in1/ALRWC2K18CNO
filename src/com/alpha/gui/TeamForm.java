@@ -62,7 +62,7 @@ public class TeamForm extends BaseForm {
 
 		Label spacer1 = new Label();
 		Label spacer2 = new Label();
-		addTab(swipe, res.getImage("signup-background.jpg"), spacer1, "Teams & Players");
+		addTab(swipe, res.getImage("signup-background.jpg"), spacer1, "Teams");
 
 		swipe.setUIID("Container");
 		swipe.getContentPane().setUIID("Container");
@@ -96,7 +96,6 @@ public class TeamForm extends BaseForm {
 		});
 		bindButtonSelection(teamsButton, arrow);
 
-		// special case for rotation
 		addOrientationListener(e -> {
 			updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
 
@@ -109,9 +108,7 @@ public class TeamForm extends BaseForm {
 		ServiceTeam serviceTeam = new ServiceTeam();
 
 		for (Team e : serviceTeam.getList2()) {
-			//System.out.println(e.getFlagPhoto());
-
-			//addButton(e.getFlagPhoto(), e.getName(), false, e.getFifaRank(), e.getPoints(), 0);
+			
 			addButton(e,res);
 		}
 	}
@@ -200,7 +197,6 @@ public class TeamForm extends BaseForm {
 		image.addActionListener(
 				e -> {
 					team= t ;
-				//	System.out.println(team.getName());
 					TeamStatForm h = new TeamStatForm(res);
 					h.show();
 					ToastBar.showMessage(team.getName(), FontImage.MATERIAL_INFO);
