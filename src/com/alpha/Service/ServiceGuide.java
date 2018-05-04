@@ -151,7 +151,7 @@ public class ServiceGuide {
 				float id = Float.parseFloat(obj.get("id").toString());
 				p.setId((int)id);
 				p.setBagage(obj.get("bagage").toString());
-				p.setCouleur(obj.get("city").toString());
+				p.setCouleur(obj.get("couleur").toString());
                                 Map<String, Object> dateDepart = (Map<String, Object>) obj.get("dateDepart");
                                 String d = dateDepart.get("timestamp").toString();
                                 float ts = Float.parseFloat(d);
@@ -161,15 +161,26 @@ public class ServiceGuide {
 				p.setDepart(obj.get("depart").toString());
 				p.setDestination(obj.get("destination").toString());
 				p.setDuree(obj.get("duree").toString());
-				p.setIdUser(Integer.parseInt(obj.get("idUser").toString()));
-                                p.setKilometrage(Integer.parseInt(obj.get("kilometrage").toString()));
+                                float id_user = Float.parseFloat(obj.get("idUser").toString());
+				p.setIdUser((int) id_user);
+                                  float kilo = Float.parseFloat(obj.get("idUser").toString());
+				
+                                p.setKilometrage((int)kilo);
 				p.setLangue(obj.get("langage").toString());
 				p.setNameUser(obj.get("nameUser").toString());
-				p.setNbPlaceRestantes(Integer.parseInt(obj.get("nbPlaceRestantes").toString()));
-				p.setNbPlaceTot(Integer.parseInt(obj.get("nbPlaceTot").toString()));
-				p.setNumCompteBancaire(Integer.parseInt(obj.get("numCompteBancaire").toString()));
-				p.setPrixPlace(Integer.parseInt(obj.get("prixPlace").toString()));
-				p.setSmoking(Float.parseFloat(obj.get("smoking").toString()));
+                                 float placetot = Float.parseFloat(obj.get("nbPlaceTot").toString());
+				 float placerest = Float.parseFloat(obj.get("nbPlaceRestantes").toString());
+				
+				p.setNbPlaceRestantes((int)placerest);
+				p.setNbPlaceTot((int)placetot);
+                                 float numcomte = Float.parseFloat(obj.get("numCompteBancaire").toString());
+				
+				p.setNumCompteBancaire((int)numcomte);
+				 float prixPlace = Float.parseFloat(obj.get("prixPlace").toString());
+				
+                                p.setPrixPlace((int)prixPlace);
+                                
+				p.setSmoking(obj.get("smoking").toString());
 				p.setVoiture(obj.get("voiture").toString());
 				
 				listProducts.add(p);
@@ -185,7 +196,7 @@ public class ServiceGuide {
 
 	public ArrayList<Covoiturage> getListCarpooling() {
 		ConnectionRequest con = new ConnectionRequest();
-		con.setUrl("http://localhost/alrwc2k18/web/app_dev.php/guide/AfficherToutHotelMobile");
+		con.setUrl("http://127.0.0.1:8000/guide/AfficherToutCarpooling");
 
 		con.addResponseListener(new ActionListener<NetworkEvent>() {
 			@Override

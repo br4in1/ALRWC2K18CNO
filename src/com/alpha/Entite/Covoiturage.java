@@ -26,12 +26,12 @@ public class Covoiturage {
     int NbPlaceTot;
     int NbPlaceRestantes ; 
     String Bagage ; 
-    float Smoking; 
+    String Smoking; 
     int PrixPlace; 
     int  NumCompteBancaire ; 
     public Covoiturage()
     {}
-    public Covoiturage(int id, int idUser, String NameUser, String Voiture, String Couleur, String Langue, Date DateDepart, String Depart, String Destination, String Duree, int Kilometrage, int NbPlaceTot, int NbPlaceRestantes, String Bagage, float Smoking, int PrixPlace, int NumCompteBancaire) {
+    public Covoiturage(int id, int idUser, String NameUser, String Voiture, String Couleur, String Langue, Date DateDepart, String Depart, String Destination, String Duree, int Kilometrage, int NbPlaceTot, int NbPlaceRestantes, String Bagage, String Smoking, int PrixPlace, int NumCompteBancaire) {
         this.id = id;
         this.idUser = idUser;
         this.NameUser = NameUser;
@@ -163,11 +163,11 @@ public class Covoiturage {
         this.Bagage = Bagage;
     }
 
-    public float getSmoking() {
+    public String getSmoking() {
         return Smoking;
     }
 
-    public void setSmoking(float Smoking) {
+    public void setSmoking(String Smoking) {
         this.Smoking = Smoking;
     }
 
