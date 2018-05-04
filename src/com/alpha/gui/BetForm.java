@@ -168,7 +168,7 @@ public class BetForm extends BaseForm {
 			//addButton(e.getFlagPhoto(), e.getName(), false, e.getFifaRank(), e.getPoints(), 0);
 			addButton(e,res);
 		}
-		
+		/*
 		TextField resultField = new TextField("", "result", 20, TextField.ANY);
 		resultField.setUIID("TextFieldBlack");
 
@@ -204,15 +204,16 @@ public class BetForm extends BaseForm {
 
 			}
 
-		});
+		});*/
 		
 		all.addActionListener(e -> {
            // updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
-		   System.out.println("all");
+		 //  System.out.println("all");
         });
 		addBetButton.addActionListener(e -> {
            // updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
-		   System.out.println("add");
+		  BetAddForm betAddF = new BetAddForm(res);
+		  betAddF.show();
         });
 
 	}
@@ -271,9 +272,9 @@ public class BetForm extends BaseForm {
 		
 		String ch= "" ;
 		String result = t.getIdGame().get("result").toString();
-		System.out.println(result);
+		/*		System.out.println(result);
 		System.out.println(result.charAt(0));
-		System.out.println(result.charAt(2));
+		System.out.println(result.charAt(2));*/
 		
 		if(t.getResult().equals("x") && result.charAt(0)>result.charAt(2)
 				||

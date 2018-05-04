@@ -202,7 +202,7 @@ public class TeamForm extends BaseForm {
 		image.addActionListener(
 				e -> {
 					team= t ;
-					System.out.println(team.getName());
+				//	System.out.println(team.getName());
 					TeamStatForm h = new TeamStatForm(res);
 					h.show();
 					ToastBar.showMessage(team.getName(), FontImage.MATERIAL_INFO);
