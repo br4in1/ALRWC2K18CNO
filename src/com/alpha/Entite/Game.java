@@ -22,8 +22,9 @@ public class Game {
     private String summaryPhoto;
     private String Highlights;
     private String Referee;
+	private int cost;
 
-    public Game(Date date, Map<String,Object> homeTeam, Map<String,Object> awayTeam, String result, Map<String,Object> stadium, String summary, String summaryPhoto, String Highlights, String Referee) {
+    public Game(Date date, Map<String,Object> homeTeam, Map<String,Object> awayTeam, String result, Map<String,Object> stadium, String summary, String summaryPhoto, String Highlights, String Referee, int cost) {
     
         this.date = date;
         this.homeTeam = homeTeam;
@@ -34,6 +35,7 @@ public class Game {
         this.summaryPhoto = summaryPhoto;
         this.Highlights = Highlights;
         this.Referee = Referee;
+		this.cost = cost;
     }
 
 	public Game() {
@@ -118,6 +120,15 @@ public class Game {
     public void setReferee(String Referee) {
         this.Referee = Referee;
     }
+
+	public int getCost() {
+		return cost;
+	}
+
+	public void setCost(int cost) {
+		this.cost = cost;
+	}
+	
 
 	@Override
 	public String toString() {

@@ -53,6 +53,7 @@ public class ServiceGame {
 			//	System.out.println("date == "+g.getDate().toString());
 				 g.setDate(new Date());
 				g.setHighlights(obj.get("highlights").toString());
+				g.setCost((int) Float.parseFloat(obj.get("cost").toString()));
 				g.setReferee(obj.get("referee").toString());
 				g.setResult(obj.get("result").toString());
 				g.setSummary(obj.get("summary").toString());

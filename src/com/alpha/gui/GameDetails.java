@@ -11,20 +11,24 @@ import com.codename1.components.ImageViewer;
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.components.SpanLabel;
 import com.codename1.ui.Button;
+import com.codename1.ui.ButtonGroup;
 import com.codename1.ui.Container;
 import com.codename1.ui.Display;
 import com.codename1.ui.EncodedImage;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
+import com.codename1.ui.RadioButton;
 import com.codename1.ui.Tabs;
 import com.codename1.ui.TextArea;
+import com.codename1.ui.TextField;
 import com.codename1.ui.Toolbar;
 import com.codename1.ui.URLImage;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
+import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
@@ -47,6 +51,13 @@ public class GameDetails extends BaseForm {
 		super.addSideMenu(res);
 		tb.addSearchCommand(e -> {
 		});
+				ButtonGroup barGroup = new ButtonGroup();
+		RadioButton teamsButton = RadioButton.createToggle("  ", barGroup);
+		teamsButton.setUIID("SelectBar");
+		add(LayeredLayout.encloseIn(
+				GridLayout.encloseIn(1, teamsButton)
+		));
+
 
 		Tabs swipe = new Tabs();
 
@@ -115,7 +126,8 @@ public class GameDetails extends BaseForm {
 		date.setUIID("date");
         date.setEditable(false);
 		
-	
+		TextField nbTickets = new TextField();
+		nbTickets.setWidth(5);
 		
 		Button tickets= new Button("Book a Ticket");
 		Button bet= new Button("Bet");
@@ -123,7 +135,9 @@ public class GameDetails extends BaseForm {
 		gameContainer.add(BorderLayout.NORTH,dateCnt);
 		gameContainer.add(BorderLayout.EAST,BoxLayout.encloseY(awayName,imageAway));
 		gameContainer.add(BorderLayout.WEST,BoxLayout.encloseY(homeName,imageHome));
-		gameContainer.add(BorderLayout.CENTER,BoxLayout.encloseY(scoreG,tickets));
+		gameContainer.add(BorderLayout.CENTER,scoreG);
+		gameContainer.add(BorderLayout.SOUTH,BoxLayout.encloseX(tickets,bet));
+		
 		
 		tickets.addActionListener(new ActionListener() {
 			@Override
@@ -138,7 +152,7 @@ public class GameDetails extends BaseForm {
 			}
 		});
 		add(gameContainer);
-		add(bet);
+		
 		
 	
 				
