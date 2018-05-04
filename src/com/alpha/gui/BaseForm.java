@@ -100,8 +100,11 @@ public class BaseForm extends Form {
 		tb.addMaterialCommandToSideMenu("Logout", FontImage.MATERIAL_EXIT_TO_APP, e -> new WalkthruForm(res).show());
 		tb.addMaterialCommandToSideMenu("Teams", FontImage.MATERIAL_FLAG, e -> new TeamForm(res).show());
 <<<<<<< HEAD
+<<<<<<< HEAD
 		tb.addMaterialCommandToSideMenu("Guide", FontImage.MATERIAL_HOME, e -> new GuideAffichage(res).show());
 =======
+=======
+>>>>>>> 19e55e25bd30ed100825a12728e7837c88ba6f5f
 		tb.addMaterialCommandToSideMenu("Bets", FontImage.MATERIAL_UPDATE,  e -> new BetForm(res).show());
 		tb.addMaterialCommandToSideMenu("Guide", FontImage.MATERIAL_HOME, e -> {GoogleMapsTestApp a= new GoogleMapsTestApp() ; a.start("tunis");});
 >>>>>>> 19e55e25bd30ed100825a12728e7837c88ba6f5f

@@ -42,6 +42,7 @@ import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.paint.Color;
@@ -59,13 +60,20 @@ public class DisplayGallery extends BaseForm {
 
 	public DisplayGallery(Resources res) {
 		super("", BoxLayout.y());
-		getAllStyles().setBgColor(0xE8E8E8);
+		this.res=res;	
 		Toolbar tb = new Toolbar(true);
 		setToolbar(tb);
 		getTitleArea().setUIID("Container");
 		getContentPane().setScrollVisible(false);
 
 		super.addSideMenu(res);
+
+		     Tabs swipe = new Tabs();
+
+        Label spacer1 = new Label();
+        Label spacer2 = new Label();
+        addTab(swipe, res.getImage("news-item.jpg"), spacer1, "15 Likes  ", "85 Comments", "Integer ut placerat purued non dignissim neque. ");
+        addTab(swipe, res.getImage("dog.jpg"), spacer2, "100 Likes  ", "66 Comments", "Dogs are cute: story at 11");
 
 		ButtonGroup bg = new ButtonGroup();
 		int size = Display.getInstance().convertToPixels(1);
@@ -80,7 +88,7 @@ public class DisplayGallery extends BaseForm {
 		g.setColor(0xffffff);
 		g.setAntiAliased(true);
 		g.fillArc(0, 0, size, size, 0, 360);
-		/*
+		
         RadioButton[] rbs = new RadioButton[swipe.getTabCount()];
         FlowLayout flow = new FlowLayout(CENTER);
         flow.setValign(BOTTOM);
@@ -92,7 +100,7 @@ public class DisplayGallery extends BaseForm {
             radioContainer.add(rbs[iter]);
         } 
                 
-        rbs[0].setSelected(true); */
+        rbs[0].setSelected(true); 
 
 		ButtonGroup barGroup = new ButtonGroup();
 		RadioButton all = RadioButton.createToggle("Gallery photo ", barGroup);
@@ -120,7 +128,10 @@ public class DisplayGallery extends BaseForm {
 		Button Btn  =new Button(" + ");
 		
 		Btn.addActionListener((evt) -> {
-			            new AddGallery(res).show();
+			try {
+				new AddGallery(res).show();
+			} catch (IOException ex) {
+			}
 
 			
 		});
@@ -129,7 +140,7 @@ public class DisplayGallery extends BaseForm {
 					ServiceGallery ser = new ServiceGallery();
 					ArrayList<Gallery> Tab = ser.getList2();
 					for (int i = 0; i < Tab.size(); i++) {
-						addButton(Tab.get(i).getImage(), Tab.get(i).getVille() + "  , " + Tab.get(i).getLieu(), false, 11, 9, 2);
+						addButton1(Tab.get(i).getImage(), Tab.get(i).getVille() + "  , " + Tab.get(i).getLieu(), false, 11, 9, Tab.get(i));
 					}
 		
 	}
@@ -178,7 +189,8 @@ public class DisplayGallery extends BaseForm {
 		swipe.addTab("", page1);
 	}
 
-	private void addButton(String imageUrl, String title, boolean liked, int likeCount, int commentCount, int id) {
+	
+	private void addButton1(String imageUrl, String title, boolean liked, int likeCount, int commentCount , Gallery g1) {
 
 		ImageViewer im = new ImageViewer();
 
@@ -210,6 +222,8 @@ public class DisplayGallery extends BaseForm {
 		}
 		Label comments = new Label(commentCount + " Comments", "NewsBottomLine");
 		FontImage.setMaterialIcon(likes, FontImage.MATERIAL_CHAT);
+		
+	
 
 		cnt.add(BorderLayout.CENTER,
 				BoxLayout.encloseY(
@@ -218,8 +232,9 @@ public class DisplayGallery extends BaseForm {
 				));
 		add(cnt);
 
-		image.addActionListener(e -> {
-			// new articleForm(this.res, id).show();
+		image.addActionListener((e) -> {
+			 new DisplayOne(res, (Gallery) g1).show();
+			 System.out.println(g1);
 		});
 	}
 

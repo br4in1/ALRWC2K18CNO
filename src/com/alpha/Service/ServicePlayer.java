@@ -31,11 +31,11 @@ public class ServicePlayer {
 			System.out.println(json);
 			JSONParser j = new JSONParser();
 
-			Map<String, Object> etudiants = j.parseJSON(new CharArrayReader(json.toCharArray()));
-			System.out.println(etudiants);
+			Map<String, Object> lPlayerMap = j.parseJSON(new CharArrayReader(json.toCharArray()));
+			System.out.println(lPlayerMap);
 
 			
-			List<Map<String, Object>> list = (List<Map<String, Object>>) etudiants.get("root");
+			List<Map<String, Object>> list = (List<Map<String, Object>>) lPlayerMap.get("root");
 
 			for (Map<String, Object> obj : list) {
 				Player p = new Player();

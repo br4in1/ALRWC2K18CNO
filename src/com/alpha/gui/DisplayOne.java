@@ -6,11 +6,12 @@
 package com.alpha.gui;
 
 import com.alpha.Entite.Gallery;
-import com.alpha.Entite.SimpleUser;
+import com.alpha.Service.ServiceArticles;
 import com.alpha.Service.ServiceGallery;
 import com.codename1.components.ImageViewer;
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.components.SpanLabel;
+import com.codename1.ui.BrowserComponent;
 import com.codename1.ui.Button;
 import com.codename1.ui.ButtonGroup;
 import com.codename1.ui.Component;
@@ -28,59 +29,47 @@ import com.codename1.ui.Label;
 import com.codename1.ui.RadioButton;
 import com.codename1.ui.Tabs;
 import com.codename1.ui.TextArea;
-import com.codename1.ui.TextField;
 import com.codename1.ui.Toolbar;
 import com.codename1.ui.URLImage;
-import com.codename1.ui.events.ActionEvent;
-import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
-import com.codename1.ui.util.ImageIO;
 import com.codename1.ui.util.Resources;
-import com.codename1.util.Base64;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import javafx.stage.FileChooser;
-import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
-import com.codename1.io.File;
-import com.cloudinary.*;
-import java.util.Map;
-//import java.io.File;
 
 /**
  *
  * @author dell
  */
-public class AddGallery extends BaseForm {
-	Cloudinary cloudinary = new Cloudinary("cloudinary://451245641369774:fTOR3y7gDwymp7mztVOArxrP_Rw@russie2k18");
+public class DisplayOne extends BaseForm{
+	 Gallery gallery;
+	     Resources res;
 
 
-	File file;
-	File image1;
-	TextField Ville;
-	TextField Lieu;
-	TextField Description;
-	Button photo;
-	Button ajouter;
-	private String filePath;
 
-	Container cnt3 = new Container();
+  Container cnt2 = new Container();
+	
 
-	public AddGallery(Resources res) throws IOException {
+	public DisplayOne(Resources res ,Gallery g1 ) {
 		super("", BoxLayout.y());
-
-		//cloudinaryy = new Cloudinary("cloudinary://212894137142756:7Coi2BsCet7rXqPmDAuBi08ONfQ@dbs7hg9cy");
-
+		this.res=res;	
 		Toolbar tb = new Toolbar(true);
 		setToolbar(tb);
 		getTitleArea().setUIID("Container");
 		getContentPane().setScrollVisible(false);
+
+		super.addSideMenu(res);
+
+		     Tabs swipe = new Tabs();
+
+        Label spacer1 = new Label();
+        Label spacer2 = new Label();
+        addTab(swipe, res.getImage("news-item.jpg"), spacer1, "15 Likes  ", "85 Comments", "Integer ut placerat purued non dignissim neque. ");
+        addTab(swipe, res.getImage("dog.jpg"), spacer2, "100 Likes  ", "66 Comments", "Dogs are cute: story at 11");
 
 		ButtonGroup bg = new ButtonGroup();
 		int size = Display.getInstance().convertToPixels(1);
@@ -95,28 +84,22 @@ public class AddGallery extends BaseForm {
 		g.setColor(0xffffff);
 		g.setAntiAliased(true);
 		g.fillArc(0, 0, size, size, 0, 360);
-		/* RadioButton[] rbs = new RadioButton[swipe.getTabCount()];
+		
+        RadioButton[] rbs = new RadioButton[swipe.getTabCount()];
         FlowLayout flow = new FlowLayout(CENTER);
         flow.setValign(BOTTOM);
         Container radioContainer = new Container(flow);
-        for (int iter = 0; iter < rbs.length; iter++) {
+        for(int iter = 0 ; iter < rbs.length ; iter++) {
             rbs[iter] = RadioButton.createToggle(unselectedWalkthru, bg);
             rbs[iter].setPressedIcon(selectedWalkthru);
             rbs[iter].setUIID("Label");
             radioContainer.add(rbs[iter]);
-        }
+        } 
+                
+        rbs[0].setSelected(true); 
 
-        rbs[0].setSelected(true);
-        swipe.addSelectionListener((i, ii) -> {
-            if (!rbs[ii].isSelected()) {
-                rbs[ii].setSelected(true);
-            }
-        }); */
-
- /* Component.setSameSize(radioContainer, spacer1, spacer2);
-        add(LayeredLayout.encloseIn(swipe, radioContainer));*/
 		ButtonGroup barGroup = new ButtonGroup();
-		RadioButton all = RadioButton.createToggle("Add your photo", barGroup);
+		RadioButton all = RadioButton.createToggle("Gallery photo ", barGroup);
 		all.setUIID("SelectBar");
 
 		Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
@@ -138,72 +121,13 @@ public class AddGallery extends BaseForm {
 		addOrientationListener(e -> {
 			updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
 		});
-
-		Ville = new TextField("", "Ville", 20, TextField.ANY);
-		Lieu = new TextField("", "Lieu", 20, TextField.ANY);
-		Description = new TextField("", "Description", 20, TextField.ANY);
-		Ville.setUIID("TextFieldBlack");
-		Lieu.setUIID("TextFieldBlack");
-		Description.setUIID("TextFieldBlack");
-
-		photo = new Button("Browse");
-		ajouter = new Button("Click here to add your photo ");
-
-		photo.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent evt) {
-				Display.getInstance().openGallery(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent ev) {
-						if (ev != null && ev.getSource() != null) {
-							String filePath = (String) ev.getSource();
-							int fileNameIndex = filePath.lastIndexOf("/") + 1;
-							String fileName = filePath.substring(fileNameIndex);
-							Image imgg;
-							try {
-								imgg = Image.createImage(filePath);
-								if (imgg != null) {
-
-									file = new File(filePath);
-									System.err.println(file);
-
-								}
-							} catch (IOException ex) {
-							}
-						}
-					}
-				},
-						Display.GALLERY_IMAGE);
-
-			}
-		});
-
-		ajouter.addActionListener((evt) -> {
-
-			ServiceGallery ser = new ServiceGallery();
-			String description = Description.getText();
-			String ville = Ville.getText();
-			String lieu = Lieu.getText();
-			int user = SimpleUser.current_user.getId();
 		
-				//Map uploadResult;
-				//uploadResult = cloudinary.uploader().upload(file., ObjectUtils.emptyMap());
-				//System.out.println(uploadResult);
-				Gallery g1 = new Gallery(user, ville, lieu, description, file.getPath(), "0");
-				ser.ajoutPhoto(g1);
-			/*} catch (IOException ex) {
-				System.out.println(ex);
-			}*/
-
-		});
-		cnt3.add(Ville);
-		cnt3.add(Lieu);
-		cnt3.add(Description);
-		cnt3.add(photo);
-		cnt3.add(ajouter);
-
-		add(cnt3);
-
+		
+		add(cnt2);
+				ServiceGallery ser = new ServiceGallery();
+						addButton(g1.getImage(), g1.getVille() + "  , " + g1.getLieu(), false, 11, 9, g1.getId());
+				
+		
 	}
 
 	private void updateArrowPosition(Button b, Label arrow) {
@@ -232,7 +156,7 @@ public class AddGallery extends BaseForm {
 		ScaleImageLabel image = new ScaleImageLabel(img);
 		image.setUIID("Container");
 		image.setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);
-		Label overlay = new Label(" ", "ImageOverlay");
+		Label overlay = new Label("", "ImageOverlay");
 
 		Container page1
 				= LayeredLayout.encloseIn(
@@ -250,7 +174,7 @@ public class AddGallery extends BaseForm {
 		swipe.addTab("", page1);
 	}
 
-	private void addButton(String imageUrl, String title, boolean liked, int likeCount, int commentCount, int id) {
+	private void addButton(String imageUrl, String title, boolean liked, int likeCount, int commentCount, int id  ) {
 
 		ImageViewer im = new ImageViewer();
 
@@ -259,8 +183,8 @@ public class AddGallery extends BaseForm {
 
 		im.setImage(URLImage.createToStorage(encImage, "Medium" + imageUrl, imageUrl, URLImage.RESIZE_SCALE));
 
-		int height = Display.getInstance().convertToPixels(11.5f);
-		int width = Display.getInstance().convertToPixels(14f);
+		int height = Display.getInstance().convertToPixels(25f);
+		int width = Display.getInstance().convertToPixels(25f);
 		Button image = new Button(im.getImage().fill(width, height));
 		image.setUIID("Label");
 		Container cnt = BorderLayout.west(image);
@@ -282,6 +206,8 @@ public class AddGallery extends BaseForm {
 		}
 		Label comments = new Label(commentCount + " Comments", "NewsBottomLine");
 		FontImage.setMaterialIcon(likes, FontImage.MATERIAL_CHAT);
+		
+	
 
 		cnt.add(BorderLayout.CENTER,
 				BoxLayout.encloseY(
@@ -290,17 +216,40 @@ public class AddGallery extends BaseForm {
 				));
 		add(cnt);
 
-		image.addActionListener(e -> {
-
-		});
+		
 	}
 
 	private void bindButtonSelection(Button b, Label arrow) {
 		b.addActionListener(e -> {
 			if (b.isSelected()) {
 				updateArrowPosition(b, arrow);
+				/*if (b.getName() == "All") {
+					cnt2.removeAll();
+					ServiceGallery ser = new ServiceGallery();
+					ArrayList<Gallery> Tab = ser.getList2();
+					for (int i = 0; i < Tab.size(); i++) {
+						addButton(Tab.get(i).getImage(), Tab.get(i).getVille() + "  , " + Tab.get(i).getLieu(), false, 11, 9, 2);
+					} 
+
+				} 
+				/*else if (b.getName() == "New") {
+					cnt2.removeAll();
+					TextField Ville = new TextField("", "Ville", 20, TextField.ANY);
+					TextField Lieu = new TextField("", "Lieu", 20, TextField.ANY);
+					TextField Description = new TextField("", "Description", 20, TextField.ANY);
+					FileChooser file = new FileChooser();
+					Ville.setSingleLineTextArea(false);
+					Lieu.setSingleLineTextArea(false);
+					Description.setSingleLineTextArea(false);
+					Button Valider = new Button("Add your photo");
+					cnt2.add(Ville);
+					cnt2.add(Lieu);
+					cnt2.add(Description);
+					cnt2.add(Valider);
+					
+				} */
 			}
 		});
 	}
-
+	
 }

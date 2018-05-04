@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package com.alpha.Entite;
+
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -12,6 +13,7 @@ import java.util.TimeZone;
  * @author br4in
  */
 public class User {
+
 	protected int id;
 	protected String username;
 	protected String email;
@@ -22,9 +24,14 @@ public class User {
 	protected String roles;
 	protected String firstname;
 	protected String lastname;
-	
-	public User(){
-		
+
+	public User() {
+
+	}
+
+	@Override
+	public String toString() {
+		return "User{" + "id=" + id + ", username=" + username + ", email=" + email + ", enabled=" + enabled + ", salt=" + salt + ", password=" + password + ", last_login=" + last_login + ", roles=" + roles + ", firstname=" + firstname + ", lastname=" + lastname + '}';
 	}
 
 	public User(String username, String email, Boolean enabled, String salt, String password, TimeZone last_login, String roles, String firstname, String lastname) {

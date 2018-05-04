@@ -52,6 +52,7 @@ public class MyApplication {
 					user_id = r.getInteger(1);
 				}
 			}
+			cur.close();
 			if (loggedin == 1 && user_id != -1) {
 				ServiceUser ser = new ServiceUser();
 				SimpleUser.current_user = ser.getUserData(user_id);

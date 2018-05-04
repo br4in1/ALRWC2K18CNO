@@ -27,7 +27,7 @@ public class SimpleUser extends User{
 
 	@Override
 	public String toString() {
-		return "SimpleUser{" + "birthdate=" + birthdate + ", registrationdate=" + registrationdate + ", nationality=" + nationality + ", loggedin=" + loggedin + ", fidaelitypoints=" + fidaelitypoints + ", profilepicture=" + profilepicture + '}';
+		return super.toString()+ " SimpleUser{" + "birthdate=" + birthdate + ", registrationdate=" + registrationdate + ", nationality=" + nationality + ", loggedin=" + loggedin + ", fidaelitypoints=" + fidaelitypoints + ", profilepicture=" + profilepicture + '}';
 	}
 
 	public SimpleUser(Date birthdate, Date registrationdate, String nationality, Boolean loggedin, int fidaelitypoints, String profilepicture, String username, String email, Boolean enabled, String salt, String password, TimeZone last_login, String roles, String firstname, String lastname) {

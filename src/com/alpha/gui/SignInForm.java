@@ -21,11 +21,13 @@ package com.alpha.gui;
 import com.alpha.Entite.SimpleUser;
 import com.alpha.Service.ServiceUser;
 import com.codename1.components.FloatingHint;
+import com.codename1.components.ImageViewer;
 import com.codename1.db.Database;
 import com.codename1.ui.Button;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
+import com.codename1.ui.Image;
 import com.codename1.ui.Label;
 import com.codename1.ui.TextField;
 import com.codename1.ui.events.ActionEvent;
@@ -75,6 +77,15 @@ public class SignInForm extends BaseForm {
 				FlowLayout.encloseCenter(doneHaveAnAccount, signUp)
 		);
 		content.setScrollableY(true);
+		Image cwfim = res.getImage("facebook-login.png");
+		ImageViewer cwf = new ImageViewer(cwfim.scaled(cwfim.getWidth()*3, cwfim.getHeight()*3));
+		cwf.addPointerReleasedListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				new FacebookLogin(res);
+			}
+		});
+		content.add(cwf);
 		//content.getAllStyles().setMarginTop(500);
 		add(BorderLayout.CENTER, content);
 		signIn.requestFocus();
