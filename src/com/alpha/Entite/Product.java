@@ -34,6 +34,11 @@ public class Product {
 		this.category = category;
 	}
 
+	@Override
+	public String toString() {
+		return "Product{" + "id=" + id + ", label=" + label + ", descrption=" + descrption + ", pic1=" + pic1 + ", pic2=" + pic2 + ", pic3=" + pic3 + ", price=" + price + ", remaining=" + remaining + ", category=" + category + '}';
+	}
+
 	public int getId() {
 		return id;
 	}
