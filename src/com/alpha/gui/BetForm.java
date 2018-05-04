@@ -87,7 +87,7 @@ public class BetForm extends BaseForm {
 		ButtonGroup barGroup = new ButtonGroup();
 		RadioButton all = RadioButton.createToggle("My Bets", barGroup);
 		all.setUIID("SelectBar");
-		RadioButton addBetButton = RadioButton.createToggle("Add bet", barGroup);
+		RadioButton addBetButton = RadioButton.createToggle("", barGroup);
 		addBetButton.setUIID("SelectBar");
 		RadioButton popular = RadioButton.createToggle("", barGroup);
 		popular.setUIID("SelectBar");
@@ -198,9 +198,9 @@ public class BetForm extends BaseForm {
 		String result = t.getIdGame().get("result").toString();
 	
 
-		if (t.getResult().equals("x") && result.charAt(0) > result.charAt(2)
-				|| t.getResult().equals("y") && result.charAt(0) < result.charAt(2)
-				|| t.getResult().equals("z") && result.charAt(0) == result.charAt(2)) {
+		if (t.getResult().equals("1") && result.charAt(0) > result.charAt(2)
+				|| t.getResult().equals("2") && result.charAt(0) < result.charAt(2)
+				|| t.getResult().equals("x") && result.charAt(0) == result.charAt(2)) {
 			ch = "win";
 		} else {
 			ch = "loose";
