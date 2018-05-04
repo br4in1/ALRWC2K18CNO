@@ -136,8 +136,13 @@ public class BetForm extends BaseForm {
 
 		ServiceBet serviceBet = new ServiceBet();
 
+		
 		for (Bet e : serviceBet.getList2()) {
-			addButton(e, res);
+			System.out.println(e.getIdUser());
+			if(e.getIdUser()==SimpleUser.current_user.getId())
+			{
+				addButton(e, res);
+			}
 		}
 
 		

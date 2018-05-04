@@ -134,21 +134,17 @@ public class BetAddForm extends BaseForm {
 			if (resultField.getText().equals("")) {
 				Dialog.show("Error", "Please set value in your bet ", "OK", null);
 			} else {
-				//if (Integer.parseInt(idGameField.getText()) > 0) {
-				//	System.out.println(resultField.getText() + "  ! ssssss ");
+				
 					if (resultField.getText().equals("x") || resultField.getText().equals("1") || resultField.getText().equals("2")) {
 						ServiceBet fs = new ServiceBet();
 
-						/*if (fs.getList3(Integer.parseInt(idGameField.getText())).get(0).getId() == 0) {
-						Dialog.show("Error", "Game does not exist ! ", "OK", null);
-						} else {*/
 							Map<Integer, Object> mapIdGame = new HashMap<Integer, Object>();
 							mapIdGame.put(game.getId(), "");
 							//System.out.println(mapIdGame);
 							Bet f = new Bet(mapIdGame, resultField.getText(), SimpleUser.current_user.getId());
 							fs.AjouterForum(f);
 							Dialog.show("Success", "added ! ", "OK", null);
-						//}
+						
 					} else {
 						Dialog.show("Error", "Result must be x or 1 or 2 ! ", "OK", null);
 					}
