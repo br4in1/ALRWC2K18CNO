@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 package com.alpha.Service;
-
 import com.alpha.Entite.Article;
-import com.alpha.Entite.User;
+import com.alpha.Entite.ArticleCommentaire;
+import com.alpha.Entite.SimpleUser;
 import com.codename1.io.CharArrayReader;
 import com.codename1.io.ConnectionRequest;
 import com.codename1.io.JSONParser;
@@ -15,27 +15,27 @@ import com.codename1.io.NetworkManager;
 import com.codename1.ui.events.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 
 /**
  *
  * @author raiiz
  */
 public class ServiceArticles {
-
+    
     public ArrayList<Article> getListProducts(String json) {
-
+        
         ArrayList<Article> listArticles = new ArrayList<Article>();
-
+        
         try {
             JSONParser j = new JSONParser();
-
+            
             Map<String, Object> articles = j.parseJSON(new CharArrayReader(json.toCharArray()));
-
+            
             List<Map<String, Object>> list = (List<Map<String, Object>>) articles.get("root");
-
+            
             for (Map<String, Object> obj : list) {
                 Article p = new Article();
                 float id = Float.parseFloat(obj.get("id").toString());
@@ -50,17 +50,17 @@ public class ServiceArticles {
                 p.setContenu(obj.get("contenu").toString());
                 listArticles.add(p);
             }
-
+            
         } catch (IOException ex) {
         }
         return listArticles;
     }
     public ArrayList<Article> listArticles2 = new ArrayList<Article>();
-
+    
     public ArrayList<Article> getList2() {
         ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://localhost/russie2k18/web/app_dev.php/articles/mobile/all");
-
+        con.setUrl("http://127.0.0.1:8000/articles/mobile/all");
+        
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
@@ -71,12 +71,11 @@ public class ServiceArticles {
         NetworkManager.getInstance().addToQueueAndWait(con);
         return listArticles2;
     }
-
+    
     public Article getArticle(int id) {
-        // /articles/mobile/get/{id}
         Article article = new Article();
         ConnectionRequest con = new ConnectionRequest();
-        String url = "http://localhost/russie2k18/web/app_dev.php/articles/mobile/get/" + id;
+        String url = "http://127.0.0.1:8000/articles/mobile/get/" + id;
         con.setUrl(url);
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
@@ -94,11 +93,51 @@ public class ServiceArticles {
                 } catch (IOException ex) {
                     System.out.println("error sql");
                 }
-
+                
             }
         });
         NetworkManager.getInstance().addToQueueAndWait(con);
         return article;
-
     }
+    
+    public ArrayList<ArticleCommentaire> getCommentaires(int id) {
+        ArrayList<ArticleCommentaire> commentaires = new ArrayList<>();
+        ConnectionRequest con = new ConnectionRequest();
+        con.setUrl("http://127.0.0.1:8000/commentaires/mobile/get/" + id);
+        
+        con.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                JSONParser j = new JSONParser();
+                String json = new String(con.getResponseData());
+                try {
+                    Map<String, Object> all = j.parseJSON(new CharArrayReader(json.toCharArray()));
+                    List<Map<String, Object>> coms = (List<Map<String, Object>>) all.get("root");
+                    for (Map<String, Object> obj : coms) {
+                        ArticleCommentaire ac = new ArticleCommentaire();
+                        ac.setId((int) Float.parseFloat(obj.get("id").toString()));
+                        ac.setBody(obj.get("body").toString());
+                        ac.setThread_id(id);
+                        ServiceUser su = new ServiceUser();
+                        Map< String, Object> user = (Map< String, Object>) obj.get("author");
+                        SimpleUser author = su.getUserData((int) Float.parseFloat(user.get("id").toString()));
+                        ac.setAuthor(author);
+                        Map< String, Object> creat = (Map< String, Object>) obj.get("createdAt");
+                        String dat = creat.get("timestamp").toString();
+                        float ts = Float.parseFloat(creat.get("timestamp").toString());
+                        Date d = new Date((long) ts *1000);
+                        ac.setCreated_at(d);
+                        
+                        commentaires.add(ac);
+                    }
+                } catch (IOException ex) {
+                    System.out.println("error sql");
+                } 
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+        return commentaires;
+    }
+    
+   
 }

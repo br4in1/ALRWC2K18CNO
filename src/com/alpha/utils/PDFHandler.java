@@ -7,6 +7,7 @@ package com.alpha.utils;
 
 import com.codename1.io.FileSystemStorage;
 import com.codename1.io.Util;
+import com.codename1.ui.Display;
 
 /**
  *
@@ -35,8 +36,20 @@ public class PDFHandler {
         //Encode
         value = Util.encodeUrl(value);
 
-        String fullPathToFile = FileSystemStorage.getInstance().getAppHomePath() + filename;
-        Util.downloadUrlToFileSystemInBackground(URL + "?apikey=" + APIKEY + "&value=" + value, fullPathToFile);
+        //String fullPathToFile = FileSystemStorage.getInstance().getAppHomePath() + filename;
+       // FileSystemStorage fs = FileSystemStorage.getInstance();
+        //String fn = fs.getAppHomePath() + "pdf-sample.pdf";
+        //Util.downloadUrlToFileSystemInBackground(URL + "?apikey=" + APIKEY + "&value=" + value, fullPathToFile);
+        //Util.downloadUrlToFile(URL + "?apikey=" + APIKEY + "&value=" + value, fn, true);
+                //Display.getInstance().execute(fn);
+        //String fullPathToFile = FileSystemStorage.getInstance().getAppHomePath() + "skan.pdf";
+        FileSystemStorage fs = FileSystemStorage.getInstance();
+        String fn = fs.getAppHomePath() + filename; //C:\Users\raiiz\.cn1 path to saved file
+        //Util.downloadUrlToFileSystemInBackground(URL + "?apikey=" + APIKEY + "&value=" + value, fullPathToFile);
+        Util.downloadUrlToFile("http://api.html2pdfrocket.com/pdf?apikey=a1e41309-bf0b-4684-b53f-853a93036917&value=" + value, fn, true);
+       Display.getInstance().execute(fn);
+       
+
     }
 
 }

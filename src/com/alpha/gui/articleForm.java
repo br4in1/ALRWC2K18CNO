@@ -6,7 +6,9 @@
 package com.alpha.gui;
 
 import com.alpha.Entite.Article;
+import com.alpha.Entite.ArticleCommentaire;
 import com.alpha.Service.ServiceArticles;
+import com.alpha.utils.PDFHandler;
 import com.codename1.components.FloatingHint;
 import com.codename1.components.ImageViewer;
 import com.codename1.components.ScaleImageLabel;
@@ -42,6 +44,7 @@ import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  *
@@ -60,8 +63,11 @@ public class articleForm extends BaseForm {
         getTitleArea().setUIID("Container");
         setTitle("Article");
         getContentPane().setScrollVisible(false);
+
         ServiceArticles sa = new ServiceArticles();
         article = sa.getArticle(id);
+        ArrayList<ArticleCommentaire> commentaires = sa.getCommentaires(id);
+
         super.addSideMenu(res);
         tb.addSearchCommand(e -> {
         });
@@ -111,7 +117,48 @@ public class articleForm extends BaseForm {
         add(LayeredLayout.encloseIn(swipe, radioContainer));
         BrowserComponent browser = new BrowserComponent();
         browser.setPage(article.getContenu(), null);
+        browser.getStyle().setBgColor(0x99CCCC);
+        browser.getStyle().setBgTransparency(255);
+        Button download = new Button("Download");
+        download.setText("Download");
+        download.addActionListener(e -> {
+            PDFHandler pdfh = new PDFHandler();
+            pdfh.getFile(article.getContenu(), "article"+article.getId()+".pdf"); 
+        });
+        
+        Button sendMail = new Button("Share");
+        sendMail.addActionListener(e -> {
+        
+        });
         add(browser);
+        Image imv = res.getImage("avatar_comm.jpg").fill(55, 55);
+        ImageViewer imvv = new ImageViewer(imv);
+        Label autho = new Label();
+       // autho.setText(article.getAuteur());
+        Container c1 = BorderLayout.west(imvv);
+        c1.add(BorderLayout.CENTER,
+                    BoxLayout.encloseY(
+                          //  author,
+                            BoxLayout.encloseX(download,sendMail)
+                    ));
+        add(c1);
+        for (int i = 0; i < commentaires.size(); i++) {
+            Image im = res.getImage("avatar_comm.jpg").fill(55, 55);
+            ImageViewer iv = new ImageViewer(im);
+            Container cnt = BorderLayout.west(iv);
+            cnt.getStyle().setBgColor(0xb71f1f);
+            browser.getStyle().setBgTransparency(255);
+            Label author = new Label("[" + commentaires.get(i).getAuthor().getUsername() + "]" + " Wrote : ");
+            Label commentaire = new Label(commentaires.get(i).getBody());
+            author.setUIID("ktiba_kbira");
+            commentaire.setUIID("commentaires");
+            cnt.add(BorderLayout.CENTER,
+                    BoxLayout.encloseY(
+                            author,
+                            BoxLayout.encloseX(commentaire)
+                    ));
+            add(cnt);
+        }
 
     }
 
@@ -128,15 +175,12 @@ public class articleForm extends BaseForm {
         FontImage.setMaterialIcon(comments, FontImage.MATERIAL_CHAT);
 
         if (im.getHeight() > Display.getInstance().getDisplayHeight() / 2) {
-            placeholder = placeholder.scaledHeight(Display.getInstance().getDisplayHeight() / 2);
+            placeholder = placeholder.scaledHeight(Display.getInstance().getDisplayHeight() / 3);
         }
-        /*ScaleImageLabel image = new ScaleImageLabel(img);
-        image.setUIID("Container");
-        image.setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);*/
         Label overlay = new Label(" ", "ImageOverlay");
         EncodedImage encImage = EncodedImage.createFromImage(placeholder, false);
 
-        im.setImage(URLImage.createToStorage(encImage, "Medium" + imgUrl,imgUrl, URLImage.RESIZE_SCALE));
+        im.setImage(URLImage.createToStorage(encImage, "Medium" + imgUrl, imgUrl, URLImage.RESIZE_SCALE));
 
         Container page1
                 = LayeredLayout.encloseIn(
