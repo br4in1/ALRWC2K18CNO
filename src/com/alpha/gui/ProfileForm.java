@@ -19,14 +19,17 @@
 
 package com.alpha.gui;
 
+import com.alpha.Entite.SimpleUser;
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.ui.CheckBox;
 import com.codename1.ui.Component;
 import com.codename1.ui.Display;
+import com.codename1.ui.EncodedImage;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
 import com.codename1.ui.TextField;
 import com.codename1.ui.Toolbar;
+import com.codename1.ui.URLImage;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
@@ -67,40 +70,35 @@ public class ProfileForm extends BaseForm {
         Label twitter = new Label("486 followers", res.getImage("twitter-logo.png"), "BottomPad");
         facebook.setTextPosition(BOTTOM);
         twitter.setTextPosition(BOTTOM);
+		
+		Label picLabel;
+		
+		if (SimpleUser.current_user.getProfilepicture() == null || SimpleUser.current_user.getProfilepicture().equals("null")) {
+			picLabel = new Label(res.getImage("default_profile_picture.png"));
+		} else {
+			Image placeholder = Image.createImage(45, 45, 0xbfc9d2);
+			EncodedImage encImage = EncodedImage.createFromImage(placeholder, false);
+			picLabel = new Label(URLImage.createToStorage(encImage, "User" + SimpleUser.current_user.getProfilepicture(), SimpleUser.current_user.getProfilepicture(), URLImage.RESIZE_SCALE_TO_FILL).scaled(200, 200), "PictureWhiteBackgrond");	
+		}
         
         add(LayeredLayout.encloseIn(
                 sl,
                 BorderLayout.south(
                     GridLayout.encloseIn(3, 
                             facebook,
-                            FlowLayout.encloseCenter(
-                                new Label(res.getImage("profile-pic.jpg"), "PictureWhiteBackgrond")),
+                            FlowLayout.encloseCenter(picLabel),
                             twitter
                     )
                 )
         ));
 
-        TextField username = new TextField("sandeep");
+        TextField username = new TextField(SimpleUser.current_user.getUsername());
         username.setUIID("TextFieldBlack");
         addStringValue("Username", username);
 
-        TextField email = new TextField("sandeep@gmail.com", "E-Mail", 20, TextField.EMAILADDR);
+        TextField email = new TextField(SimpleUser.current_user.getEmail(), "E-Mail", 20, TextField.EMAILADDR);
         email.setUIID("TextFieldBlack");
         addStringValue("E-Mail", email);
-        
-        TextField password = new TextField("sandeep", "Password", 20, TextField.PASSWORD);
-        password.setUIID("TextFieldBlack");
-        addStringValue("Password", password);
-
-        CheckBox cb1 = CheckBox.createToggle(res.getImage("on-off-off.png"));
-        cb1.setUIID("Label");
-        cb1.setPressedIcon(res.getImage("on-off-on.png"));
-        CheckBox cb2 = CheckBox.createToggle(res.getImage("on-off-off.png"));
-        cb2.setUIID("Label");
-        cb2.setPressedIcon(res.getImage("on-off-on.png"));
-        
-        addStringValue("Facebook", FlowLayout.encloseRightMiddle(cb1));
-        addStringValue("Twitter", FlowLayout.encloseRightMiddle(cb2));
     }
     
     private void addStringValue(String s, Component v) {

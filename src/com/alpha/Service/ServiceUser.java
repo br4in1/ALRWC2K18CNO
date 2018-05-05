@@ -56,7 +56,6 @@ public class ServiceUser {
 	public SimpleUser CheckLoginData(String username, String password) {
 		ConnectionRequest con = new ConnectionRequest();
 		con.setUrl("http://127.0.0.1:8000/api/user/checklogindata/username/" + username + "/password/" + password);
-		System.out.println(con.getUrl());
 
 		con.addResponseListener(new ActionListener<NetworkEvent>() {
 			@Override
