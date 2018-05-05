@@ -5,22 +5,31 @@
  */
 package com.alpha.Entite;
 
-
 /**
  *
  * @author dell
  */
 public class Gallery {
 
-    private int id;
-    private int idUser;
-	private String ville ; 
-    private String lieu;
-    private String description;
-    private String image;
-    private String etat ; 
-	private int likes; 
-	private int comments; 
+	private int id;
+	private int idUser;
+	private String ville;
+	private String lieu;
+	private String description;
+	private String image;
+	private String etat;
+	private String exist;
+
+	private int likes;
+	private int comments;
+
+	public String getExist() {
+		return exist;
+	}
+
+	public void setExist(String exist) {
+		this.exist = exist;
+	}
 
 	public int getLikes() {
 		return likes;
@@ -38,91 +47,80 @@ public class Gallery {
 		this.comments = comments;
 	}
 
-
-	
-	
-
-
 	public Gallery() {
-		
-	}
-   
-    public Gallery(int id,int idUser,String ville , String lieu,String description,String image,String etat) {
-        this.id = id;
-        this.idUser = idUser;
-		this.ville=ville;
-        this.lieu = lieu;
-        this.description = description;
-        this.image = image;
-        this.etat = etat;
-	}
-	public Gallery(int idUser,String ville , String lieu,String description,String image,String etat) {
-        this.idUser = idUser;
-		this.ville=ville ; 
-        this.lieu = lieu;
-        this.description = description;
-        this.image = image;
-        this.etat = etat;
-	}
-	
-	 public Gallery(String etat) {
-        this.etat = etat;
+
 	}
 
+	public Gallery(int id, int idUser, String ville, String lieu, String description, String image, String etat) {
+		this.id = id;
+		this.idUser = idUser;
+		this.ville = ville;
+		this.lieu = lieu;
+		this.description = description;
+		this.image = image;
+		this.etat = etat;
+	}
 
-	 
+	public Gallery(int idUser, String ville, String lieu, String description, String image, String etat) {
+		this.idUser = idUser;
+		this.ville = ville;
+		this.lieu = lieu;
+		this.description = description;
+		this.image = image;
+		this.etat = etat;
+	}
 
+	public Gallery(String etat) {
+		this.etat = etat;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public int getIdUser() {
-        return idUser;
-    }
+	public int getIdUser() {
+		return idUser;
+	}
 
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
-    }
+	public void setIdUser(int idUser) {
+		this.idUser = idUser;
+	}
 
-   
+	public String getLieu() {
+		return lieu;
+	}
 
-    public String getLieu() {
-        return lieu;
-    }
+	public void setLieu(String lieu) {
+		this.lieu = lieu;
+	}
 
-    public void setLieu(String lieu) {
-        this.lieu = lieu;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public String getImage() {
+		return image;
+	}
 
-    public String getImage() {
-        return image;
-    }
+	public void setImage(String image) {
+		this.image = image;
+	}
 
-    public void setImage(String image) {
-        this.image = image;
-    }
+	public String getEtat() {
+		return etat;
+	}
 
-
-    public String getEtat() {
-        return etat;
-    }
-
-    public void setEtat(String etat) {
-        this.etat = etat;
-    }
+	public void setEtat(String etat) {
+		this.etat = etat;
+	}
 
 	public String getVille() {
 		return ville;
@@ -132,5 +130,4 @@ public class Gallery {
 		this.ville = ville;
 	}
 
-	
 }

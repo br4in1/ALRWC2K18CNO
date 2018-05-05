@@ -67,6 +67,7 @@ public class DisplayOne extends BaseForm {
 
 	Container cnt2 = new Container();
 	private int x = 0;
+	private boolean x1 ; 
 
 	public DisplayOne(Resources res, Gallery g1) {
 		super("", BoxLayout.y());
@@ -139,8 +140,10 @@ public class DisplayOne extends BaseForm {
 		addOrientationListener(e -> {
 			updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
 		});
+				ServiceLikes ser4 = new ServiceLikes();
 
-		Label likes = new Label(" Like");
+
+		Label likes = new Label(" Like"+ser4.getList2(g1.getId()).getLikes());
 		Style heartStyle = new Style(likes.getUnselectedStyle());
 		heartStyle.setFgColor(0xff2d55);
 		FontImage heartImage = FontImage.createMaterial(FontImage.MATERIAL_FAVORITE_BORDER, heartStyle);
@@ -159,18 +162,28 @@ public class DisplayOne extends BaseForm {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
 				if (x == 0) {
-					likes.setIcon(FontImage.createMaterial(FontImage.MATERIAL_FAVORITE, heartStyle));
 					ServiceLikes ser = new ServiceLikes();
+						Gallery j = new Gallery();
+							j=ser.existe(SimpleUser.current_user.getId(),g1.getId());
+						
+					likes.setIcon(FontImage.createMaterial(FontImage.MATERIAL_FAVORITE, heartStyle));
 					Likes l1 = new Likes(SimpleUser.current_user.getId(), g1.getId());
 					ser.LikedPhoto(l1);
+					likes.setText(String.valueOf(ser4.getList2(g1.getId()).getLikes()+" likes"));
 					x = 1;
-								new DisplayOne(res, (Gallery) g1).show();
+					new DisplayOne(res, (Gallery) g1).show();
+              /*if(j.getExist()==null)
+								{
+						likes.setIcon(FontImage.createMaterial(FontImage.MATERIAL_FAVORITE, heartStyle));
 
+								} */
 				} else {
 					ServiceLikes ser = new ServiceLikes();
 					Likes l1 = new Likes(SimpleUser.current_user.getId(), g1.getId());
 					ser.DislikedPhoto(l1);
 					likes.setIcon(FontImage.createMaterial(FontImage.MATERIAL_FAVORITE_BORDER, heartStyle));
+					new DisplayOne(res, (Gallery) g1).show();
+
 					x = 0;
 				}
 			}
@@ -187,6 +200,8 @@ public class DisplayOne extends BaseForm {
 
 			ServiceCommentaire ser1 = new ServiceCommentaire();
 			Commentaire com = new Commentaire(SimpleUser.current_user.getId(), g1.getId(), Commentaire.getText());
+			new DisplayOne(res, (Gallery) g1).show();
+
 			ser1.CommentPhoto(com);
 		});
 		Container cont = BorderLayout.west(likes);
