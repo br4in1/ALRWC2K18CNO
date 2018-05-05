@@ -8,6 +8,7 @@ package com.alpha.Service;
 import com.alpha.Entite.Covoiturage;
 import com.alpha.Entite.Divertissement;
 import com.alpha.Entite.Hotel;
+import com.alpha.Entite.Passager;
 import com.alpha.Entite.Stadium;
 import com.codename1.io.CharArrayReader;
 import com.codename1.io.ConnectionRequest;
@@ -61,7 +62,7 @@ public class ServiceGuide {
 
 	public ArrayList<Stadium> getListStade() {
 		ConnectionRequest con = new ConnectionRequest();
-		con.setUrl("http://localhost/alrwc2k18/web/app_dev.php/guide/AfficherToutStadeMobile");
+		con.setUrl("http://127.0.0.1:8000/guide/AfficherToutStadeMobile");
 
 		con.addResponseListener(new ActionListener<NetworkEvent>() {
 			@Override
@@ -116,7 +117,7 @@ public class ServiceGuide {
 
 	public ArrayList<Hotel> getListHotel() {
 		ConnectionRequest con = new ConnectionRequest();
-		con.setUrl("http://localhost/alrwc2k18/web/app_dev.php/guide/AfficherToutHotelMobile");
+		con.setUrl("http://127.0.0.1:8000/guide/AfficherToutHotelMobile");
 
 		con.addResponseListener(new ActionListener<NetworkEvent>() {
 			@Override
@@ -209,6 +210,76 @@ public class ServiceGuide {
 		});
 		NetworkManager.getInstance().addToQueueAndWait(con);
 		return listCarpooling2;
+	}
+        
+        
+        
+        
+        
+        
+        public ArrayList<Passager> getListPassager(String json) {
+
+		ArrayList<Passager> listProducts = new ArrayList<Passager>();
+
+		try {
+			JSONParser j = new JSONParser();
+
+			Map<String, Object> passagers = j.parseJSON(new CharArrayReader(json.toCharArray()));
+
+			List<Map<String, Object>> list = (List<Map<String, Object>>) passagers.get("root");
+
+			for (Map<String, Object> obj : list) {
+				Passager p = new Passager();
+				float id = Float.parseFloat(obj.get("id").toString());
+                                float idConv = Float.parseFloat(obj.get("idConv").toString());
+                                float PLace = Float.parseFloat(obj.get("nbPlace").toString());
+                                float idUser = Float.parseFloat(obj.get("iduser").toString());
+                              
+				p.setId((int)id);
+				p.setIdUser((int)idUser);
+				p.setIdConv((int)idConv);
+				
+				p.setNameUser(obj.get("nameuser").toString());
+				p.setNbPlace((int)PLace);
+				
+				listProducts.add(p);
+				
+			}
+
+		} catch (IOException ex) {
+		}
+		return listProducts;
+
+	}
+	public ArrayList<Passager> listPassager2 = new ArrayList<Passager>();
+
+	public ArrayList<Passager> getListPassager() {
+		ConnectionRequest con = new ConnectionRequest();
+		con.setUrl("http://127.0.0.1:8000/guide/AfficherTousPasagerMobile");
+
+		con.addResponseListener(new ActionListener<NetworkEvent>() {
+			@Override
+			public void actionPerformed(NetworkEvent evt) {
+				ServiceGuide ser = new ServiceGuide();
+				System.out.println(new String (con.getResponseData()));
+				listPassager2 = ser.getListPassager(new String(con.getResponseData()));
+				
+			}
+		});
+		NetworkManager.getInstance().addToQueueAndWait(con);
+		return listPassager2;
+	}
+        
+        public void ajoutPassager(Passager g) {
+		ConnectionRequest con = new ConnectionRequest();
+		String Url = "http://127.0.0.1:8000/guide/approuvermobile/"+g.getIdConv()+"/"+g.getIdUser()+"/"+g.getNbPlace()+"/Tmar"; 
+		
+		con.setUrl(Url);
+		con.addResponseListener((e) -> {
+			String str = new String(con.getResponseData());
+			System.out.println(str);
+		});
+		NetworkManager.getInstance().addToQueueAndWait(con);
 	}
 	
 	

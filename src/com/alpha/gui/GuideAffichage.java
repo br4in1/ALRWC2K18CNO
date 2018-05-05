@@ -63,9 +63,8 @@ public class GuideAffichage extends BaseForm {
         Tabs swipe = new Tabs();
 
         Label spacer1 = new Label();
-        Label spacer2 = new Label();
-        addTab(swipe, res.getImage("news-item.jpg"), spacer1, "15 Likes  ", "85 Comments", "Integer ut placerat purued non dignissim neque. ");
-        addTab(swipe, res.getImage("dog.jpg"), spacer2, "100 Likes  ", "66 Comments", "Dogs are cute: story at 11");
+        
+        addTab(swipe, res.getImage("news-item.jpg"), spacer1, "15 Likes  ", "85 Comments", " ");
                 
         swipe.setUIID("Container");
         swipe.getContentPane().setUIID("Container");
@@ -102,7 +101,7 @@ public class GuideAffichage extends BaseForm {
             }
         });
         
-        Component.setSameSize(radioContainer, spacer1, spacer2);
+        Component.setSameSize(radioContainer, spacer1);
         add(LayeredLayout.encloseIn(swipe, radioContainer));
         
         ButtonGroup barGroup = new ButtonGroup();
@@ -167,16 +166,8 @@ public class GuideAffichage extends BaseForm {
         if(img.getHeight() < size) {
             img = img.scaledHeight(size);
         }
-        Label likes = new Label(likesStr);
-        Style heartStyle = new Style(likes.getUnselectedStyle());
-        heartStyle.setFgColor(0xff2d55);
-        FontImage heartImage = FontImage.createMaterial(FontImage.MATERIAL_FAVORITE, heartStyle);
-        likes.setIcon(heartImage);
-        likes.setTextPosition(RIGHT);
-
-        Label comments = new Label(commentsStr);
-        FontImage.setMaterialIcon(comments, FontImage.MATERIAL_CHAT);
-        if(img.getHeight() > Display.getInstance().getDisplayHeight() / 2) {
+        
+         if(img.getHeight() > Display.getInstance().getDisplayHeight() / 2) {
             img = img.scaledHeight(Display.getInstance().getDisplayHeight() / 2);
         }
         ScaleImageLabel image = new ScaleImageLabel(img);
@@ -191,7 +182,6 @@ public class GuideAffichage extends BaseForm {
                 BorderLayout.south(
                     BoxLayout.encloseY(
                             new SpanLabel(text, "LargeWhiteText"),
-                            FlowLayout.encloseIn(likes, comments),
                             spacer
                         )
                 )

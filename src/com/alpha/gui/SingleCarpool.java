@@ -6,6 +6,7 @@
 package com.alpha.gui;
 
 import com.alpha.Entite.Covoiturage;
+import com.alpha.Entite.SimpleUser;
 import com.codename1.components.ImageViewer;
 import com.codename1.ui.Button;
 import com.codename1.ui.Container;
@@ -87,7 +88,8 @@ public class SingleCarpool extends BaseForm {
             
         });
         image.addActionListener(e->{
-          boolean test =  Dialog.show("Do You Want to Participate ? ", "It's 100% secure!", "I am In","Show me The Route");
+            if(cov.getIdUser()!=SimpleUser.current_user.getId())
+            { boolean test =  Dialog.show("Do You Want to Participate ? ", "It's 100% secure!", "I am In","Show me The Route");
             if(test)
             {
                 new BuyAPLaceCovoiturage(res,cov,imageUrl).show();
@@ -98,6 +100,9 @@ public class SingleCarpool extends BaseForm {
             }
         
             
-        });
+        }
+        }
+        
+        );
         add(input);}
 }
