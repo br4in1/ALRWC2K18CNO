@@ -35,6 +35,10 @@ import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
 import java.util.ArrayList;
 import com.alpha.utils.RunnableDemo;
+import com.codename1.l10n.DateFormat;
+import com.codename1.l10n.SimpleDateFormat;
+import com.codename1.ui.Dialog;
+import java.util.Date;
 
 /**
  *
@@ -156,9 +160,20 @@ public class GameDetails extends BaseForm {
 				new GameDetails(game,res).show();
 			}
 		});
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date today = new Date();
+		
 		bet.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
+				if(dateFormat.format(today).compareTo(dateFormat.format(game.getDate())) < 0 ){
+				//show the bet form 
+					System.out.println("not played yet !");
+				}
+				else{
+					Dialog.show("Error", "Game already played ! ", "OK", null);
+				}
 				new BetAddForm(game,res).show();
 			}
 		});
