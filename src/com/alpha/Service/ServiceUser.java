@@ -33,6 +33,7 @@ public class ServiceUser {
 			JSONParser j = new JSONParser();
 
 			Map<String, Object> obj = j.parseJSON(new CharArrayReader(json.toCharArray()));
+			
 			if (obj.size() == 0) {
 				return null;
 			}
@@ -40,6 +41,10 @@ public class ServiceUser {
 			float id = Float.parseFloat(obj.get("id").toString());
 			u.setId((int) id);
 			u.setUsername(obj.get("username").toString());
+			if(obj.get("fidelityPoints") == null || obj.get("fidelityPoints").equals("null")){
+				u.setFidaelitypoints(0);
+			}
+			else u.setFidaelitypoints((int) Float.parseFloat(obj.get("fidelityPoints").toString()));
 			u.setEmail(obj.get("email").toString());
 			u.setNationality(obj.get("nationality").toString());
 			u.setProfilepicture("" + obj.get("profilePicture"));
@@ -55,7 +60,6 @@ public class ServiceUser {
 	public SimpleUser CheckLoginData(String username, String password) {
 		ConnectionRequest con = new ConnectionRequest();
 		con.setUrl("http://127.0.0.1:8000/api/user/checklogindata/username/" + username + "/password/" + password);
-		System.out.println(con.getUrl());
 
 		con.addResponseListener(new ActionListener<NetworkEvent>() {
 			@Override

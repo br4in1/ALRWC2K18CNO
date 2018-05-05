@@ -76,10 +76,6 @@ public class Games extends BaseForm {
           ServiceGame serviceGame =new ServiceGame(); 
 		ArrayList<Game> games = new ArrayList<Game>(serviceGame.getListGames());
 			for (Game game : games) {
-				
-				System.out.println(serviceGame.getListCardsByGame(game.getId()));
-			
-				System.out.println(serviceGame.getListgoalsByGame(game.getId()));
 				addButton(res,game,game.getHomeTeam().get("flagphoto").toString(),game.getAwayTeam().get("flagphoto").toString(),game.getHomeTeam().get("name").toString(),game.getAwayTeam().get("name").toString(),game.getDate().toString(),game.getResult());
 		
 			}

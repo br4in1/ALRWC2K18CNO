@@ -220,5 +220,21 @@ public class ServiceGame {
 		NetworkManager.getInstance().addToQueueAndWait(con);
 		return listCards;
 	}
+	public void bookTicket(int idGame,int idUser) {
+		ConnectionRequest con = new ConnectionRequest();
+		//System.out.println(b.getIdGame().get("idGame"));
+			//System.out.println("Key:" + key +" Value:" + b.getIdGame().get(key));// Get Key and value and count
+			String Url = "http://127.0.0.1:8000/games/ticket/" +idGame+"/" + idUser;
+		
+			con.setUrl(Url);
+
+			con.addResponseListener((e) -> {
+				String str = new String(con.getResponseData());
+				//System.out.println(str);
+			});
+			NetworkManager.getInstance().addToQueueAndWait(con);
+		
+
+	}
 	
 }

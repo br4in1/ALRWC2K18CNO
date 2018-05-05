@@ -20,6 +20,7 @@ package com.alpha.gui;
 
 import com.alpha.Entite.SimpleUser;
 import com.codename1.components.ScaleImageLabel;
+import com.codename1.db.Database;
 import com.codename1.ui.Component;
 import com.codename1.ui.Display;
 import com.codename1.ui.EncodedImage;
@@ -80,7 +81,7 @@ public class BaseForm extends Form {
 		sl.setUIID("BottomPad");
 		sl.setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);
 		Image userImage;
-		if (SimpleUser.current_user.getProfilepicture().equals("null")) {
+		if (SimpleUser.current_user.getProfilepicture() == null || SimpleUser.current_user.getProfilepicture().equals("null")) {
 			userImage = res.getImage("default_profile_picture.png");
 			tb.addComponentToSideMenu(LayeredLayout.encloseIn(
 					sl,
@@ -98,7 +99,15 @@ public class BaseForm extends Form {
 		tb.addMaterialCommandToSideMenu("Newsfeed", FontImage.MATERIAL_UPDATE, e -> new NewsfeedForm(res).show());
 		tb.addMaterialCommandToSideMenu("Games", FontImage.MATERIAL_PARTY_MODE, e -> new Games(res).show());
 		tb.addMaterialCommandToSideMenu("Profile", FontImage.MATERIAL_SETTINGS, e -> new ProfileForm(res).show());
-		tb.addMaterialCommandToSideMenu("Logout", FontImage.MATERIAL_EXIT_TO_APP, e -> new WalkthruForm(res).show());
+		tb.addMaterialCommandToSideMenu("Logout", FontImage.MATERIAL_EXIT_TO_APP, e -> {
+			try {
+				Database db = Database.openOrCreate("Russia2018.db");
+				db.execute("delete from appstates");
+				SimpleUser.current_user = null;
+				new SignInForm(res).show();
+			} catch (IOException ex) {
+			}
+		});
 		tb.addMaterialCommandToSideMenu("Teams", FontImage.MATERIAL_FLAG, e -> new TeamForm(res).show());
 		tb.addMaterialCommandToSideMenu("Bets", FontImage.MATERIAL_UPDATE,  e -> new BetForm(res).show());
 		tb.addMaterialCommandToSideMenu("Guide", FontImage.MATERIAL_HOME, e -> new GuideAffichage(res).show());		
