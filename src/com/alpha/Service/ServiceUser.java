@@ -40,6 +40,7 @@ public class ServiceUser {
 			float id = Float.parseFloat(obj.get("id").toString());
 			u.setId((int) id);
 			u.setUsername(obj.get("username").toString());
+			u.setFidaelitypoints((int) Float.parseFloat(obj.get("fidelityPoints").toString()));
 			u.setEmail(obj.get("email").toString());
 			u.setNationality(obj.get("nationality").toString());
 			u.setProfilepicture("" + obj.get("profilePicture"));
