@@ -48,12 +48,12 @@ public class BuyAPLaceCovoiturage extends BaseForm {
         Label nom = new Label("Driver's name : "+cov.getNameUser());
         
         Label From = new Label("Departure : "+cov.getDepart());
-        Label To = new Label("Destination : "+cov.getDestination());
+        Label To = new Label("Price : "+cov.getPrixPlace());
     
         Label NumCompte = new Label("Account Number : ");
         Label Password = new Label("Password : ");
      TextField AccountNumber = new TextField();
-                 TextField PasswordCompte = new TextField();
+                 TextField PasswordCompte = new TextField("", "Password", 20, TextField.PASSWORD);
          Label SeatsRest = new Label("Seats Available : "+cov.getNbPlaceRestantes());
         Label Seats_booked = new Label("Seats booked : ");
         Label Price = new Label("Price : ");
@@ -80,7 +80,7 @@ public class BuyAPLaceCovoiturage extends BaseForm {
         }
         else {
             Prix.setText("0");
-             Prix.setText(""+Integer.parseInt(lastValidInput)*cov.getNbPlaceRestantes());
+             Prix.setText(""+Integer.parseInt(lastValidInput)*cov.getPrixPlace());
         }}
     } else {
        myTextField.stopEditing();
