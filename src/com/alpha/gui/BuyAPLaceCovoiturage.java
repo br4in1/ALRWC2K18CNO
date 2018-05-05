@@ -6,6 +6,9 @@
 package com.alpha.gui;
 
 import com.alpha.Entite.Covoiturage;
+import com.alpha.Entite.Passager;
+import com.alpha.Entite.SimpleUser;
+import com.alpha.Service.ServiceGuide;
 import com.codename1.components.ImageViewer;
 import com.codename1.ui.Button;
 import com.codename1.ui.Container;
@@ -60,6 +63,11 @@ public class BuyAPLaceCovoiturage extends BaseForm {
         Button Voir = new Button("Buy");
         Voir.setUIID("Button");
         Voir.addActionListener(e->{
+            ServiceGuide ser = new ServiceGuide();
+            System.out.println(SimpleUser.current_user.getLastname()+SimpleUser.current_user.getFirstname());
+            Passager g = new Passager(2, SimpleUser.current_user.getId(), SimpleUser.current_user.getLastname(),cov.getId() , Integer.parseInt(myTextField.getText()));
+            ser.ajoutPassager(g);
+            
             });
        myTextField.addDataChangedListener((i, ii) -> {
     if(isValidInput(myTextField.getText())){
@@ -81,17 +89,24 @@ public class BuyAPLaceCovoiturage extends BaseForm {
     }
 });
        AccountNumber.addDataChangedListener((i, ii) -> {
-    if(isValidInput(AccountNumber.getText())){
+    if(lastValidInput2.length()<4)
+    {  if(isValidInput(AccountNumber.getText())){
+        
         lastValidInput2 = AccountNumber.getText();
-        if(!lastValidInput2.equals(""))
-         {
-            AccountNumber.setText(lastValidInput2);
-        }
-    } else {
+        
+    }
+    else {
        AccountNumber.stopEditing();
        AccountNumber.setText(lastValidInput2);
        AccountNumber.startEditingAsync();
     }
+    }
+    else{
+    Dialog.show("Warnig", "Account Number is too long", "ok","ok");
+    lastValidInput2="0";
+       AccountNumber.setText(lastValidInput2);
+    }
+    
 });
         cncn.add(BoxLayout.encloseY(
                  BorderLayout.center(InfoStade),nom,
