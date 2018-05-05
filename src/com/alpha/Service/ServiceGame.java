@@ -13,6 +13,7 @@ import com.codename1.io.ConnectionRequest;
 import com.codename1.io.JSONParser;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
+import com.codename1.l10n.DateFormat;
 import com.codename1.l10n.ParseException;
 import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.events.ActionListener;
@@ -69,8 +70,6 @@ public class ServiceGame {
 			Map<String, Object> games = j.parseJSON(new CharArrayReader(json.toCharArray()));
 
 			List<Map<String, Object>> list = (List<Map<String, Object>>) games.get("root");
-
-			SimpleDateFormat format= new SimpleDateFormat("dd-MM-yyyy HH:mm");
 			
 			for (Map<String, Object> obj : list) {
 				Game g = new Game();
@@ -85,7 +84,9 @@ public class ServiceGame {
 				g.setAwayTeam(awayMap);
 			//	g.setDate(format.parse(obj.get("date").toString()));
 			//	System.out.println("date == "+g.getDate().toString());
-				 g.setDate(new Date());
+				DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+				Date date = format.parse(obj.get("date").toString());
+				g.setDate(date);
 				g.setHighlights(obj.get("highlights").toString());
 				g.setCost((int) Float.parseFloat(obj.get("cost").toString()));
 				g.setReferee(obj.get("referee").toString());

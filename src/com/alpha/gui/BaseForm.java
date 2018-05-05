@@ -80,7 +80,6 @@ public class BaseForm extends Form {
 		sl.setUIID("BottomPad");
 		sl.setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);
 		Image userImage;
-		System.out.println("user profile picture is "+ SimpleUser.current_user.getProfilepicture());
 		if (SimpleUser.current_user.getProfilepicture().equals("null")) {
 			userImage = res.getImage("default_profile_picture.png");
 			tb.addComponentToSideMenu(LayeredLayout.encloseIn(
