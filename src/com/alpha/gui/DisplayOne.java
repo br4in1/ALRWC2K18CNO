@@ -143,7 +143,7 @@ public class DisplayOne extends BaseForm {
 				ServiceLikes ser4 = new ServiceLikes();
 
 
-		Label likes = new Label(" Like"+ser4.getList2(g1.getId()).getLikes());
+		Label likes = new Label(ser4.getList2(g1.getId()).getLikes()+"likes");
 		Style heartStyle = new Style(likes.getUnselectedStyle());
 		heartStyle.setFgColor(0xff2d55);
 		FontImage heartImage = FontImage.createMaterial(FontImage.MATERIAL_FAVORITE_BORDER, heartStyle);
@@ -169,20 +169,15 @@ public class DisplayOne extends BaseForm {
 					likes.setIcon(FontImage.createMaterial(FontImage.MATERIAL_FAVORITE, heartStyle));
 					Likes l1 = new Likes(SimpleUser.current_user.getId(), g1.getId());
 					ser.LikedPhoto(l1);
-					likes.setText(String.valueOf(ser4.getList2(g1.getId()).getLikes()+" likes"));
+					likes.setText(String.valueOf(ser4.getList2(g1.getId()).getLikes()+"likes"));
 					x = 1;
-					new DisplayOne(res, (Gallery) g1).show();
-              /*if(j.getExist()==null)
-								{
-						likes.setIcon(FontImage.createMaterial(FontImage.MATERIAL_FAVORITE, heartStyle));
-
-								} */
+           
 				} else {
 					ServiceLikes ser = new ServiceLikes();
 					Likes l1 = new Likes(SimpleUser.current_user.getId(), g1.getId());
 					ser.DislikedPhoto(l1);
+					likes.setText(String.valueOf(ser4.getList2(g1.getId()).getLikes()+"likes"));
 					likes.setIcon(FontImage.createMaterial(FontImage.MATERIAL_FAVORITE_BORDER, heartStyle));
-					new DisplayOne(res, (Gallery) g1).show();
 
 					x = 0;
 				}
