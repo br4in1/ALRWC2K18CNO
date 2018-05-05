@@ -15,6 +15,7 @@ import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
 import com.codename1.ui.events.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -75,6 +76,82 @@ public class ServiceCommentaire {
 		NetworkManager.getInstance().addToQueueAndWait(con);
 		return listGallery1;
 	}
+	
+	
+	
+	
+	
+	
+	/*public ArrayList<Commentaire> getListCommentaire(String json) {
+
+		ArrayList<Commentaire> listCommenaire = new ArrayList<Commentaire>();
+
+		try {
+			JSONParser j = new JSONParser();
+
+			Map<String, Object> G1 = j.parseJSON(new CharArrayReader(json.toCharArray()));
+
+			List<Map<String, Object>> list = (List<Map<String, Object>>) G1.get("root");
+
+			for (Map<String, Object> obj : list) {
+				Commentaire p = new Commentaire();
+				float id = Float.parseFloat(obj.get("id").toString());
+				p.setId((int) id);
+				p.getText(obj.get("text").toString());
+				
+				p.setImage(obj.get("image").toString());
+				System.out.println(p.getImage());
+				listCommenaire.add(p);
+			}
+
+		} catch (IOException ex) {
+		}
+		return listCommenaire;
+	}
+
+	public ArrayList<Gallery> listGallery1 = new ArrayList<Gallery>();
+
+	public ArrayList<Gallery> getList2() {
+		ConnectionRequest con = new ConnectionRequest();
+		con.setUrl("http://127.0.0.1:8000/gallery/photo/mobile");
+
+		con.addResponseListener(new ActionListener<NetworkEvent>() {
+			@Override
+			public void actionPerformed(NetworkEvent evt) {
+				ServiceGallery ser = new ServiceGallery();
+				listGallery1 = ser.getListGallery(new String(con.getResponseData()));
+			}
+		});
+		NetworkManager.getInstance().addToQueueAndWait(con);
+		return listGallery1;
+	} */
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	
 }

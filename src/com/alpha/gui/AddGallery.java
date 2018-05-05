@@ -50,6 +50,7 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.codename1.io.File;
 import com.cloudinary.*;
+import com.codename1.ui.Dialog;
 import java.util.Map;
 //import java.io.File;
 
@@ -184,6 +185,14 @@ public class AddGallery extends BaseForm {
 			String description = Description.getText();
 			String ville = Ville.getText();
 			String lieu = Lieu.getText();
+			if(ville.equals("")||lieu.equals("")||description.equals(""))
+			{
+			Dialog.show("Warning", "You must complete all the champ", "ok", "");
+			}
+			else if(ville.length()<5 && lieu.length()<5 && description.length()<10 ){
+			Dialog.show("Warning", "You must put atleast 5 caracteres ", "ok", "");
+			}
+			else {
 			int user = SimpleUser.current_user.getId();
 		
 				//Map uploadResult;
@@ -195,7 +204,7 @@ public class AddGallery extends BaseForm {
 				System.out.println(ex);
 			}*/
 
-		});
+			}});
 		Button back =  new Button("Back"); 
 		back.addActionListener((evt) -> {
 						 new DisplayGallery(res).show();
@@ -210,7 +219,7 @@ public class AddGallery extends BaseForm {
 		cnt3.add(ajouter);
 
 		add(cnt3);
-
+		
 	}
 
 	private void updateArrowPosition(Button b, Label arrow) {

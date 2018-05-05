@@ -67,7 +67,7 @@ public class DisplayOne extends BaseForm {
 
 	Container cnt2 = new Container();
 	private int x = 0;
-	private boolean x1 ; 
+	private boolean x1;
 
 	public DisplayOne(Resources res, Gallery g1) {
 		super("", BoxLayout.y());
@@ -140,10 +140,12 @@ public class DisplayOne extends BaseForm {
 		addOrientationListener(e -> {
 			updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
 		});
-				ServiceLikes ser4 = new ServiceLikes();
+		ServiceLikes ser4 = new ServiceLikes();
+		ServiceCommentaire ser5 = new ServiceCommentaire();
 
+		Label likes = new Label(ser4.getList2(g1.getId()).getLikes() + " likes");
+		Label Comments = new Label(ser5.getList3(g1.getId()).getComments() + " Comments");
 
-		Label likes = new Label(ser4.getList2(g1.getId()).getLikes()+"likes");
 		Style heartStyle = new Style(likes.getUnselectedStyle());
 		heartStyle.setFgColor(0xff2d55);
 		FontImage heartImage = FontImage.createMaterial(FontImage.MATERIAL_FAVORITE_BORDER, heartStyle);
@@ -163,20 +165,23 @@ public class DisplayOne extends BaseForm {
 			public void actionPerformed(ActionEvent evt) {
 				if (x == 0) {
 					ServiceLikes ser = new ServiceLikes();
-						Gallery j = new Gallery();
-							j=ser.existe(SimpleUser.current_user.getId(),g1.getId());
-						
+
+					Gallery j = new Gallery();
+					j = ser.existe(SimpleUser.current_user.getId(), g1.getId());
+
 					likes.setIcon(FontImage.createMaterial(FontImage.MATERIAL_FAVORITE, heartStyle));
 					Likes l1 = new Likes(SimpleUser.current_user.getId(), g1.getId());
 					ser.LikedPhoto(l1);
-					likes.setText(String.valueOf(ser4.getList2(g1.getId()).getLikes()+"likes"));
+					likes.setText(String.valueOf(ser4.getList2(g1.getId()).getLikes() + " likes"));
+
 					x = 1;
-           
+
 				} else {
 					ServiceLikes ser = new ServiceLikes();
+
 					Likes l1 = new Likes(SimpleUser.current_user.getId(), g1.getId());
 					ser.DislikedPhoto(l1);
-					likes.setText(String.valueOf(ser4.getList2(g1.getId()).getLikes()+"likes"));
+					likes.setText(String.valueOf(ser4.getList2(g1.getId()).getLikes() + "likes"));
 					likes.setIcon(FontImage.createMaterial(FontImage.MATERIAL_FAVORITE_BORDER, heartStyle));
 
 					x = 0;
@@ -195,16 +200,24 @@ public class DisplayOne extends BaseForm {
 
 			ServiceCommentaire ser1 = new ServiceCommentaire();
 			Commentaire com = new Commentaire(SimpleUser.current_user.getId(), g1.getId(), Commentaire.getText());
-			new DisplayOne(res, (Gallery) g1).show();
-
+			ServiceCommentaire ser7 = new ServiceCommentaire();
 			ser1.CommentPhoto(com);
+			Comments.setText(String.valueOf(ser7.getList3(g1.getId()).getComments() + " Comments"));
+
+		});
+		Comments.addPointerPressedListener((evt) -> {
+			new AfficherComm(res).show();
 		});
 		Container cont = BorderLayout.west(likes);
+		Container cont1 = BorderLayout.west(Comments);
+
 		//cnt2.add(dislike);
 		//cnt2.add(likes);
 		cnt2.add(Commentaire);
 		cnt2.add(comment);
 		cnt2.add(back);
+				add(cont1);
+
 		add(cont);
 		add(cnt2);
 	}
@@ -284,6 +297,9 @@ public class DisplayOne extends BaseForm {
 			likes.setIcon(heartImage);
 		}
 		Label comments = new Label(commentCount + " Comments", "NewsBottomLine");
+		comments.addPointerPressedListener((evt) -> {
+			new ActivateForm(res).show();
+		});
 		FontImage.setMaterialIcon(likes, FontImage.MATERIAL_CHAT);
 
 		cnt.add(BorderLayout.CENTER,
