@@ -17,6 +17,7 @@ public class Goal {
     private int minute;
     private String video;
 
+	public Goal() {} 
     public Goal(int id, Player player, Game game, int minute, String video) {
         this.id = id;
         this.player = player;
@@ -64,6 +65,11 @@ public class Goal {
     public void setVideo(String video) {
         this.video = video;
     }
+
+	@Override
+	public String toString() {
+		return "Goal{" + "id=" + id + ", player=" + player + ", game=" + game + ", minute=" + minute + ", video=" + video + '}';
+	}
      
     
     

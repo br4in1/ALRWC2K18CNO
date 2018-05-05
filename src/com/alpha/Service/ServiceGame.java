@@ -123,4 +123,102 @@ public class ServiceGame {
 		return listGames2;
 	}
 	
+	//find goals by id game 
+	
+		public ArrayList<Goal> getListGoals(String json) {
+
+		ArrayList<Goal> listGoals = new ArrayList<>();
+
+		try {
+			JSONParser j = new JSONParser();
+
+			Map<String, Object> GoalMap = j.parseJSON(new CharArrayReader(json.toCharArray()));
+
+			List<Map<String, Object>> list = (List<Map<String, Object>>) GoalMap.get("root");
+
+			for (Map<String, Object> obj : list) {
+				Goal g = new Goal();
+
+				float id = Float.parseFloat(obj.get("id").toString());
+
+				g.setId((int) id);
+				g.setMinute((int)Float.parseFloat(obj.get("minute").toString()));
+				
+				listGoals.add(g);
+
+			}
+
+		} catch (IOException ex) {
+		}
+		return listGoals;
+	}
+	
+	//
+	public ArrayList<Goal> listGoals = new ArrayList<>();
+	public ArrayList<Goal> getListgoalsByGame(Integer id) {
+		ConnectionRequest con = new ConnectionRequest();
+		con.setUrl("http://127.0.0.1:8000/games/findgoal/"+id);
+
+		con.addResponseListener(new ActionListener<NetworkEvent>() {
+			@Override
+			public void actionPerformed(NetworkEvent evt) {
+				ServiceGame ser = new ServiceGame();
+				listGoals = ser.getListGoals(new String(con.getResponseData()));
+			}
+		});
+		NetworkManager.getInstance().addToQueueAndWait(con);
+		return listGoals;
+	}
+	
+	
+		//find cards by id game 
+	
+		public ArrayList<Card> getListCards(String json) {
+
+		ArrayList<Card> listCards = new ArrayList<>();
+
+		try {
+			JSONParser j = new JSONParser();
+
+			Map<String, Object> CardMap = j.parseJSON(new CharArrayReader(json.toCharArray()));
+
+			List<Map<String, Object>> list = (List<Map<String, Object>>) CardMap.get("root");
+
+			for (Map<String, Object> obj : list) {
+				Card c = new Card();
+
+				float id = Float.parseFloat(obj.get("id").toString());
+
+				c.setId((int) id);
+				c.setYellow((int)Float.parseFloat(obj.get("yellow").toString()));
+				c.setRed((int)Float.parseFloat(obj.get("red").toString()));
+				c.setMinute((int)Float.parseFloat(obj.get("minute").toString()));
+				
+				listCards.add(c);
+
+			}
+
+		} catch (IOException ex) {
+		}
+		return listCards;
+	}
+	
+	
+
+	public ArrayList<Card> listCards = new ArrayList<>();
+	public ArrayList<Card> getListCardsByGame(Integer id) {
+		ConnectionRequest con = new ConnectionRequest();
+		con.setUrl("http://127.0.0.1:8000/games/findcard/"+id);
+
+		con.addResponseListener(new ActionListener<NetworkEvent>() {
+			@Override
+			public void actionPerformed(NetworkEvent evt) {
+				ServiceGame ser = new ServiceGame();
+				listCards = ser.getListCards(new String(con.getResponseData()));
+			}
+		});
+		NetworkManager.getInstance().addToQueueAndWait(con);
+		return listCards;
+	}
+	
 }

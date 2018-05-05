@@ -5,67 +5,93 @@
  */
 package com.alpha.Entite;
 
-
 /**
  *
  * @author simo
  */
 public class Card {
-    private int id;
-    private Game game;
-    private Player player;
-    private int yellow;
-    private int red;
 
-    public Card(int id, Game game, Player player, int yellow, int red) {
-        this.id = id;
-        this.game = game;
-        this.player = player;
-        this.yellow = yellow;
-        this.red = red;
-    }
+	private int id;
+	private Game game;
+	private Player player;
+	private int yellow;
+	private int red;
+	private int minute;
 
-    public int getId() {
-        return id;
-    }
+	public Card() {
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public Card(int id, Game game, Player player, int yellow, int red, int minute) {
+		this.id = id;
+		this.game = game;
+		this.player = player;
+		this.yellow = yellow;
+		this.red = red;
+		this.minute = minute;
+	}
 
-    public Game getGame() {
-        return game;
-    }
+	public Card(int id, Game game, Player player, int yellow, int red) {
+		this.id = id;
+		this.game = game;
+		this.player = player;
+		this.yellow = yellow;
+		this.red = red;
+	}
 
-    public void setGame(Game game) {
-        this.game = game;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public Player getPlayer() {
-        return player;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
+	public Game getGame() {
+		return game;
+	}
 
-    public int getYellow() {
-        return yellow;
-    }
+	public void setGame(Game game) {
+		this.game = game;
+	}
 
-    public void setYellow(int yellow) {
-        this.yellow = yellow;
-    }
+	public Player getPlayer() {
+		return player;
+	}
 
-    public int getRed() {
-        return red;
-    }
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
 
-    public void setRed(int red) {
-        this.red = red;
-    }
-    
-    
-    
-    
+	public int getYellow() {
+		return yellow;
+	}
+
+	public void setYellow(int yellow) {
+		this.yellow = yellow;
+	}
+
+	public int getRed() {
+		return red;
+	}
+
+	public void setRed(int red) {
+		this.red = red;
+	}
+
+	public int getMinute() {
+		return minute;
+	}
+
+	public void setMinute(int minute) {
+		this.minute = minute;
+	}
+	
+
+	@Override
+	public String toString() {
+		return "Card{" + "id=" + id + ", game=" + game + ", player=" + player + ", yellow=" + yellow + ", red=" + red + ", minute=" + minute + '}';
+	}
+
+	
+
 }
