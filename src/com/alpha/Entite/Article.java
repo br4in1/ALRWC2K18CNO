@@ -20,14 +20,14 @@ public class Article {
     private String typeEntity;
     private Date datePublication;
     private Date derniereModification;
-    private User auteur;
+    private SimpleUser auteur;
     private String articleImage;
     private String permalink;
     private String is_commentable;
     private int num_comments;
     private String last_comment_at;
 
-    public Article(int id, String titre, String contenu, int idEntity, String typeEntity, Date datePublication, Date derniereModification, User auteur, String articleImage) {
+    public Article(int id, String titre, String contenu, int idEntity, String typeEntity, Date datePublication, Date derniereModification, SimpleUser auteur, String articleImage) {
         this.id = id;
         this.titre = titre;
         this.contenu = contenu;
@@ -39,7 +39,7 @@ public class Article {
         this.articleImage = articleImage;
     }
 
-    public Article(int id, String titre, String contenu, int idEntity, String typeEntity, Date datePublication, Date derniereModification, User auteur, String articleImage, String permalink, String is_commentable, int num_comments, String last_comment_at) {
+    public Article(int id, String titre, String contenu, int idEntity, String typeEntity, Date datePublication, Date derniereModification, SimpleUser auteur, String articleImage, String permalink, String is_commentable, int num_comments, String last_comment_at) {
         this.id = id;
         this.titre = titre;
         this.contenu = contenu;
@@ -126,11 +126,11 @@ public class Article {
         this.derniereModification = derniereModification;
     }
 
-    public User getAuteur() {
+    public SimpleUser getAuteur() {
         return auteur;
     }
 
-    public void setAuteur(User auteur) {
+    public void setAuteur(SimpleUser auteur) {
         this.auteur = auteur;
     }
 

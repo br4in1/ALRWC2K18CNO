@@ -7,6 +7,7 @@ package com.alpha.gui;
 
 import com.alpha.Entite.Article;
 import com.alpha.Entite.ArticleCommentaire;
+import com.alpha.Entite.SimpleUser;
 import com.alpha.Service.ServiceArticles;
 import com.alpha.utils.PDFHandler;
 import com.codename1.components.FloatingHint;
@@ -14,6 +15,7 @@ import com.codename1.components.ImageViewer;
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.components.SpanLabel;
 import com.codename1.components.WebBrowser;
+import com.codename1.messaging.Message;
 import com.codename1.ui.BrowserComponent;
 import com.codename1.ui.Button;
 import com.codename1.ui.ButtonGroup;
@@ -23,6 +25,7 @@ import static com.codename1.ui.Component.CENTER;
 import static com.codename1.ui.Component.LEFT;
 import static com.codename1.ui.Component.RIGHT;
 import com.codename1.ui.Container;
+import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
 import com.codename1.ui.EncodedImage;
 import com.codename1.ui.FontImage;
@@ -66,6 +69,7 @@ public class articleForm extends BaseForm {
 
         ServiceArticles sa = new ServiceArticles();
         article = sa.getArticle(id);
+
         ArrayList<ArticleCommentaire> commentaires = sa.getCommentaires(id);
 
         super.addSideMenu(res);
@@ -123,32 +127,73 @@ public class articleForm extends BaseForm {
         download.setText("Download");
         download.addActionListener(e -> {
             PDFHandler pdfh = new PDFHandler();
-            pdfh.getFile(article.getContenu(), "article"+article.getId()+".pdf"); 
+            pdfh.getFile(article.getContenu(), "article" + article.getId() + ".pdf");
         });
-        
+
         Button sendMail = new Button("Share");
         sendMail.addActionListener(e -> {
-        
+
+            Message m = new Message(article.getContenu());
+            m.getAttachments().put("", "text/plain");
+            m.getAttachments().put("", "image/png");
+            Display.getInstance().sendMessage(new String[]{SimpleUser.current_user.getEmail()}, article.getTitre(), m);
         });
         add(browser);
-        Image imv = res.getImage("avatar_comm.jpg").fill(55, 55);
+
+        Image imv = res.getImage("avatar_author.png").fill(55, 55);
         ImageViewer imvv = new ImageViewer(imv);
+
+        Label created_at = new Label();
+        created_at.setText("Written In " + article.getDatePublication());
         Label autho = new Label();
-       // autho.setText(article.getAuteur());
+        autho.setText("Article By : " + article.getAuteur().getUsername());
+        Container c2 = BorderLayout.east(BoxLayout.encloseX(
+                download, sendMail
+        ));
         Container c1 = BorderLayout.west(imvv);
         c1.add(BorderLayout.CENTER,
-                    BoxLayout.encloseY(
-                          //  author,
-                            BoxLayout.encloseX(download,sendMail)
-                    ));
+                BoxLayout.encloseY(
+                        created_at,
+                        BoxLayout.encloseX(autho)
+                ));
+
+        add(c2);
         add(c1);
+
+        Label leave = new Label("Leave a comment :");
+        TextArea ta = new TextArea();
+        ta.setHint("Your Comment");
+        Button comm = new Button("Comment");
+        comm.setText("Comment");
+        Button cancel = new Button("Cancel");
+        cancel.setText("Cancel");
+
+        cancel.addActionListener(e -> {
+            ta.setText("");
+        });
+        comm.addActionListener(e -> {
+            if (ta.getText().equals("") || ta.getText() == "") {
+                Dialog.show("Error", "The comment must not be empty", "OK", "Cancel");
+            } else {
+                Dialog.show("Success", "Your comment has been added", "OK", "Close");
+            }
+        });
+        ta.getStyle().setBgColor(0xb71f1f);
+        ta.getStyle().setBgTransparency(255);
+        Container commentarea = BorderLayout.west(leave);
+        commentarea.add(BorderLayout.CENTER,
+                BoxLayout.encloseX(
+                        ta));
+        add(commentarea);
+        Container buttonsa = BorderLayout.east(BoxLayout.encloseX(comm, cancel));
+        add(buttonsa);
         for (int i = 0; i < commentaires.size(); i++) {
             Image im = res.getImage("avatar_comm.jpg").fill(55, 55);
             ImageViewer iv = new ImageViewer(im);
             Container cnt = BorderLayout.west(iv);
             cnt.getStyle().setBgColor(0xb71f1f);
             browser.getStyle().setBgTransparency(255);
-            Label author = new Label("[" + commentaires.get(i).getAuthor().getUsername() + "]" + " Wrote : ");
+            Label author = new Label(commentaires.get(i).getAuthor().getUsername() + " :");
             Label commentaire = new Label(commentaires.get(i).getBody());
             author.setUIID("ktiba_kbira");
             commentaire.setUIID("commentaires");

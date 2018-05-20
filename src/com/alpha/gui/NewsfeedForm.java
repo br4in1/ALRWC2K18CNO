@@ -20,10 +20,13 @@ package com.alpha.gui;
 
 import com.alpha.Entite.Article;
 import com.alpha.Service.ServiceArticles;
+import com.alpha.utils.PDFHandler;
 import com.codename1.components.ImageViewer;
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.components.SpanLabel;
 import com.codename1.components.ToastBar;
+import com.codename1.io.FileSystemStorage;
+import com.codename1.io.Util;
 import com.codename1.ui.Button;
 import com.codename1.ui.ButtonGroup;
 import com.codename1.ui.Component;
@@ -60,9 +63,9 @@ public class NewsfeedForm extends BaseForm {
     public NewsfeedForm(Resources res) {
         super("Newsfeed", BoxLayout.y());
         
-       // ServiceArticles sa = new ServiceArticles();
-        //ArrayList<Article> articles = sa.getList2();
-
+        ServiceArticles sa = new ServiceArticles();
+        ArrayList<Article> articles = sa.getList2();
+        
         this.res = res;
         Toolbar tb = new Toolbar(true);
         setToolbar(tb);
@@ -78,8 +81,8 @@ public class NewsfeedForm extends BaseForm {
 
         Label spacer1 = new Label();
         Label spacer2 = new Label();
-        addTab(swipe, res.getImage("news-item.jpg"), spacer1, "15 Likes  ", "85 Comments", "Integer ut placerat purued non dignissim neque. ");
-        addTab(swipe, res.getImage("dog.jpg"), spacer2, "100 Likes  ", "66 Comments", "Dogs are cute: story at 11");
+        addTab(swipe, res.getImage("news-item.jpg"), spacer1, "", articles.size()+" Articles", "Latest articles");
+        addTab(swipe, res.getImage("news-item.jpg"), spacer2, "100 Likes  ", articles.size()+" Articles", "Everything football and more");
 
         swipe.setUIID("Container");
         swipe.getContentPane().setUIID("Container");
@@ -121,13 +124,17 @@ public class NewsfeedForm extends BaseForm {
 
         ButtonGroup barGroup = new ButtonGroup();
         RadioButton all = RadioButton.createToggle("All", barGroup);
+        all.setName("general");
         all.setUIID("SelectBar");
-        RadioButton featured = RadioButton.createToggle("Featured", barGroup);
+        RadioButton featured = RadioButton.createToggle("Matchs", barGroup);
+        featured.setName("matchs");
         featured.setUIID("SelectBar");
-        RadioButton popular = RadioButton.createToggle("Popular", barGroup);
+        RadioButton popular = RadioButton.createToggle("Teams", barGroup);
+        popular.setName("equipe");
         popular.setUIID("SelectBar");
-        RadioButton myFavorite = RadioButton.createToggle("My Favorites", barGroup);
+        RadioButton myFavorite = RadioButton.createToggle("Stadiums", barGroup);
         myFavorite.setUIID("SelectBar");
+        myFavorite.setName("stade");
         Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
 
         add(LayeredLayout.encloseIn(
@@ -150,10 +157,10 @@ public class NewsfeedForm extends BaseForm {
         addOrientationListener(e -> {
             updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
         });
-        /*for (int i = 0; i < articles.size(); i++) {
+        for (int i = 0; i < articles.size(); i++) {
             addButton(articles.get(i).getArticleImage(), articles.get(i).getTitre(), false, 0, articles.get(i).getNum_comments(), articles.get(i).getId());
 
-        }*/
+        }
 
     }
 
@@ -249,6 +256,16 @@ public class NewsfeedForm extends BaseForm {
         b.addActionListener(e -> {
             if (b.isSelected()) {
                 updateArrowPosition(b, arrow);
+                if (b.getName().equals("general")){
+                    System.out.println("general");
+                }
+                if (b.getName().equals("matchs")){
+                    System.out.println("matchs");
+                } if (b.getName().equals("equipe")){
+                    
+                } if (b.getName().equals("stade")){
+                    System.out.println("stade");
+                }
             }
         });
     }

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package com.alpha.Service;
+
 import com.alpha.Entite.Article;
 import com.alpha.Entite.ArticleCommentaire;
 import com.alpha.Entite.SimpleUser;
@@ -90,6 +91,16 @@ public class ServiceArticles {
                     article.setId((int) id);
                     article.setNum_comments((int) numComments);
                     article.setContenu(art.get("contenu").toString());
+                    Map< String, Object> auteur = (Map< String, Object>) art.get("auteur");
+                    ServiceUser su = new ServiceUser();
+                    float id_user = Float.parseFloat(auteur.get("id").toString());
+                    SimpleUser simpleU = su.getUserData((int) id_user);
+                    article.setAuteur(simpleU);
+                    Map< String, Object> dateCreated = (Map< String, Object>) art.get("datepublication");
+                    String dat = dateCreated.get("timestamp").toString();
+                    float ts = Float.parseFloat(dat);
+                    Date d = new Date((long) ts * 1000);
+                    article.setDatePublication(d);
                 } catch (IOException ex) {
                     System.out.println("error sql");
                 }
@@ -124,20 +135,23 @@ public class ServiceArticles {
                         ac.setAuthor(author);
                         Map< String, Object> creat = (Map< String, Object>) obj.get("createdAt");
                         String dat = creat.get("timestamp").toString();
-                        float ts = Float.parseFloat(creat.get("timestamp").toString());
-                        Date d = new Date((long) ts *1000);
+                        float ts = Float.parseFloat(dat);
+                        Date d = new Date((long) ts * 1000);
                         ac.setCreated_at(d);
-                        
                         commentaires.add(ac);
                     }
                 } catch (IOException ex) {
                     System.out.println("error sql");
-                } 
+                }                
             }
         });
         NetworkManager.getInstance().addToQueueAndWait(con);
         return commentaires;
     }
     
-   
+    public void addComment(int idarticle,ArticleCommentaire a){
+        ConnectionRequest con = new ConnectionRequest();
+        //con.setUrl("http://127.0.0.1:8000/commentaires/mobile/get/" + id);
+    }
+    
 }
