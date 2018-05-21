@@ -5,6 +5,14 @@
  */
 package com.alpha.gui;
 
+import com.alpha.Entite.ArticleCommentaire;
+import com.alpha.Entite.Commentaire;
+import com.alpha.Entite.Gallery;
+import com.alpha.Entite.SimpleUser;
+import com.alpha.Service.ServiceArticles;
+import com.alpha.Service.ServiceCommentaire;
+import com.alpha.Service.ServiceGallery;
+import com.alpha.Service.ServiceLikes;
 import com.codename1.components.ImageViewer;
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.components.SpanLabel;
@@ -34,6 +42,7 @@ import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
+import java.util.ArrayList;
 
 /**
  *
@@ -42,7 +51,7 @@ import com.codename1.ui.util.Resources;
 public class AfficherComm extends BaseForm{
 	Resources res;
 
-    public AfficherComm(Resources res) {
+    public AfficherComm(Resources res , int id) {
         super("", BoxLayout.y());
         
        // ServiceArticles sa = new ServiceArticles();
@@ -53,6 +62,26 @@ public class AfficherComm extends BaseForm{
         setToolbar(tb);
         getTitleArea().setUIID("Container");
         getContentPane().setScrollVisible(false);
+		
+ 	 ServiceCommentaire sa = new ServiceCommentaire();
+        ArrayList<Commentaire> commentaires = sa.getCommentaires(id);	
+		
+		  for (int i = 0; i < commentaires.size(); i++) {
+            Image im = res.getImage("avatar_comm.jpg").fill(55, 55);
+            ImageViewer iv = new ImageViewer(im);
+            Container cnt = BorderLayout.west(iv);
+            cnt.getStyle().setBgColor(0xb71f1f);
+            Label author = new Label(commentaires.get(i).getAuthor().getUsername() + " :");
+            Label commentaire = new Label(commentaires.get(i).getText());
+            author.setUIID("ktiba_kbira");
+            commentaire.setUIID("commentaires");
+            cnt.add(BorderLayout.CENTER,
+                    BoxLayout.encloseY(
+                            author,
+                            BoxLayout.encloseX(commentaire)
+                    ));
+            add(cnt);
+        }
 
         super.addSideMenu(res);
      
@@ -94,37 +123,11 @@ public class AfficherComm extends BaseForm{
         add(LayeredLayout.encloseIn(swipe, radioContainer));
 		*/
 
-        ButtonGroup barGroup = new ButtonGroup();
-        RadioButton all = RadioButton.createToggle("All", barGroup);
-        all.setUIID("SelectBar");
-        RadioButton featured = RadioButton.createToggle("Featured", barGroup);
-        featured.setUIID("SelectBar");
-        RadioButton popular = RadioButton.createToggle("Popular", barGroup);
-        popular.setUIID("SelectBar");
-        RadioButton myFavorite = RadioButton.createToggle("My Favorites", barGroup);
-        myFavorite.setUIID("SelectBar");
-        Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
-
-        add(LayeredLayout.encloseIn(
-                GridLayout.encloseIn(4, all, featured, popular, myFavorite),
-                FlowLayout.encloseBottom(arrow)
-        ));
-
-        all.setSelected(true);
-        arrow.setVisible(false);
-        addShowListener(e -> {
-            arrow.setVisible(true);
-            updateArrowPosition(all, arrow);
-        });
-        bindButtonSelection(all, arrow);
-        bindButtonSelection(featured, arrow);
-        bindButtonSelection(popular, arrow);
-        bindButtonSelection(myFavorite, arrow);
+    
 
         // special case for rotation
-        addOrientationListener(e -> {
-            updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
-        });
+    
+	
         /*for (int i = 0; i < articles.size(); i++) {
             addButton(articles.get(i).getArticleImage(), articles.get(i).getTitre(), false, 0, articles.get(i).getNum_comments(), articles.get(i).getId());
 
@@ -173,9 +176,14 @@ public class AfficherComm extends BaseForm{
                         )
                 );
         swipe.addTab("", page1);
+	
+	
+	
     }
+		
+      
 
-    private void addButton(String imageUrl, String title, boolean liked, int likeCount, int commentCount, int id) {
+    private void addButton(String imageUrl, String title, boolean liked, int likeCount, int commentCount) {
 
         ImageViewer im = new ImageViewer();
 
@@ -215,9 +223,7 @@ public class AfficherComm extends BaseForm{
                 ));
         add(cnt);
 
-        image.addActionListener(e -> {
-            new articleForm(this.res, id).show();
-        });
+
     }
 
     private void bindButtonSelection(Button b, Label arrow) {

@@ -5,9 +5,11 @@
  */
 package com.alpha.Service;
 
+import com.alpha.Entite.ArticleCommentaire;
 import com.alpha.Entite.Commentaire;
 import com.alpha.Entite.Gallery;
 import com.alpha.Entite.Likes;
+import com.alpha.Entite.SimpleUser;
 import com.codename1.io.CharArrayReader;
 import com.codename1.io.ConnectionRequest;
 import com.codename1.io.JSONParser;
@@ -16,6 +18,7 @@ import com.codename1.io.NetworkManager;
 import com.codename1.ui.events.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -82,9 +85,9 @@ public class ServiceCommentaire {
 	
 	
 	
-	/*public ArrayList<Commentaire> getListCommentaire(String json) {
+public ArrayList<Commentaire> getListCommentaire(String json) {
 
-		ArrayList<Commentaire> listCommenaire = new ArrayList<Commentaire>();
+		ArrayList<Commentaire> listCom = new ArrayList<Commentaire>();
 
 		try {
 			JSONParser j = new JSONParser();
@@ -97,34 +100,81 @@ public class ServiceCommentaire {
 				Commentaire p = new Commentaire();
 				float id = Float.parseFloat(obj.get("id").toString());
 				p.setId((int) id);
-				p.getText(obj.get("text").toString());
-				
-				p.setImage(obj.get("image").toString());
-				System.out.println(p.getImage());
-				listCommenaire.add(p);
+				p.setText((String) obj.get("text"));
+				listCom.add(p);
 			}
 
 		} catch (IOException ex) {
 		}
-		return listCommenaire;
+		return listCom;
 	}
 
-	public ArrayList<Gallery> listGallery1 = new ArrayList<Gallery>();
+	public ArrayList<Commentaire> listComm = new ArrayList<Commentaire>();
 
-	public ArrayList<Gallery> getList2() {
+	public ArrayList<Commentaire> getList4(int id ) {
 		ConnectionRequest con = new ConnectionRequest();
-		con.setUrl("http://127.0.0.1:8000/gallery/photo/mobile");
+		con.setUrl("http://127.0.0.1:8000/gallery/photo/comment/"+id);
 
 		con.addResponseListener(new ActionListener<NetworkEvent>() {
 			@Override
 			public void actionPerformed(NetworkEvent evt) {
-				ServiceGallery ser = new ServiceGallery();
-				listGallery1 = ser.getListGallery(new String(con.getResponseData()));
+				ServiceCommentaire ser = new ServiceCommentaire();
+				listComm = ser.getListCommentaire(new String(con.getResponseData()));
 			}
 		});
 		NetworkManager.getInstance().addToQueueAndWait(con);
-		return listGallery1;
-	} */
+		return listComm;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	  public ArrayList<Commentaire> getCommentaires(int id) {
+        ArrayList<Commentaire> commentaires = new ArrayList<>();
+        ConnectionRequest con = new ConnectionRequest();
+        con.setUrl("http://127.0.0.1:8000/gallery/photo/comment/" + id);
+        con.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                JSONParser j = new JSONParser();
+                String json = new String(con.getResponseData());
+                try {
+                    Map<String, Object> all = j.parseJSON(new CharArrayReader(json.toCharArray()));
+                    List<Map<String, Object>> coms = (List<Map<String, Object>>) all.get("root");
+                    for (Map<String, Object> obj : coms) {
+                        Commentaire ac = new Commentaire();
+                        ac.setId((int) Float.parseFloat(obj.get("id").toString()));
+                        ac.setText(obj.get("com").toString());
+						ServiceUser su = new ServiceUser();
+                        Map< String, Object> user = (Map< String, Object>) obj.get("iduser");
+                        SimpleUser author = su.getUserData((int) Float.parseFloat(user.get("id").toString()));
+                        ac.setAuthor(author);
+                        commentaires.add(ac);
+                    }
+                } catch (IOException ex) {
+                    System.out.println("error sql");
+                }                
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+        return commentaires;
+    }
+	
+	
 	
 	
 	

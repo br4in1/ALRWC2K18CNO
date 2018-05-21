@@ -16,6 +16,16 @@ public class Commentaire {
 	private int idUser;
 	private int idPhoto;
 
+	    private SimpleUser author;
+
+	public SimpleUser getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(SimpleUser author) {
+		this.author = author;
+	}
+
 	public Commentaire() {
 	}
 

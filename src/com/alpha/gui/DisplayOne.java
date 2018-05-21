@@ -59,6 +59,7 @@ public class DisplayOne extends BaseForm {
 	Gallery gallery;
 	Resources res;
 	TextField Commentaire;
+	Label Comments ; 
 
 	@Override
 	public boolean visibleBoundsContains(int x, int y) {
@@ -145,7 +146,11 @@ public class DisplayOne extends BaseForm {
 
 		Label likes = new Label(ser4.getList2(g1.getId()).getLikes() + " likes");
 		Label Comments = new Label(ser5.getList3(g1.getId()).getComments() + " Comments");
-
+Comments.addPointerPressedListener((evt) -> {
+			new AfficherComm(res ,g1.getId()).show();
+			System.out.println(g1.getId());
+			
+		});
 		Style heartStyle = new Style(likes.getUnselectedStyle());
 		heartStyle.setFgColor(0xff2d55);
 		FontImage heartImage = FontImage.createMaterial(FontImage.MATERIAL_FAVORITE_BORDER, heartStyle);
@@ -194,6 +199,7 @@ public class DisplayOne extends BaseForm {
 		ServiceCommentaire ser3 = new ServiceCommentaire();
 
 		addButton(g1.getImage(), g1.getVille() + "  , " + g1.getLieu(), false, ser2.getList2(g1.getId()).getLikes(), ser3.getList3(g1.getId()).getComments(), g1.getId());
+
 		Commentaire = new TextField("", "Commenaitre", 20, TextField.ANY);
 		Button comment = new Button("Comment");
 		comment.addActionListener((evt) -> {
@@ -205,18 +211,17 @@ public class DisplayOne extends BaseForm {
 			Comments.setText(String.valueOf(ser7.getList3(g1.getId()).getComments() + " Comments"));
 
 		});
-		Comments.addPointerPressedListener((evt) -> {
-			new AfficherComm(res).show();
-		});
+	
 		Container cont = BorderLayout.west(likes);
 		Container cont1 = BorderLayout.west(Comments);
 
-		//cnt2.add(dislike);
-		//cnt2.add(likes);
+		
+	
+
 		cnt2.add(Commentaire);
 		cnt2.add(comment);
 		cnt2.add(back);
-				add(cont1);
+		add(cont1);
 
 		add(cont);
 		add(cnt2);
@@ -297,9 +302,9 @@ public class DisplayOne extends BaseForm {
 			likes.setIcon(heartImage);
 		}
 		Label comments = new Label(commentCount + " Comments", "NewsBottomLine");
-		comments.addPointerPressedListener((evt) -> {
+		/*comments.addPointerPressedListener((evt) -> {
 			new ActivateForm(res).show();
-		});
+		});*/
 		FontImage.setMaterialIcon(likes, FontImage.MATERIAL_CHAT);
 
 		cnt.add(BorderLayout.CENTER,
@@ -307,7 +312,13 @@ public class DisplayOne extends BaseForm {
 						ta,
 						BoxLayout.encloseX(likes, comments)
 				));
+			/*Comments.addPointerPressedListener((evt) -> {
+			new AfficherComm(res ,id).show();
+		})*/;
+			
 		add(cnt);
+		
+		
 
 	}
 
